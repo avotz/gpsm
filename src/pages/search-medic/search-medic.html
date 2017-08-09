@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Buscar Médico</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-searchbar [(ngModel)]="searchKey" (ionInput)="onInput($event)"
+                       (ionCancel)="onCancel($event)"></ion-searchbar>
+    <ion-list>
+        <ion-item *ngFor="let medic of medics">
+            <button ion-item (click)="openMedicDetail(medic)">
+                <ion-thumbnail item-left>
+                    <img src="{{ serverUrl}}{{ medic.photo }}"/>
+                </ion-thumbnail>
+                <h2>{{medic.name}}</h2>
+                <p><span *ngFor="let clinic of medic.offices">{{ clinic.name}}</span></p>
+            </button>
+            
+        </ion-item>
+   
+    </ion-list>
+</ion-content>

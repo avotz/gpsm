@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Home</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  
+    <div class="logo">
+      <img src="assets/img/logo.png" alt="GPS Médica">
+    </div>
+   <h2>¿Que deseas hacer?</h2>
+  
+
+   <button ion-button full icon-left color="celeste" large (click)="searchMedic()">
+    <ion-icon name="people"></ion-icon>
+    Buscar Médico
+  </button>
+   <button ion-button full icon-left color="verde" large (click)="searchClinic()">
+    <ion-icon name="home"></ion-icon>
+    Buscar Clínica
+  </button>
+   <button ion-button full icon-left color="amarillo" large (click)="expedient()">
+    <ion-icon name="list"></ion-icon>
+    Mi Expediente
+  </button>
+   
+  
+</ion-content>
+
+<!-- <ion-header>
+  <ion-navbar>
+    <ion-title>
+     GPS Médica
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  The world is your oyster.
+  <p>
+    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
+  </p>
+  <ul>
+ 		<li>{{auth.name}}</li>
+ 		<li>{{auth.email}}</li>
+ 	</ul>
+  
+
+  <button type="button" class="custom-button" block (click)="logout()">Log Out</button>
+</ion-content> -->

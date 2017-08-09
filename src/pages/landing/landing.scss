@@ -1,0 +1,48 @@
+page-landing {
+
+	.swiper-pagination{
+		bottom:60px !important;
+	}
+	.logo{
+		max-width:200px;
+		position: absolute;
+		top:20%;
+		left:50%;
+		transform:translate(-50%, 0);
+		margin:0 auto;
+		z-index: 2;
+	}
+	.landing-slider ion-slide{
+		background-position: center center;
+		background-size: cover;
+		background-repeat: no-repeat;
+
+	}
+	.landing-slider ion-slide::after{
+		content:'';
+		background-color: rgba(0,0,0,.30);
+		position: absolute;
+		width:100%;
+		left: 0;
+		right: 0;
+		bottom:0;
+		top:0;
+	}
+	.button-bar{
+		position: absolute;
+		bottom: 10px;
+		left: 0;
+		right:0;
+		z-index: 2;
+		text-align:center;
+	}
+	.slide-info{
+		color:white;
+		position: absolute;
+		z-index: 2;
+		left:0;
+		right:0;
+		bottom:90px;
+	}
+
+}

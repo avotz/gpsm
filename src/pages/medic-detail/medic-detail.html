@@ -1,0 +1,39 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Médico</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="medic">
+    <ion-card>
+
+        <ion-card-content>
+            <img src="{{ serverUrl}}{{ medic.photo }}"/>
+            <h2>{{medic.name}}</h2>
+            <h3>Médico</h3>
+        </ion-card-content>
+
+        <ion-list>
+            <ion-item *ngFor="let clinic of medic.offices">
+                <ion-icon name="home" item-left></ion-icon>
+                <p>{{clinic.name}}</p>
+                <h2>{{clinic.address}}</h2>
+                <button ion-button round item-right (click)="openCalendar(medic, clinic)" color="danger">
+                    <ion-icon name="calendar"></ion-icon>
+                
+                </button>
+                <button ion-button round item-right (click)="share(medic)">
+                    <ion-icon name="share"></ion-icon>
+                
+                </button>
+            </ion-item>
+          
+        </ion-list>
+
+    </ion-card>
+ 
+</ion-content>

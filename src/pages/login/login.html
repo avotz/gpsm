@@ -1,0 +1,50 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Inicio de Sesión</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+   <ion-row class="errors-row">
+    <div *ngIf="errorAuth" class="errors">
+      <span>{{ errorAuth }}</span>
+    </div>
+  </ion-row>
+	<div class="login-box">
+    <form (ngSubmit)="loginForm()">
+      <ion-row>
+        <ion-col>
+          <ion-list inset>
+            
+            <ion-item>
+              <ion-input type="text" placeholder="Email" name="email" [(ngModel)]="email" required></ion-input>
+            </ion-item>
+            
+            <ion-item>
+              <ion-input type="password" placeholder="Contraseña" name="password" [(ngModel)]="password" required></ion-input>
+            </ion-item>
+            
+          </ion-list>
+        </ion-col>
+      </ion-row>
+      
+      <ion-row>
+        <ion-col class="signup-col">
+          <button ion-button class="submit-btn" full type="submit">Iniciar</button>
+        </ion-col>
+      </ion-row>
+      
+      
+    </form>
+    <ion-row>
+        <button ion-button class="register-btn" block clear (click)="createAccount()">Crear Nueva Cuenta</button>
+        
+         <button (click)="loginFacebook()" block ion-button color="facebook" icon-left><ion-icon name="logo-facebook"></ion-icon>  Iniciar con facebook</button>
+        <button (click)="loginGoogle()" block ion-button color="google" icon-left><ion-icon name="logo-googleplus"></ion-icon> Iniciar con Google+</button>
+     </ion-row> 
+   
+  </div>
+</ion-content>
