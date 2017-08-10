@@ -4,11 +4,6 @@ import 'rxjs/Rx';
 import {SERVER_URL} from '../config';
 
 
-const postData = {
-          password:'',
-          email:''
-       };
-
 @Injectable()
 export class PatientServiceProvider {
 

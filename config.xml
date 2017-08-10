@@ -84,6 +84,7 @@
         <variable name="APP_ID" value="159461661253763" />
         <variable name="APP_NAME" value="GPS Medica" />
     </plugin>
+    <plugin name="cordova-plugin-geolocation" spec="^2.4.3" />
     <plugin name="cordova-plugin-googleplus" spec="^5.1.1">
         <variable name="REVERSED_CLIENT_ID" value="1088161575987-3fpu107g1si45377dmebgo183a0rqs3m.apps.googleusercontent.com" />
     </plugin>

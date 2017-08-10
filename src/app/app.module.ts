@@ -8,6 +8,7 @@ import { Facebook } from '@ionic-native/facebook';
 import { GooglePlus } from '@ionic-native/google-plus';
 import {RlTagInputModule} from 'angular2-tag-input';
 import { NgCalendarModule  } from 'ionic2-calendar';
+import { Geolocation } from '@ionic-native/geolocation';
 
 
 import { MyApp } from './app.component';
@@ -61,6 +62,7 @@ import { MedicServiceProvider } from '../providers/medic-service/medic-service';
   providers: [
     StatusBar,
     SplashScreen,
+    Geolocation,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     Facebook,
     GooglePlus,

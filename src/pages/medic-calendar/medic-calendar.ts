@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { MedicServiceProvider } from '../../providers/medic-service/medic-service';
 import moment from 'moment'

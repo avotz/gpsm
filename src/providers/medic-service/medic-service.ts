@@ -16,13 +16,14 @@ export class MedicServiceProvider {
    
     findAll(search) {
         
-          let params = {
-            q: search
-          }
+          /*let params = {
+            q: search,
+             
+          }*/
           let headers = new Headers({'Accept': 'application/json',
                    'Authorization': 'Bearer '+ window.localStorage.getItem('token')}),
 
-              options = new RequestOptions({headers: headers,params: params});
+              options = new RequestOptions({headers: headers,params: search});
 
 
         return this.http.get(SERVER_URL + '/api/medics', options)
@@ -50,6 +51,18 @@ export class MedicServiceProvider {
             .map(res => res.json())
             .toPromise();
 
+    }
+    getSpecialities () {
+     
+      let headers = new Headers({'Accept': 'application/json',
+               'Authorization': 'Bearer '+ window.localStorage.getItem('token')}),
+
+          options = new RequestOptions({headers: headers});
+
+
+    return this.http.get(SERVER_URL + '/api/medics/specialities' , options)
+        .map(res => res.json())
+        .toPromise();
     }
 
 }

@@ -8,9 +8,64 @@
 </ion-header>
 
 <ion-content padding>
-    <ion-searchbar [(ngModel)]="searchKey" (ionInput)="onInput($event)"
-                       (ionCancel)="onCancel($event)"></ion-searchbar>
+    <form [formGroup]="medicSearchForm">
+        
+        <ion-searchbar formControlName="q" (ionInput)="onInput($event)"
+                        (ionCancel)="onCancel($event)"></ion-searchbar>
+                        <ion-card>
+                                <ion-card-header>
+                                    Parámetros de busqueda (Opcionales)
+                                </ion-card-header>
+                                <ion-card-content>
+                    
+                                    <ion-item>
+                                        
+                                        <ion-select formControlName="speciality"  placeholder="Especialidad">
+                                                <ion-option *ngFor="let speciality of specialities" value="{{speciality.id}}">{{speciality.name}}</ion-option>
+                                        </ion-select>
+                                    </ion-item>    
+                                        <ion-item>
+                                                
+                                             <ion-select formControlName="province"  (ionChange)="onChangeProvince($event)" placeholder="Provincia">
+                                               <ion-option value="Guanacaste">Guanacaste</ion-option>
+                                               <ion-option value="San Jose">San Jose</ion-option>
+                                               <ion-option value="Heredia">Heredia</ion-option>
+                                               <ion-option value="Limon">Limon</ion-option>
+                                               <ion-option value="Cartago">Cartago</ion-option>
+                                               <ion-option value="Puntarenas">Puntarenas</ion-option>
+                                               <ion-option value="Alajuela">Alajuela</ion-option>
+                                             </ion-select>
+                                        </ion-item>
+                                        <ion-item>
+                                                
+                                             <ion-select formControlName="canton"  placeholder="Cantón" (ionChange)="onChangeCanton($event)">
+                                                    <ion-option *ngFor="let canton of cantones" value="{{canton.title}}">{{canton.title}}</ion-option>
+                                             </ion-select>
+                                        </ion-item>
+                                        <ion-item>
+                                                
+                                             <ion-select formControlName="district"  placeholder="Distrito">
+                                               <ion-option *ngFor="let district of districts" value="{{district}}">{{district}}</ion-option>
+                                              
+                                             </ion-select>
+                                        </ion-item>
+                                        <ion-item>
+                                            
+                                                <button ion-button (click)="onGetGeolocalitation()" icon-left>
+                                                        <ion-icon name="locate"></ion-icon>   
+                                                    Cerca tuyo
+                                                    </button>
+                                        </ion-item>
+                                </ion-card-content>
+                            </ion-card>
+        <button ion-button (click)="onSearch()" full color="verde" >
+            Buscar
+        </button>
+    </form>
     <ion-list>
+        <div *ngIf="!medics.length > 0 && searchKey" class="errors">
+            <span>No se encontraron Médicos</span>
+        </div>
         <ion-item *ngFor="let medic of medics">
             <button ion-item (click)="openMedicDetail(medic)">
                 <ion-thumbnail item-left>
