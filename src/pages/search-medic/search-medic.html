@@ -8,9 +8,13 @@
 </ion-header>
 
 <ion-content padding>
-    <form [formGroup]="medicSearchForm">
+    <form [formGroup]="medicSearchForm" >
 
-        <ion-searchbar formControlName="q" (ionInput)="onInput($event)" (ionCancel)="onCancel($event)"></ion-searchbar>
+        <ion-searchbar formControlName="q"></ion-searchbar>
+        <!-- <ion-item>
+            
+            <ion-input formControlName="q" placeholder="" type="text"></ion-input>
+        </ion-item> -->
         <ion-card>
             <ion-card-header>
                 Parámetros de busqueda (Opcionales)
@@ -20,12 +24,14 @@
                 <ion-item>
 
                     <ion-select formControlName="speciality" placeholder="Especialidad">
+                        <ion-option value=""></ion-option>
                         <ion-option *ngFor="let speciality of specialities" value="{{speciality.id}}">{{speciality.name}}</ion-option>
                     </ion-select>
                 </ion-item>
                 <ion-item>
 
                     <ion-select formControlName="province" (ionChange)="onChangeProvince($event)" placeholder="Provincia">
+                        <ion-option value=""></ion-option>
                         <ion-option value="Guanacaste">Guanacaste</ion-option>
                         <ion-option value="San Jose">San Jose</ion-option>
                         <ion-option value="Heredia">Heredia</ion-option>
@@ -37,11 +43,13 @@
                 </ion-item>
                 <ion-item>
                     <ion-select formControlName="canton" placeholder="Cantón" (ionChange)="onChangeCanton($event)">
+                        <ion-option value=""></ion-option>
                         <ion-option *ngFor="let canton of cantones" value="{{canton.title}}">{{canton.title}}</ion-option>
                     </ion-select>
                 </ion-item>
                 <ion-item>
                     <ion-select formControlName="district" placeholder="Distrito">
+                        <ion-option value=""></ion-option>
                         <ion-option *ngFor="let district of districts" value="{{district}}">{{district}}</ion-option>
 
                     </ion-select>

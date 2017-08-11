@@ -9,7 +9,7 @@ import { GooglePlus } from '@ionic-native/google-plus';
 import {RlTagInputModule} from 'angular2-tag-input';
 import { NgCalendarModule  } from 'ionic2-calendar';
 import { Geolocation } from '@ionic-native/geolocation';
-
+//import { ReactiveFormsModule } from '@angular/forms';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -44,6 +44,7 @@ import { MedicServiceProvider } from '../providers/medic-service/medic-service';
     HttpModule,
     RlTagInputModule,
     NgCalendarModule
+    
 
   ],
   bootstrap: [IonicApp],

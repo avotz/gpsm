@@ -6,7 +6,7 @@ import { MedicServiceProvider } from '../../providers/medic-service/medic-servic
 import { provinces } from '../../providers/provinces';
 import {SERVER_URL} from '../../providers/config';
 import {MedicDetailPage} from '../medic-detail/medic-detail';
-
+//import { SearchValidator } from '../../validators/search';
 @Component({
   selector: 'page-search-medic',
   templateUrl: 'search-medic.html',
@@ -44,8 +44,8 @@ export class SearchMedicPage {
       lat:[''],
       lon:['']
       
-     
     });
+    // }, { 'validator': SearchValidator.isNotEmpty });
 
   }
   onGetGeolocalitation () {
@@ -53,9 +53,11 @@ export class SearchMedicPage {
       
            console.log(position.coords.latitude, position.coords.longitude);
       
-            this.medicSearchForm.value.lat = position.coords.latitude
-            this.medicSearchForm.value.lon = position.coords.longitude
-            
+            //this.medicSearchForm.value.lat = position.coords.latitude
+            //this.medicSearchForm.value.lon = position.coords.longitude
+            this.medicSearchForm.get('lat').setValue(position.coords.latitude)
+            this.medicSearchForm.get('lon').setValue(position.coords.latitude)
+    
             this.onSearch();
       
          }, (err) => {
@@ -113,7 +115,7 @@ export class SearchMedicPage {
     }
   }
   onInput(event) {
-    //this.fetchMedics() 
+    this.onSearch();
   }
 
   onCancel(event) {
@@ -139,7 +141,8 @@ export class SearchMedicPage {
                     loader.dismiss();
 
                     this.medics = data.data;
-                    this.createForm();
+                    this.clearForm(this.medicSearchForm);
+                    this.submitAttempt = false;
                 })
                 .catch(error => {
                   console.log(JSON.stringify(error))
@@ -147,11 +150,81 @@ export class SearchMedicPage {
                 });
         
   }
+  clearForm(form){
+   
+    form.get('q').setValue('')
+    form.get('province').setValue('')
+    form.get('canton').setValue('')
+    form.get('district').setValue('')
+    form.get('speciality').setValue('')
+    form.get('lat').setValue('')
+    form.get('lon').setValue('')
+  
+  }
   
 
    
   ionViewDidLoad() {
     console.log('ionViewDidLoad SearchMedicPage');
+  }
+  ngOnInit() {
+   
+    console.log('on init')
+    this.medicSearchForm.get('province').valueChanges.subscribe(
+      
+          (province: string) => {
+            
+              if (province != '') {
+      
+                  this.medicSearchForm.get('q').setValidators([]);
+      
+              }else{
+                
+                this.medicSearchForm.get('q').setValidators([Validators.required]);
+              }
+             
+              this.medicSearchForm.get('q').updateValueAndValidity();
+      
+          }
+      
+      )
+
+    this.medicSearchForm.get('speciality').valueChanges.subscribe(
+        
+            (speciality: string) => {
+              
+                if (speciality != '') {
+        
+                    this.medicSearchForm.get('q').setValidators([]);
+        
+                }else{
+                  
+                  this.medicSearchForm.get('q').setValidators([Validators.required]);
+                }
+               
+                this.medicSearchForm.get('q').updateValueAndValidity();
+        
+            }
+        
+        )
+        this.medicSearchForm.get('lat').valueChanges.subscribe(
+          
+              (lat: string) => {
+                 
+                  if (lat != '') {
+          
+                      this.medicSearchForm.get('q').setValidators([]);
+          
+                  }else{
+                    
+                    this.medicSearchForm.get('q').setValidators([Validators.required]);
+                  }
+                 
+                  this.medicSearchForm.get('q').updateValueAndValidity();
+          
+              }
+          
+          )
   }
 
 }
