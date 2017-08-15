@@ -20,7 +20,8 @@ export class SearchMedicPage {
     cantones:Array<any>;
     districts:Array<any>;
     specialities:Array<any>;
-
+    currentPage: any = 1;
+    lastPage:any = 1;
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public medicService: MedicServiceProvider, public formBuilder: FormBuilder, public geolocation: Geolocation) {
        this.medicService = medicService;
        this.navCtrl = navCtrl;
@@ -42,15 +43,53 @@ export class SearchMedicPage {
       district: [''],
       speciality:[''],
       lat:[''],
-      lon:['']
+      lon:[''],
+      page:[1]
       
     });
     // }, { 'validator': SearchValidator.isNotEmpty });
 
   }
-  onGetGeolocalitation () {
-    this.geolocation.getCurrentPosition().then((position) => {
+  doInfinite(infiniteScroll) {
+    console.log('Begin async operation');
+
       
+    if(this.currentPage === this.lastPage)
+      {
+        infiniteScroll.complete();
+        return
+      }
+
+
+      this.medicSearchForm.get('page').setValue(this.currentPage + 1)
+    
+          this.medicService.findAll(this.medicSearchForm.value)
+          .then(data => {
+            
+    
+              data.data.forEach(medic => {
+                this.medics.push(medic);
+              });
+              
+              this.medicSearchForm.get('page').setValue(data.currentPage)
+              this.currentPage = data.current_page;
+              this.lastPage = data.last_page;
+             // this.clearForm(this.medicSearchForm);
+
+             console.log('Async operation has ended');
+             infiniteScroll.complete();
+          })
+          .catch(error => {
+            console.log(JSON.stringify(error))
+           
+          });
+
+     
+  }
+  onGetGeolocalitation () {
+    
+    this.geolocation.getCurrentPosition().then((position) => {
+           
            console.log(position.coords.latitude, position.coords.longitude);
       
             //this.medicSearchForm.value.lat = position.coords.latitude
@@ -108,7 +147,9 @@ export class SearchMedicPage {
   }
   onSearch(){
     this.submitAttempt = true;
-    
+    this.medicSearchForm.get('page').setValue(1);
+    this.currentPage = 1;
+    this.lastPage = 1;
     if(this.medicSearchForm.valid){
 
       this.fetchMedics(this.medicSearchForm.value) 
@@ -141,7 +182,10 @@ export class SearchMedicPage {
                     loader.dismiss();
 
                     this.medics = data.data;
-                    this.clearForm(this.medicSearchForm);
+                    this.medicSearchForm.get('page').setValue(data.current_page)
+                    this.currentPage = data.current_page;
+                    this.lastPage = data.last_page;
+                   // this.clearForm(this.medicSearchForm);
                     this.submitAttempt = false;
                 })
                 .catch(error => {
@@ -159,6 +203,7 @@ export class SearchMedicPage {
     form.get('speciality').setValue('')
     form.get('lat').setValue('')
     form.get('lon').setValue('')
+    form.get('page').setValue(1)
   
   }
   

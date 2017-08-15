@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActionSheetController, ActionSheet,  NavController, NavParams } from 'ionic-angular';
 import {SERVER_URL} from '../../providers/config';
 import {MedicCalendarPage} from '../medic-calendar/medic-calendar';
-
+import moment from 'moment'
 
 @Component({
   selector: 'page-medic-detail',
@@ -19,7 +19,8 @@ export class MedicDetailPage {
    
     let calendarOptions = {
       medic_id: medic.id,
-      clinic_id: clinic.id
+      clinic_id: clinic.id,
+      slot_duration: moment.duration(medic.slot).asMinutes()
     }
 
     this.navCtrl.push(MedicCalendarPage, calendarOptions);

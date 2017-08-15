@@ -32,7 +32,7 @@ export class MedicCalendarPage {
         //this.schedules = data.data;
         data.forEach(schedule => {
           console.log(schedule.start)
-          let intervals = this.createIntervalsFromHours(moment(schedule.start).format("YYYY-MM-DD"), moment(schedule.start).format("HH:mm"), moment(schedule.end).format("HH:mm"));
+          let intervals = this.createIntervalsFromHours(moment(schedule.start).format("YYYY-MM-DD"), moment(schedule.start).format("HH:mm"), moment(schedule.end).format("HH:mm"), this.params.slot_duration);
 
           console.log(intervals);
           let events = [];
@@ -60,12 +60,12 @@ export class MedicCalendarPage {
     .catch(error => alert(JSON.stringify(error)));
 
   }
-  createIntervalsFromHours(date, from, until){
+  createIntervalsFromHours(date, from, until, slot){
      
      until = Date.parse(date+" " + until);
      from = Date.parse(date+" " + from);
 
-     let intervalLength = 30;
+     let intervalLength = (slot) ? slot : 30;
      let intervalsPerHour = 60 / intervalLength;
      let milisecsPerHour = 60 * 60 * 1000;
     
