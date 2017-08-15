@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { ActionSheetController, ActionSheet,  NavController, NavParams } from 'ionic-angular';
 import {SERVER_URL} from '../../providers/config';
 import {MedicCalendarPage} from '../medic-calendar/medic-calendar';
-import moment from 'moment'
+import { MedicServiceProvider } from '../../providers/medic-service/medic-service';
+
 
 @Component({
   selector: 'page-medic-detail',
@@ -11,16 +12,26 @@ import moment from 'moment'
 export class MedicDetailPage {
   serverUrl: String = SERVER_URL;
   medic: any;
-  constructor(public actionSheetCtrl: ActionSheetController, public navCtrl: NavController, public navParams: NavParams) {
+  
+  constructor(public actionSheetCtrl: ActionSheetController, public navCtrl: NavController, public navParams: NavParams, public medicService: MedicServiceProvider) {
+    
     this.medic = this.navParams.data;
-  }
 
-  openCalendar(medic, clinic) {
+    this.medicService.findById(this.medic.id)
+    .then(resp => {
+        this.medic = resp.data;
+        
+    })
+    .catch(error => alert(JSON.stringify(error)));
+
+  }
+  
+   openCalendar(medic, clinic) {
    
     let calendarOptions = {
       medic_id: medic.id,
-      clinic_id: clinic.id,
-      slot_duration: moment.duration(medic.slot).asMinutes()
+      clinic_id: clinic.id
+      
     }
 
     this.navCtrl.push(MedicCalendarPage, calendarOptions);

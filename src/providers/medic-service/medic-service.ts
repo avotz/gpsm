@@ -32,6 +32,21 @@ export class MedicServiceProvider {
 
        
     }
+    findById(id) {
+      
+       
+        let headers = new Headers({'Accept': 'application/json',
+                 'Authorization': 'Bearer '+ window.localStorage.getItem('token')}),
+
+            options = new RequestOptions({headers: headers});
+
+
+      return this.http.get(SERVER_URL + '/api/medics/'+ id, options)
+          .map(res => res.json())
+          .toPromise();
+
+     
+  }
     findSchedules(medic_id, clinic_id,date_from,date_to) {
 
       //url: '/medics/'+ externalEvent.data('doctor') +'/schedules/list?office='+ externalEvent.data('office'),

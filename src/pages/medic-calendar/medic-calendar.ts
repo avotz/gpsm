@@ -20,7 +20,7 @@ export class MedicCalendarPage {
         mode: 'month'
       }
 
-     // this.loadEvents();
+   
      
 
     
@@ -28,11 +28,10 @@ export class MedicCalendarPage {
   loadSchedules (date_from, date_to) {
     this.medicService.findSchedules(this.params.medic_id, this.params.clinic_id, date_from, date_to)
     .then(data => {
-        console.log(data)
-        //this.schedules = data.data;
+       
         data.forEach(schedule => {
-          console.log(schedule.start)
-          let intervals = this.createIntervalsFromHours(moment(schedule.start).format("YYYY-MM-DD"), moment(schedule.start).format("HH:mm"), moment(schedule.end).format("HH:mm"), this.params.slot_duration);
+          
+          let intervals = this.createIntervalsFromHours(moment(schedule.start).format("YYYY-MM-DD"), moment(schedule.start).format("HH:mm"), moment(schedule.end).format("HH:mm"), moment.duration(schedule.user.settings.slotDuration).asMinutes());
 
           console.log(intervals);
           let events = [];
@@ -89,21 +88,7 @@ doubleZeros(item){
   return (item < 10 ) ? '0'+ item : item;
 }
 
-loadEvents() {
-      this.eventSource.push({
-          title: 'test',
-          startTime: new Date('2017-08-09 14:00:00'),
-          endTime: new Date('2017-08-09 14:30:00'),
-          allDay: false
-      });
-      this.eventSource.push({
-          title: 'test2',
-          startTime: new Date('2017-08-09 17:00:00'),
-          endTime: new Date('2017-08-09 17:30:00'),
-          allDay: false
-      });
-      //this.myCalendar.loadEvents();
-  }
+
   onEventSelected (evt){
     console.log(evt)
   }
@@ -114,11 +99,7 @@ loadEvents() {
    // console.log(evt.selectedTime)
   }
   onCurrentDateChanged(date){
-    //console.log('current date change - '+ evt)
-    //let currentDate = date;
-    //let firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
-    //let lastDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
-  
+    
     let dateFrom = moment(date).format('YYYY-MM-DD');
     let dateTo = dateFrom; //moment(lastDay).format('YYYY-MM-DD');
 

@@ -23,7 +23,7 @@ export class SearchMedicPage {
     currentPage: any = 1;
     lastPage:any = 1;
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public medicService: MedicServiceProvider, public formBuilder: FormBuilder, public geolocation: Geolocation) {
-       this.medicService = medicService;
+      
        this.navCtrl = navCtrl;
        this.medics = [];
        this.cantones = [];
