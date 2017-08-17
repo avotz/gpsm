@@ -5,15 +5,15 @@ import {SERVER_URL} from '../config';
 
 
 @Injectable()
-export class PatientServiceProvider {
+export class AppointmentServiceProvider {
 
   constructor(public http: Http) {
-    console.log('Hello PatientServiceProvider Provider');
+    console.log('Hello AppointmentServiceProvider Provider');
     this.http = http;
   }
 
   
-   register(form){
+   save(appointment){
        
         let headers = new Headers({'Accept': 'application/json',
                    'Authorization': 'Bearer '+ window.localStorage.getItem('token')}),
@@ -22,13 +22,34 @@ export class PatientServiceProvider {
 
        
       
-        return this.http.post(SERVER_URL + '/api/patient/register', form, options)
+        return this.http.post(SERVER_URL + '/api/appointments', appointment, options)
             .map(res => res.json())
            .toPromise();
 
            
              
     }
+  saveReminder(appointment_id, time){
+      
+    let params = {
+        reminder_time: time
+   
+      }
+
+       let headers = new Headers({'Accept': 'application/json',
+                  'Authorization': 'Bearer '+ window.localStorage.getItem('token')}),
+
+             options = new RequestOptions({headers: headers});
+
+      
+     
+       return this.http.post(SERVER_URL + '/api/appointments/'+ appointment_id +'/reminder', params, options)
+           .map(res => res.json())
+          .toPromise();
+
+          
+            
+   }
     findAllByUser(id) {
         
     
@@ -38,7 +59,7 @@ export class PatientServiceProvider {
               options = new RequestOptions({headers: headers});
 
 
-        return this.http.get(SERVER_URL + '/api/users/'+ id +'/patients', options)
+        return this.http.get(SERVER_URL + '/api/users/'+ id +'/appointments', options)
             .map(res => res.json())
             .toPromise();
 

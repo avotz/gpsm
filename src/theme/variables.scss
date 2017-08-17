@@ -103,4 +103,11 @@ $colors: (
    .bar-button-default-md{
    	 color: white;
    }
+
+}
+.mytoast.error .toast-wrapper{
+  background-color: map-get($colors, danger);
+}
+.mytoast.success .toast-wrapper{
+  background-color: map-get($colors, secondary);
 }

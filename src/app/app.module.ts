@@ -20,10 +20,11 @@ import { RegisterPatientPage } from '../pages/register-patient/register-patient'
 import { SearchMedicPage } from '../pages/search-medic/search-medic';
 import { MedicDetailPage } from '../pages/medic-detail/medic-detail';
 import { MedicCalendarPage } from '../pages/medic-calendar/medic-calendar';
+import { ModalReservationPage } from '../pages/medic-calendar/modal-reservation';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { PatientServiceProvider } from '../providers/patient-service/patient-service';
 import { MedicServiceProvider } from '../providers/medic-service/medic-service';
-
+import { AppointmentServiceProvider } from '../providers/appointment-service/appointment-service';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { MedicServiceProvider } from '../providers/medic-service/medic-service';
     RegisterPatientPage,
     SearchMedicPage,
     MedicDetailPage,
-    MedicCalendarPage
+    MedicCalendarPage,
+    ModalReservationPage
   ],
   imports: [
     BrowserModule,
@@ -57,7 +59,8 @@ import { MedicServiceProvider } from '../providers/medic-service/medic-service';
     RegisterPatientPage,
     SearchMedicPage,
     MedicDetailPage,
-    MedicCalendarPage
+    MedicCalendarPage,
+    ModalReservationPage
 
   ],
   providers: [
@@ -69,7 +72,8 @@ import { MedicServiceProvider } from '../providers/medic-service/medic-service';
     GooglePlus,
     AuthServiceProvider,
     PatientServiceProvider,
-    MedicServiceProvider
+    MedicServiceProvider,
+    AppointmentServiceProvider
   ]
 })
 export class AppModule {}

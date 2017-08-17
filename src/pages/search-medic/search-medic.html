@@ -7,7 +7,7 @@
     </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
     <form [formGroup]="medicSearchForm" >
 
         <ion-searchbar formControlName="q"></ion-searchbar>
@@ -66,11 +66,12 @@
                         Limpiar
                     </a>
                 </ion-item>
+                <button ion-button type="submit" (click)="onSearch()" full color="verde">
+                        Buscar
+                </button>
             </ion-card-content>
         </ion-card>
-        <button ion-button type="submit" (click)="onSearch()" full color="verde">
-            Buscar
-        </button>
+        
     </form>
     <ion-list>
         <div *ngIf="!medics.length > 0 && searchKey" class="errors">
