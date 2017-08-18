@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Platform, NavController, NavParams, ModalController, ViewController, ToastController, LoadingController } from 'ionic-angular';
+import { Platform, NavParams, ViewController, ToastController, LoadingController } from 'ionic-angular';
 import {PatientServiceProvider} from '../../providers/patient-service/patient-service';
 import {AppointmentServiceProvider} from '../../providers/appointment-service/appointment-service';
 import moment from 'moment'
@@ -10,6 +10,9 @@ import moment from 'moment'
 export class ModalReservationPage {
   
   appointment: any;
+  clinic: any;
+  medic: any;
+  reminder: any;
   authUser: any;
   patients: any[] = [];
   patientSelected: any;
@@ -17,7 +20,11 @@ export class ModalReservationPage {
   reminder_time: string = "02:00:00";
   isWaiting: boolean = null;
   constructor(public platform: Platform, public navParams: NavParams, public viewCtrl: ViewController,public toastCtrl: ToastController, public patientService: PatientServiceProvider, public appointmentService: AppointmentServiceProvider, public loadingCtrl: LoadingController) {
+    
     this.appointment = this.navParams.data;
+    this.medic = this.appointment.medic;
+    this.clinic = this.appointment.office;
+
     this.authUser = JSON.parse(window.localStorage.getItem('auth_user'));
     
     this.getPatientsFromUser();
@@ -59,7 +66,7 @@ export class ModalReservationPage {
             duration: 3000
         });
         toast.present(toast);
-
+        this.reminder = data.id
         this.isWaiting = null;
 
       })

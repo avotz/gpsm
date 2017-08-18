@@ -5,7 +5,12 @@ modal-reservation {
         justify-content: start;
     }
     .loading{
-        margin-top: 10px;
-        margin-left: 1rem;
+        /*margin-top: 10px;
+        margin-left: 1rem;*/
+        text-align: center
+    }
+    ion-card-header{
+        background: map-get($colors, secondary);
+        color: white !important;
     }
 }

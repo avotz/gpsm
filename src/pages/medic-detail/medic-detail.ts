@@ -29,8 +29,8 @@ export class MedicDetailPage {
    openCalendar(medic, clinic) {
    
     let calendarOptions = {
-      medic_id: medic.id,
-      clinic_id: clinic.id
+      medic: medic,
+      clinic: clinic
       
     }
 

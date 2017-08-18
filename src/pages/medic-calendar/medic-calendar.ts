@@ -8,39 +8,42 @@ import moment from 'moment'
   templateUrl: 'medic-calendar.html',
 })
 export class MedicCalendarPage {
-   //@ViewChild(CalendarComponent) myCalendar:CalendarComponent;
+  
   params:any;
   calendar : any;
   eventSource: any[] = [];
   schedules: any[] = [];
   appointments: any[] = [];
   loader: any;
+  authUser: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public medicService: MedicServiceProvider, public modalCtrl: ModalController, public loadingCtrl: LoadingController) {
-      this.params = this.navParams.data;
-      this.calendar = {
+
+    this.authUser = JSON.parse(window.localStorage.getItem('auth_user'));
+    this.params = this.navParams.data;
+    this.calendar = {
         currentDate:new Date(),
         mode: 'month'
-      }
-      
-     this.loader = this.loadingCtrl.create({
-      content: "Espere por favor...",
-      
-    });
-
-   
-     
-
+    } 
     
   }
+  
+  markDisabled (date){
+      
+      var current =  moment().format("YYYY-MM-DD");
+      var dateCal = moment(date).format("YYYY-MM-DD");
+      return moment(dateCal).isBefore(current) //dateCal < current;
+  }
+
   loadAppointments (date_from, date_to) {
+  
     let loader = this.loadingCtrl.create({
       content: "Espere por favor...",
-      //duration: 3000
+     
     });
 
-     loader.present();
+    loader.present();
 
-    this.medicService.findAppointments(this.params.medic_id, this.params.clinic_id, date_from, date_to)
+    this.medicService.findAppointments(this.params.medic.id, this.params.clinic.id, date_from, date_to)
     .then(data => {
         this.appointments = [];
 
@@ -57,11 +60,10 @@ export class MedicCalendarPage {
     .catch(error => alert(JSON.stringify(error)));
 
   }
+
   loadSchedules (date_from, date_to, loader) {
     
-  
-    
-    this.medicService.findSchedules(this.params.medic_id, this.params.clinic_id, date_from, date_to)
+    this.medicService.findSchedules(this.params.medic.id, this.params.clinic.id, date_from, date_to)
     .then(data => {
        
         data.forEach(schedule => {
@@ -74,14 +76,17 @@ export class MedicCalendarPage {
           let startEvent;
           let endEvent;
           let reserved;
-          
+          let reservedType;
           for (var i = 0; i < intervals.length; i++) {
             
             startEvent = moment(schedule.start).format("YYYY-MM-DD") +'T'+ intervals[i]+':00';
             endEvent = moment(schedule.start).format("YYYY-MM-DD") +'T'+ intervals[i+1]+':00';
-
-            if(this.isReserved(startEvent, endEvent)){
-              title = 'No Disponible';
+            reservedType = this.isReserved(startEvent, endEvent);
+            if(reservedType){
+              if(reservedType == 1)
+                title = 'No Disponible';
+              else 
+                title = 'Reservado';
               reserved = 1;
              } else {
               title = 'Disponible';
@@ -98,8 +103,10 @@ export class MedicCalendarPage {
                 end: endEvent,
                 allDay: false,
                 reserved: reserved,
-                office_id: this.params.clinic_id,
-                medic_id: this.params.medic_id
+                office_id: this.params.clinic.id,
+                medic_id: this.params.medic.id,
+                office: this.params.clinic,
+                medic: this.params.medic
 
             }
 
@@ -120,11 +127,15 @@ export class MedicCalendarPage {
   }
 
   isReserved(startSchedule, endSchedule){
-    let res = false;
+    let res = 0;
     for (var j = 0; j < this.appointments.length; j++) {
       
       if (this.appointments[j].end > startSchedule && this.appointments[j].start < endSchedule){
-          res = true;
+
+          if(this.appointments[j].created_by == this.authUser.id) //si fue el usuario logueado que creo la cita cambia el titulo a reservado
+            res = 2;
+          else /// se pone titulo en no disponible
+            res = 1
         }
 
     }
@@ -141,29 +152,32 @@ export class MedicCalendarPage {
      let intervalsPerHour = 60 / intervalLength;
      let milisecsPerHour = 60 * 60 * 1000;
     
-    var max = (Math.abs(until-from) / milisecsPerHour)* intervalsPerHour;
+     let max = (Math.abs(until-from) / milisecsPerHour)* intervalsPerHour;
            
-    var time = new Date(from);
-    var intervals = [];
-    for(var i = 0; i <= max; i++){
+     let time = new Date(from);
+     let intervals = [];
+     for(let i = 0; i <= max; i++){
         //doubleZeros just adds a zero in front of the value if it's smaller than 10.
-        var hour = this.doubleZeros(time.getHours());
-        var minute = this.doubleZeros(time.getMinutes());
+        let hour = this.doubleZeros(time.getHours());
+        let minute = this.doubleZeros(time.getMinutes());
         intervals.push(hour+":"+minute);
         time.setMinutes(time.getMinutes()+intervalLength);
-    }
+     }
     return intervals;
-}
+  }
 
 
-doubleZeros(item){
+  doubleZeros(item){
 
-  return (item < 10 ) ? '0'+ item : item;
-}
+    return (item < 10 ) ? '0'+ item : item;
+  }
 
   onEventSelected (evt){
     console.log(evt)
     if(evt.reserved) return
+    let current = new Date();
+    
+    if(evt.startTime < current) return 
     
     let modal = this.modalCtrl.create(ModalReservationPage, evt);
     modal.onDidDismiss(data => {
@@ -174,14 +188,9 @@ doubleZeros(item){
     });
     modal.present();
   }
-  onViewTitleChanged (evt){
-
-  }
-  onTimeSelected (evt){
-   // console.log(evt.selectedTime)
-  }
+ 
   onCurrentDateChanged(date){
-    
+
     let dateFrom = moment(date).format('YYYY-MM-DD');
     let dateTo = dateFrom; //moment(lastDay).format('YYYY-MM-DD');
     
@@ -191,14 +200,6 @@ doubleZeros(item){
    
 
   }
-  onRangeChanged(evt){
-    console.log(evt);
-  }
-
-  
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad MedicCalendarPage');
-  }
+ 
 
 }
