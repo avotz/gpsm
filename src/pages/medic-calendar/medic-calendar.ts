@@ -83,11 +83,15 @@ export class MedicCalendarPage {
             endEvent = moment(schedule.start).format("YYYY-MM-DD") +'T'+ intervals[i+1]+':00';
             reservedType = this.isReserved(startEvent, endEvent);
             if(reservedType){
-              if(reservedType == 1)
+              if(reservedType == 1){
                 title = 'No Disponible';
-              else 
+                reserved = 1;
+              }
+              else {
                 title = 'Reservado';
-              reserved = 1;
+                reserved = 2;
+              }
+             
              } else {
               title = 'Disponible';
               reserved = 0;
@@ -174,10 +178,14 @@ export class MedicCalendarPage {
 
   onEventSelected (evt){
     console.log(evt)
-    if(evt.reserved) return
+    if(evt.reserved == 1) return
+
     let current = new Date();
     
     if(evt.startTime < current) return 
+
+    if(evt.reserved == 2)
+        evt.show = 1;
     
     let modal = this.modalCtrl.create(ModalReservationPage, evt);
     modal.onDidDismiss(data => {

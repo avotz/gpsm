@@ -29,6 +29,22 @@ export class PatientServiceProvider {
            
              
     }
+    update(patient_id, form){
+      
+     
+       let headers = new Headers({'Accept': 'application/json',
+       'Authorization': 'Bearer '+ window.localStorage.getItem('token')}),
+
+        options = new RequestOptions({headers: headers});
+       
+       return this.http.put(SERVER_URL + '/api/account/patients/'+ patient_id, form, options)
+           .map(res => res.json())
+          .toPromise();
+
+          
+            
+   }
+
     findAllByUser(id) {
         
     

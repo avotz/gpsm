@@ -9,6 +9,7 @@ import { GooglePlus } from '@ionic-native/google-plus';
 import {RlTagInputModule} from 'angular2-tag-input';
 import { NgCalendarModule  } from 'ionic2-calendar';
 import { Geolocation } from '@ionic-native/geolocation';
+import { SocialSharing } from '@ionic-native/social-sharing';
 //import { ReactiveFormsModule } from '@angular/forms';
 
 import { MyApp } from './app.component';
@@ -18,14 +19,20 @@ import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
 import { RegisterPatientPage } from '../pages/register-patient/register-patient';
 import { SearchMedicPage } from '../pages/search-medic/search-medic';
+import { SearchClinicPage } from '../pages/search-clinic/search-clinic';
 import { MedicDetailPage } from '../pages/medic-detail/medic-detail';
+import { ClinicDetailPage } from '../pages/clinic-detail/clinic-detail';
 import { MedicCalendarPage } from '../pages/medic-calendar/medic-calendar';
 import { ModalReservationPage } from '../pages/medic-calendar/modal-reservation';
+import { AccountPage } from '../pages/account/account';
+import { PatientsPage } from '../pages/patients/patients';
+import { ModalPatientPage } from '../pages/patients/modal-patient';
+
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { PatientServiceProvider } from '../providers/patient-service/patient-service';
 import { MedicServiceProvider } from '../providers/medic-service/medic-service';
 import { AppointmentServiceProvider } from '../providers/appointment-service/appointment-service';
-
+import { ClinicServiceProvider } from '../providers/clinic-service/clinic-service';
 
 @NgModule({
   declarations: [
@@ -36,9 +43,15 @@ import { AppointmentServiceProvider } from '../providers/appointment-service/app
     RegisterPage,
     RegisterPatientPage,
     SearchMedicPage,
+    SearchClinicPage,
     MedicDetailPage,
+    ClinicDetailPage,
     MedicCalendarPage,
-    ModalReservationPage
+    ModalReservationPage,
+    AccountPage,
+    PatientsPage,
+    ModalPatientPage
+    
   ],
   imports: [
     BrowserModule,
@@ -46,6 +59,7 @@ import { AppointmentServiceProvider } from '../providers/appointment-service/app
     HttpModule,
     RlTagInputModule,
     NgCalendarModule
+    
     
 
   ],
@@ -58,9 +72,14 @@ import { AppointmentServiceProvider } from '../providers/appointment-service/app
     RegisterPage,
     RegisterPatientPage,
     SearchMedicPage,
+    SearchClinicPage,
     MedicDetailPage,
+    ClinicDetailPage,
     MedicCalendarPage,
-    ModalReservationPage
+    ModalReservationPage,
+    AccountPage,
+    PatientsPage,
+    ModalPatientPage
 
   ],
   providers: [
@@ -74,7 +93,10 @@ import { AppointmentServiceProvider } from '../providers/appointment-service/app
     AuthServiceProvider,
     PatientServiceProvider,
     MedicServiceProvider,
-    AppointmentServiceProvider
+    ClinicServiceProvider,
+    AppointmentServiceProvider,
+    SocialSharing
+    
   ]
 })
 export class AppModule {}

@@ -46,6 +46,7 @@ export class AuthServiceProvider {
     }
     register(form){
        
+        
         /*let postDataRegister = {
           name: form.name,
           email: form.email,
@@ -60,6 +61,21 @@ export class AuthServiceProvider {
            
              
     }
+    update(form){
+      
+     
+       let headers = new Headers({'Accept': 'application/json',
+       'Authorization': 'Bearer '+ window.localStorage.getItem('token')}),
+
+        options = new RequestOptions({headers: headers});
+       
+       return this.http.put(SERVER_URL + '/api/account/edit', form, options)
+           .map(res => res.json())
+          .toPromise();
+
+          
+            
+   }
     findAll() {
         
       

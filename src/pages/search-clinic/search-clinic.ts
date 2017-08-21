@@ -2,47 +2,45 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Geolocation } from '@ionic-native/geolocation';
-import { MedicServiceProvider } from '../../providers/medic-service/medic-service';
+import { ClinicServiceProvider } from '../../providers/clinic-service/clinic-service';
 import { provinces } from '../../providers/provinces';
 import {SERVER_URL} from '../../providers/config';
-import {MedicDetailPage} from '../medic-detail/medic-detail';
+import {ClinicDetailPage} from '../clinic-detail/clinic-detail';
 //import { SearchValidator } from '../../validators/search';
 @Component({
-  selector: 'page-search-medic',
-  templateUrl: 'search-medic.html',
+  selector: 'page-search-clinic',
+  templateUrl: 'search-clinic.html',
 })
-export class SearchMedicPage {
+export class SearchClinicPage {
     serverUrl: String = SERVER_URL;
-    medics: Array<any>;
+    clinics: Array<any>;
     searchKey: number = 0;
-    medicSearchForm: FormGroup;
+    clinicSearchForm: FormGroup;
     submitAttempt: boolean = false;
     cantones:Array<any>;
     districts:Array<any>;
-    specialities:Array<any>;
     currentPage: any = 1;
     lastPage:any = 1;
     shownGroup = null;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public medicService: MedicServiceProvider, public formBuilder: FormBuilder, public geolocation: Geolocation) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public clinicService: ClinicServiceProvider, public formBuilder: FormBuilder, public geolocation: Geolocation) {
       
        this.navCtrl = navCtrl;
-       this.medics = [];
+       this.clinics = [];
        this.cantones = [];
        this.districts = [];
        this.createForm();
        
-      this.loadSpecialities();
+      
 
 
 
   }
   createForm(){
-    this.medicSearchForm = this.formBuilder.group({
+    this.clinicSearchForm = this.formBuilder.group({
       q: ['',Validators.required],
       province: [''],
       canton: [''],
       district: [''],
-      speciality:[''],
       lat:[''],
       lon:[''],
       page:[1]
@@ -62,22 +60,21 @@ export class SearchMedicPage {
       }
 
 
-      this.medicSearchForm.get('page').setValue(this.currentPage + 1)
+      this.clinicSearchForm.get('page').setValue(this.currentPage + 1)
     
-          this.medicService.findAll(this.medicSearchForm.value)
+          this.clinicService.findAll(this.clinicSearchForm.value)
           .then(data => {
             
     
               data.data.forEach(medic => {
-                this.medics.push(medic);
+                this.clinics.push(medic);
               });
               
-              this.medicSearchForm.get('page').setValue(data.currentPage)
+              this.clinicSearchForm.get('page').setValue(data.currentPage)
               this.currentPage = data.current_page;
               this.lastPage = data.last_page;
-              this.searchKey = 1;
-             // this.clearForm(this.medicSearchForm);
-
+             // this.clearForm(this.clinicSearchForm);
+             this.searchKey = 1;
              console.log('Async operation has ended');
              infiniteScroll.complete();
           })
@@ -94,10 +91,10 @@ export class SearchMedicPage {
            
            console.log(position.coords.latitude, position.coords.longitude);
       
-            //this.medicSearchForm.value.lat = position.coords.latitude
-            //this.medicSearchForm.value.lon = position.coords.longitude
-            this.medicSearchForm.get('lat').setValue(position.coords.latitude)
-            this.medicSearchForm.get('lon').setValue(position.coords.latitude)
+            //this.clinicSearchForm.value.lat = position.coords.latitude
+            //this.clinicSearchForm.value.lon = position.coords.longitude
+            this.clinicSearchForm.get('lat').setValue(position.coords.latitude)
+            this.clinicSearchForm.get('lon').setValue(position.coords.latitude)
     
             this.onSearch();
       
@@ -105,8 +102,8 @@ export class SearchMedicPage {
            console.log(err);
          });
   }
-  openMedicDetail(medic: any) {
-        this.navCtrl.push(MedicDetailPage, medic);
+  openClinicDetail(clinic: any) {
+        this.navCtrl.push(ClinicDetailPage, clinic);
   }
   onChangeProvince (evt) {
     console.log(provinces)
@@ -115,16 +112,6 @@ export class SearchMedicPage {
   onChangeCanton (evt) {
     console.log(evt)
     this.loadDistricts(evt);
-  }
-  loadSpecialities () {
-
-      this.medicService.getSpecialities().then(data => {
-        console.log(data)
-        this.specialities = data;
-        
-    })
-    .catch(error => alert(JSON.stringify(error)));
-
   }
   loadCantones(prov) {
     provinces.forEach(provincia => {
@@ -149,12 +136,12 @@ export class SearchMedicPage {
   }
   onSearch(){
     this.submitAttempt = true;
-    this.medicSearchForm.get('page').setValue(1);
+    this.clinicSearchForm.get('page').setValue(1);
     this.currentPage = 1;
     this.lastPage = 1;
-    if(this.medicSearchForm.valid){
+    if(this.clinicSearchForm.valid){
 
-      this.fetchMedics(this.medicSearchForm.value) 
+      this.fetchClinics(this.clinicSearchForm.value) 
     }
   }
   onInput(event) {
@@ -163,11 +150,11 @@ export class SearchMedicPage {
 
   onCancel(event) {
         //this.findAll();
-        this.medics = [];
+        this.clinics = [];
   }
 
-  fetchMedics(search) {
-        this.medics = [];
+  fetchClinics(search) {
+        this.clinics = [];
         let loader = this.loadingCtrl.create({
           content: "Buscando. Espere por favor...",
           //duration: 3000
@@ -179,17 +166,17 @@ export class SearchMedicPage {
        
   
         
-          this.medicService.findAll(search)
+          this.clinicService.findAll(search)
                 .then(data => {
                     loader.dismiss();
 
-                    this.medics = data.data;
-                    this.medicSearchForm.get('page').setValue(data.current_page)
+                    this.clinics = data.data;
+                    this.clinicSearchForm.get('page').setValue(data.current_page)
                     this.currentPage = data.current_page;
                     this.lastPage = data.last_page;
-                   // this.clearForm(this.medicSearchForm);
-                    this.searchKey = 1;
+                   // this.clearForm(this.clinicSearchForm);
                     this.submitAttempt = false;
+                    this.searchKey = 1;
                 })
                 .catch(error => {
                   console.log(JSON.stringify(error))
@@ -203,12 +190,10 @@ export class SearchMedicPage {
     form.get('province').setValue('')
     form.get('canton').setValue('')
     form.get('district').setValue('')
-    form.get('speciality').setValue('')
     form.get('lat').setValue('')
     form.get('lon').setValue('')
     form.get('page').setValue(1)
     this.searchKey = 0;
-  
   }
   toggleGroup(group) {
       if (this.isGroupShown(group)) {
@@ -225,62 +210,44 @@ export class SearchMedicPage {
 
    
   ionViewDidLoad() {
-    console.log('ionViewDidLoad SearchMedicPage');
+    console.log('ionViewDidLoad SearchClinicPage');
   }
   ngOnInit() {
    
     console.log('on init')
-    this.medicSearchForm.get('province').valueChanges.subscribe(
+    this.clinicSearchForm.get('province').valueChanges.subscribe(
       
           (province: string) => {
             
               if (province != '') {
       
-                  this.medicSearchForm.get('q').setValidators([]);
+                  this.clinicSearchForm.get('q').setValidators([]);
       
               }else{
                 
-                this.medicSearchForm.get('q').setValidators([Validators.required]);
+                this.clinicSearchForm.get('q').setValidators([Validators.required]);
               }
              
-              this.medicSearchForm.get('q').updateValueAndValidity();
+              this.clinicSearchForm.get('q').updateValueAndValidity();
       
           }
       
       )
 
-    this.medicSearchForm.get('speciality').valueChanges.subscribe(
-        
-            (speciality: string) => {
-              
-                if (speciality != '') {
-        
-                    this.medicSearchForm.get('q').setValidators([]);
-        
-                }else{
-                  
-                  this.medicSearchForm.get('q').setValidators([Validators.required]);
-                }
-               
-                this.medicSearchForm.get('q').updateValueAndValidity();
-        
-            }
-        
-        )
-        this.medicSearchForm.get('lat').valueChanges.subscribe(
+        this.clinicSearchForm.get('lat').valueChanges.subscribe(
           
               (lat: string) => {
                  
                   if (lat != '') {
           
-                      this.medicSearchForm.get('q').setValidators([]);
+                      this.clinicSearchForm.get('q').setValidators([]);
           
                   }else{
                     
-                    this.medicSearchForm.get('q').setValidators([Validators.required]);
+                    this.clinicSearchForm.get('q').setValidators([Validators.required]);
                   }
                  
-                  this.medicSearchForm.get('q').updateValueAndValidity();
+                  this.clinicSearchForm.get('q').updateValueAndValidity();
           
               }
           

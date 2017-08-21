@@ -1,0 +1,127 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>
+            Nuevo Paciente
+        </ion-title>
+        <ion-buttons start>
+            <button ion-button (click)="dismiss()">
+          <span ion-text color="primary" showWhen="ios">Cancel</span>
+          <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+        </button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+    <p *ngIf="errorSave" style="color: #ea6153;">{{ errorSave }}</p>
+      <form [formGroup]="patientForm">
+        <ion-row>
+          <ion-col>
+            <ion-list inset>
+              
+              <ion-item>
+                <!-- <ion-input type="text" placeholder="Nombre" name="name" [(ngModel)]="name" required></ion-input> -->
+                <ion-input formControlName="first_name" type="text" [class.invalid]="!patientForm.controls.first_name.valid && (patientForm.controls.first_name.dirty || submitAttempt)" placeholder="Nombre"></ion-input>
+  
+              </ion-item>
+               <ion-item *ngIf="!patientForm.controls.first_name.valid  && (patientForm.controls.first_name.dirty || submitAttempt)">
+                  <p>Please enter a valid first_name.</p>
+              </ion-item>
+  
+               <ion-item>
+                <!-- <ion-input type="text" placeholder="Nombre" name="name" [(ngModel)]="name" required></ion-input> -->
+                <ion-input formControlName="last_name" type="text" [class.invalid]="!patientForm.controls.last_name.valid && (patientForm.controls.last_name.dirty || submitAttempt)" placeholder="Apellidos"></ion-input>
+  
+              </ion-item>
+              <ion-item *ngIf="!patientForm.controls.last_name.valid  && (patientForm.controls.last_name.dirty || submitAttempt)">
+                  <p>Please enter a valid last_name.</p>
+              </ion-item>
+  
+              <ion-item>
+                
+                <ion-datetime displayFormat="MMM DD, YYYY" formControlName="birth_date" [class.invalid]="!patientForm.controls.birth_date.valid && (patientForm.controls.birth_date.dirty || submitAttempt)" placeholder="Fecha de Nacimiento"></ion-datetime>
+              </ion-item>
+              <ion-item *ngIf="!patientForm.controls.birth_date.valid  && (patientForm.controls.birth_date.dirty || submitAttempt)">
+                  <p>Please enter a valid birth_date.</p>
+              </ion-item>
+  
+              <ion-item>
+                
+              <ion-select formControlName="gender" [class.invalid]="!patientForm.controls.gender.valid && (patientForm.controls.gender.dirty || submitAttempt)" placeholder="Genero">
+                <ion-option value="f">Femenino</ion-option>
+                <ion-option value="m">Másculino</ion-option>
+              </ion-select>
+  
+              </ion-item>
+              <ion-item *ngIf="!patientForm.controls.gender.valid  && (patientForm.controls.gender.dirty || submitAttempt)">
+                  <p>Please enter a valid Gender.</p>
+              </ion-item>
+  
+               <ion-item>
+               
+                <ion-input formControlName="phone" type="text" [class.invalid]="!patientForm.controls.phone.valid && (patientForm.controls.phone.dirty || submitAttempt)" placeholder="Teléfono (Celular)"></ion-input>
+  
+              </ion-item>
+              <ion-item *ngIf="!patientForm.controls.phone.valid  && (patientForm.controls.phone.dirty || submitAttempt)">
+                  <p>Please enter a valid phone.</p>
+              </ion-item>
+  
+  
+              <ion-item>
+               
+                <ion-input formControlName="email" type="email" [class.invalid]="!patientForm.controls.email.valid && (patientForm.controls.email.dirty || submitAttempt)" email="true" placeholder="Email"></ion-input>
+              </ion-item>
+               <ion-item *ngIf="!patientForm.controls.email.valid  && (patientForm.controls.email.dirty || submitAttempt)">
+                  <p>Please enter a valid email.</p>
+              </ion-item>
+              
+              <ion-item>
+                <!-- <ion-input type="password" placeholder="Contraseña" name="password" [(ngModel)]="password" required></ion-input> -->
+                <ion-input formControlName="address" type="text" [class.invalid]="!patientForm.controls.address.valid && (patientForm.controls.address.dirty || submitAttempt)" placeholder="Dirección"></ion-input>
+              </ion-item>
+               <ion-item *ngIf="!patientForm.controls.address.valid  && (patientForm.controls.address.dirty || submitAttempt)">
+                  <p>Please enter a valid address.</p>
+              </ion-item>
+              
+              <ion-item>
+                 
+              <ion-select formControlName="province" [class.invalid]="!patientForm.controls.province.valid && (patientForm.controls.province.dirty || submitAttempt)" placeholder="Provincia">
+                <ion-option value="Guanacaste">Guanacaste</ion-option>
+                <ion-option value="San Jose">San Jose</ion-option>
+                <ion-option value="Heredia">Heredia</ion-option>
+                <ion-option value="Limon">Limon</ion-option>
+                <ion-option value="Cartago">Cartago</ion-option>
+                <ion-option value="Puntarenas">Puntarenas</ion-option>
+                <ion-option value="Alajuela">Alajuela</ion-option>
+              </ion-select>
+            </ion-item>
+  
+             <ion-item>
+              
+                <ion-input formControlName="city" type="text" placeholder="Ciudad"></ion-input>
+            </ion-item>
+            <ion-item>
+               <!-- <rl-tag-input formControlName="conditions" placeholder="Testing placeholder"></rl-tag-input> -->
+               <!-- <tags-input formControlName="conditions"></tags-input> -->
+                 <ion-input formControlName="conditions" type="text" placeholder="Padecimientos"></ion-input> 
+            </ion-item>
+               
+               
+              
+            </ion-list>
+          </ion-col>
+        </ion-row>
+        
+        <ion-row>
+          <ion-col class="signup-col">
+            <button ion-button class="submit-btn" full (click)="savePatient()">Guardar</button>
+           
+          </ion-col>
+        </ion-row>
+         
+      </form>
+      <div class="loading">
+        <ion-spinner *ngIf="isWaiting"></ion-spinner>
+      </div>
+      
+  </ion-content>

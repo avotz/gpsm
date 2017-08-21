@@ -1,0 +1,13 @@
+modal-patient {
+    .buttons{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: start;
+    }
+    .loading{
+        /*margin-top: 10px;
+        margin-left: 1rem;*/
+        text-align: center
+    }
+    
+}

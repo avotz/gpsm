@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-navbar>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>Tus Pacientes</ion-title>
+      <ion-buttons end>
+        <button ion-button icon-only color="royal" (click)="newPatient()">
+          <ion-icon name="person-add"></ion-icon>
+        </button>
+      </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+
+
+<ion-content padding>
+  <ion-list>
+      <ion-item *ngIf="!patients.length > 0" class="errors">
+          <span>No se encontraron Pacientes</span>
+      </ion-item>
+      <ion-item *ngFor="let patient of patients">
+        
+              <ion-avatar item-start>
+                  <img src="{{ serverUrl}}{{ patient.photo }}"/>
+              </ion-avatar>
+              <h2>{{patient.fullname}}</h2>
+
+          <button ion-button clear item-end (click)="openPatientDetail(patient)">Ver</button>
+      </ion-item>
+      
+
+  </ion-list>
+</ion-content>

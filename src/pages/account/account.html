@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-navbar>
+      <button ion-button menuToggle>
+    <ion-icon name="menu"></ion-icon>
+  </button>
+      <ion-title>Cuenta</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<p *ngIf="submitAttempt" style="color: #ea6153;">Por favor revisa los campos con errores.</p>
+
+<ion-content padding>
+
+	<form [formGroup]="accountForm">
+      <ion-row>
+        <ion-col>
+          <ion-list inset>
+            
+            <ion-item>
+              <!-- <ion-input type="text" placeholder="Nombre" name="name" [(ngModel)]="name" required></ion-input> -->
+              <ion-input formControlName="name" type="text" [class.invalid]="!accountForm.controls.name.valid && (accountForm.controls.name.dirty || submitAttempt)" placeholder="Nombre"></ion-input>
+
+            </ion-item>
+             <ion-item *ngIf="!accountForm.controls.name.valid  && (accountForm.controls.name.dirty || submitAttempt)">
+                <p>Por favor ingrese un nombre válido</p>
+            </ion-item>
+
+            <ion-item>
+              <!-- <ion-input type="text" placeholder="Email" name="email" [(ngModel)]="email" required></ion-input> -->
+              <ion-input formControlName="email" type="email" [class.invalid]="!accountForm.controls.email.valid && (accountForm.controls.email.dirty || submitAttempt)" email="true" placeholder="Email"></ion-input>
+            </ion-item>
+             <ion-item *ngIf="!accountForm.controls.email.valid  && (accountForm.controls.email.dirty || submitAttempt)">
+                <p>Por favor ingrese un email válido</p>
+            </ion-item>
+            
+            <ion-item>
+              <!-- <ion-input type="password" placeholder="Contraseña" name="password" [(ngModel)]="password" required></ion-input> -->
+              <ion-input formControlName="password" type="password" [class.invalid]="!accountForm.controls.password.valid && (accountForm.controls.password.dirty || submitAttempt)" placeholder="Cambiar Contraseña"></ion-input>
+            </ion-item>
+            <ion-item *ngIf="!accountForm.controls.password.valid  && (accountForm.controls.password.dirty || submitAttempt)">
+              <p>Minimo 6 caracteres.</p>
+            </ion-item>
+             
+            
+            
+          </ion-list>
+        </ion-col>
+      </ion-row>
+      
+      <ion-row>
+        <ion-col class="signup-col">
+          <button ion-button class="submit-btn" full (click)="update()">Guardar</button>
+         
+        </ion-col>
+      </ion-row>
+       
+    </form>
+    
+</ion-content>

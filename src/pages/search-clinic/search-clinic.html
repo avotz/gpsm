@@ -3,12 +3,12 @@
         <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-        <ion-title>Buscar Médico</ion-title>
+        <ion-title>Buscar Clínica</ion-title>
     </ion-navbar>
 </ion-header>
 
 <ion-content>
-    <form [formGroup]="medicSearchForm" >
+    <form [formGroup]="clinicSearchForm" >
 
         <ion-searchbar formControlName="q"></ion-searchbar>
         <!-- <ion-item>
@@ -22,13 +22,7 @@
             </ion-card-header>
             <ion-card-content >
                 <div class="optional-fields" *ngIf="isGroupShown(1)">
-                    <ion-item>
-                        <ion-label>Especialidad</ion-label>
-                        <ion-select formControlName="speciality">
-                            <ion-option value=""></ion-option>
-                            <ion-option *ngFor="let speciality of specialities" value="{{speciality.id}}">{{speciality.name}}</ion-option>
-                        </ion-select>
-                    </ion-item>
+                   
                     <ion-item>
                         <ion-label>Provincia</ion-label>
                         <ion-select formControlName="province" (ionChange)="onChangeProvince($event)" >
@@ -77,18 +71,17 @@
         
     </form>
     <ion-list>
-            <ion-item *ngIf="!medics.length > 0 && searchKey" class="errors">
-                <span>No se encontraron Médicos</span>
-            </ion-item>
-        <ion-item *ngFor="let medic of medics">
+        <ion-item *ngIf="!clinics.length > 0 && searchKey" class="errors">
+            <span>No se encontraron Clínicas</span>
+        </ion-item>
+        <ion-item *ngFor="let clinic of clinics">
           
-                <ion-avatar item-start>
-                    <img src="{{ serverUrl}}{{ medic.photo }}"/>
-                </ion-avatar>
-                <h2>{{medic.name}}</h2>
-                <p *ngIf="medic.specialities.length; else elseBlock"><span *ngFor="let speciality of medic.specialities">{{ speciality.name}}</span></p>
-                <ng-template #elseBlock><p>Médico General</p></ng-template>
-            <button ion-button clear item-end (click)="openMedicDetail(medic)">Ver</button>
+                <ion-icon name="home" item-start></ion-icon>
+                <h2>{{clinic.name}}</h2>
+                <p>{{clinic.address}}</p>
+               
+               
+            <button ion-button clear item-end (click)="openClinicDetail(clinic)">Ver</button>
         </ion-item>
         
 

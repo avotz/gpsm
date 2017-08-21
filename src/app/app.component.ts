@@ -8,6 +8,9 @@ import {GooglePlus } from '@ionic-native/google-plus';
 import { HomePage } from '../pages/home/home';
 import { LandingPage } from '../pages/landing/landing';
 import { SearchMedicPage } from '../pages/search-medic/search-medic';
+import { SearchClinicPage } from '../pages/search-clinic/search-clinic';
+import { AccountPage } from '../pages/account/account';
+import { PatientsPage } from '../pages/patients/patients';
 
 @Component({
   templateUrl: 'app.html'
@@ -29,8 +32,11 @@ export class MyApp {
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Home', component: HomePage },
-      { title: 'Buscar Médico', component: SearchMedicPage }
+      { title: 'Inicio', component: HomePage },
+      { title: 'Buscar Médico', component: SearchMedicPage },
+      { title: 'Buscar Clínica', component: SearchClinicPage },
+      { title: 'Pacientes', component: PatientsPage },
+      { title: 'Cuenta', component: AccountPage }
     ];
 
     this.checkPreviousAuthorization(); 

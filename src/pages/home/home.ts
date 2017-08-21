@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
 import { SearchMedicPage } from '../search-medic/search-medic';
+import { SearchClinicPage } from '../search-clinic/search-clinic';
 
 @Component({
   selector: 'page-home',
@@ -22,6 +23,13 @@ export class HomePage {
     //this.navCtrl.setRoot(SearchMedicPage);
 
   }
+
+  searchClinic () {
+    
+        this.navCtrl.push(SearchClinicPage)
+        //this.navCtrl.setRoot(SearchMedicPage);
+    
+      }
 
   
 

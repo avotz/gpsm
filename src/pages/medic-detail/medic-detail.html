@@ -14,7 +14,8 @@
         <ion-card-content>
             <img src="{{ serverUrl}}{{ medic.photo }}"/>
             <h2>{{medic.name}}</h2>
-            <h3>Médico</h3>
+            <h3 *ngIf="medic.specialities.length; else elseBlock"><span *ngFor="let speciality of medic.specialities">{{ speciality.name}}</span></h3>
+            <ng-template #elseBlock><h3>Médico General</h3></ng-template>
         </ion-card-content>
 
         <ion-list>
@@ -26,13 +27,14 @@
                     <ion-icon name="calendar"></ion-icon>
                 
                 </button>
-                <button ion-button round item-right (click)="share(medic)">
+                <button ion-button round item-right (click)="share(clinic)">
                     <ion-icon name="share"></ion-icon>
                 
                 </button>
             </ion-item>
           
         </ion-list>
+        
 
     </ion-card>
  

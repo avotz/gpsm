@@ -1,0 +1,48 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Clínica</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="clinic">
+    <ion-card>
+
+        <ion-card-content>
+            <img src="assets/img/clinic-icon.jpg" />
+            <h2>{{clinic.name}}</h2>
+            <h3>{{ clinic.address}}</h3>
+            <p>{{clinic.phone}}</p>
+            <button ion-button round item-right (click)="share(clinic)" color="light">
+                <ion-icon name="share"></ion-icon>
+            
+            </button>
+        </ion-card-content>
+
+        <ion-list>
+            <ion-item *ngFor="let medic of clinic.medics">
+                <ion-icon name="contact" item-left></ion-icon>
+                <p>{{medic.name}}</p>
+                <h2 *ngIf="medic.specialities.length; else elseBlock"><span *ngFor="let speciality of medic.specialities">{{ speciality.name}}</span></h2>
+                <ng-template #elseBlock><h3>Médico General</h3></ng-template>
+                <button ion-button round item-right (click)="openCalendar(medic, clinic)" color="danger">
+                    <ion-icon name="calendar"></ion-icon>
+                
+                </button>
+                <button ion-button round item-right (click)="openMedicDetail(medic)">
+                    <ion-icon name="list-box"></ion-icon>
+                
+                </button>
+            </ion-item>
+          
+        </ion-list>
+        <div class="loading">
+            <ion-spinner *ngIf="isWaiting"></ion-spinner>
+        </div>
+
+    </ion-card>
+ 
+</ion-content>

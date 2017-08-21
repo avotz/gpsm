@@ -21,7 +21,7 @@
         </ion-card-header>
         <ion-card-content>
            
-    
+           
                 <ion-item>
                     Medico: {{ medic.name }}
                 </ion-item>
@@ -37,10 +37,11 @@
                     <ion-icon name="calendar" item-left></ion-icon>
                     {{ parseDate(appointment.start) }}
                 </ion-item>
+           
 
            
             <div class="buttons">
-                <button ion-button (click)="saveAppointment()" color="danger" *ngIf="!appointment.id" disabled={{isWaiting}}>
+                <button ion-button (click)="saveAppointment()" color="danger" *ngIf="!appointment.id && !appointment.show" disabled={{isWaiting}}>
                             
                                 Reservar
                             </button>
