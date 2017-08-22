@@ -32,7 +32,8 @@ import { AccountPage } from '../pages/account/account';
 import { PatientsPage } from '../pages/patients/patients';
 import { ModalPatientPage } from '../pages/patients/modal-patient';
 import { ExpedientPage } from '../pages/expedient/expedient';
-
+import { TabPersonalPage } from '../pages/expedient/tab-personal';
+import { TabMedicoPage } from '../pages/expedient/tab-medico';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { PatientServiceProvider } from '../providers/patient-service/patient-service';
 import { MedicServiceProvider } from '../providers/medic-service/medic-service';
@@ -56,7 +57,9 @@ import { ClinicServiceProvider } from '../providers/clinic-service/clinic-servic
     AccountPage,
     PatientsPage,
     ModalPatientPage,
-    ExpedientPage
+    ExpedientPage,
+    TabPersonalPage,
+    TabMedicoPage
     
   ],
   imports: [
@@ -86,7 +89,9 @@ import { ClinicServiceProvider } from '../providers/clinic-service/clinic-servic
     AccountPage,
     PatientsPage,
     ModalPatientPage,
-    ExpedientPage
+    ExpedientPage,
+    TabPersonalPage,
+    TabMedicoPage
   ],
   providers: [
     StatusBar,

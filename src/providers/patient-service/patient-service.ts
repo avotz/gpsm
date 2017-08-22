@@ -213,6 +213,22 @@ export class PatientServiceProvider {
             
               
      }
+
+     getHistory(patient_id) {
+        
+    
+          let headers = new Headers({'Accept': 'application/json',
+                   'Authorization': 'Bearer '+ window.localStorage.getItem('token')}),
+
+              options = new RequestOptions({headers: headers});
+
+
+        return this.http.get(SERVER_URL + '/api/account/patients/'+ patient_id +'/history', options)
+            .map(res => res.json())
+            .toPromise();
+
+       
+    }
     update(patient_id, form){
       
      

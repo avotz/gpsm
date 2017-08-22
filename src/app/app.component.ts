@@ -11,6 +11,7 @@ import { SearchMedicPage } from '../pages/search-medic/search-medic';
 import { SearchClinicPage } from '../pages/search-clinic/search-clinic';
 import { AccountPage } from '../pages/account/account';
 import { PatientsPage } from '../pages/patients/patients';
+import { ExpedientPage } from '../pages/expedient/expedient';
 
 @Component({
   templateUrl: 'app.html'
@@ -35,6 +36,7 @@ export class MyApp {
       { title: 'Inicio', component: HomePage },
       { title: 'Buscar Médico', component: SearchMedicPage },
       { title: 'Buscar Clínica', component: SearchClinicPage },
+      { title: 'Mi Expediente', component: PatientsPage },
       { title: 'Pacientes', component: PatientsPage },
       { title: 'Cuenta', component: AccountPage }
     ];
