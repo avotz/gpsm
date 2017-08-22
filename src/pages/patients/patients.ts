@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController, ModalController } from 'ionic-angular';
 import {PatientServiceProvider} from '../../providers/patient-service/patient-service';
 import { ModalPatientPage } from './modal-patient';
+import { ExpedientPage } from '../expedient/expedient';
 import {SERVER_URL} from '../../providers/config';
 
 @Component({
@@ -35,6 +36,11 @@ export class PatientsPage {
     modal.present();
 
   }
+  openExpedient(patient){
+    
+    this.navCtrl.push(ExpedientPage, patient);
+  }
+
   openPatientDetail(patient){
 
     let modal = this.modalCtrl.create(ModalPatientPage, patient);

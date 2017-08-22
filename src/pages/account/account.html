@@ -10,7 +10,23 @@
 <p *ngIf="submitAttempt" style="color: #ea6153;">Por favor revisa los campos con errores.</p>
 
 <ion-content padding>
-
+    <ion-card>
+        
+        <ion-card-content>
+            <img src="{{ serverUrl}}{{ user.photo }}" [hidden]="lastImage"/>
+            <img src="{{pathForImage(lastImage)}}" [hidden]="lastImage === null">
+            <ion-buttons>
+                <button ion-button icon-left (click)="presentActionSheet()" color="light">
+                  <ion-icon name="camera"></ion-icon>Seleccionar Imagen
+                </button>
+                <button ion-button icon-left (click)="uploadImage()" [disabled]="lastImage === null" color="light">
+                  <ion-icon name="cloud-upload"></ion-icon>Guardar Imagen
+                </button>
+              </ion-buttons>
+        </ion-card-content>
+    </ion-card>
+ 
+  
 	<form [formGroup]="accountForm">
       <ion-row>
         <ion-col>
@@ -56,4 +72,17 @@
        
     </form>
     
+    <!-- <h3 [hidden]="lastImage !== null">Selecciona una imagen para cambiar de foto</h3> -->
 </ion-content>
+<ion-footer>
+  <ion-toolbar color="primary">
+    <ion-buttons>
+      <button ion-button icon-left (click)="presentActionSheet()">
+        <ion-icon name="camera"></ion-icon>Seleccionar Imagen
+      </button>
+      <button ion-button icon-left (click)="uploadImage()" [disabled]="lastImage === null">
+        <ion-icon name="cloud-upload"></ion-icon>Guardar Imagen
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

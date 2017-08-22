@@ -1,9 +1,4 @@
-<!--
-  Generated template for the MedicCalendarPage page.
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
   <ion-navbar>
@@ -14,13 +9,12 @@
 
 
 <ion-content padding>
-    <h4>Selecciona el dia en que quieres reservar la cita</h4>
-    <calendar [eventSource]="eventSource"
-        [calendarMode]="calendar.mode"
-        [currentDate]="calendar.currentDate"
-        (onCurrentDateChanged)="onCurrentDateChanged($event)"
-        (onEventSelected)="onEventSelected($event)"
-        step="30"
-        [markDisabled]="markDisabled">
-      </calendar>
+  <div class="header-title">
+    <p>Selecciona el dia y la hora en que quieres reservar la cita</p>
+    <h4>{{ currentDate }}</h4>
+  </div>
+
+  <calendar [eventSource]="eventSource" [calendarMode]="calendar.mode" [currentDate]="calendar.currentDate" (onCurrentDateChanged)="onCurrentDateChanged($event)"
+    (onEventSelected)="onEventSelected($event)" step="30" [markDisabled]="markDisabled">
+  </calendar>
 </ion-content>

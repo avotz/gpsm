@@ -42,13 +42,13 @@ export class MedicDetailPage {
    share(clinic) {
         let url = `http://maps.google.com/?saddr=Current+Location&daddr=${clinic.lat},${clinic.lon}`
         let actionSheet: ActionSheet = this.actionSheetCtrl.create({
-            title: 'Compartir ubicación',
+            title: 'Ubicación de la Clínica',
             buttons: [
+               
                 {
-                    text: 'Twitter',
+                    text: 'Compartir Ubicación',
                     handler: () => {
-                        
-                        this.socialSharing.shareViaFacebook('Ubicación de la clinica', null, url).then(() => {
+                        this.socialSharing.share('Ubicación de la clínica','Ubicación de '+ clinic.name,null, url).then(() => {
                             // Success!
                           }).catch(() => {
                             // Error!
@@ -56,35 +56,20 @@ export class MedicDetailPage {
                     }
                 },
                 {
-                    text: 'Facebook',
-                    handler: () => console.log(url)
-                },
-                {
-                    text: 'Google+',
-                    handler: () => console.log(url)
-                },
-                {
-                    text: 'Correo',
-                    handler: () => console.log('share via email')
-                },
-                {
-                    text: 'Abrir en Waze',
-                    handler: () => console.log('share via Waze')
-                },
-                {
-                    text: 'Abrir en Maps',
+                    text: 'Abrir Ubicación',
                     handler: () => {
 
                         let destination = clinic.lat + ',' + clinic.lon;
                         
                         if(this.platform.is('ios')){
-                           // window.open('maps://?q=' + destination, '_system');
-                            window.open('maps:?daddr=' + destination, '_system');
+                            window.open('maps://?q=' + destination, '_system');
+                           // window.open('maps:?daddr=' + destination, '_system');
                             
                         } else {
-                            let label = encodeURI('My Label');
-                            //window.open('geo:0,0?q=' + destination + '(' + label + ')', '_system');
-                            window.open('geo:?daddr=' + destination + '(' + label + ')', '_system');
+                            let label = encodeURI('Ubicación de '+ clinic.name);
+                            window.open('geo:0,0?q=' + destination + '(' + label + ')', '_system');
+                            //window.open('geo:?daddr=' + destination + '(' + label + ')', '_system');
+                          
                             
                         }
 

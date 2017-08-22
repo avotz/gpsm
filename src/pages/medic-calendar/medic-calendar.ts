@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController, LoadingController } from 'ionic-angular';
+import { NavController, NavParams, ModalController, LoadingController, ToastController } from 'ionic-angular';
 import { MedicServiceProvider } from '../../providers/medic-service/medic-service';
 import { ModalReservationPage } from './modal-reservation';
 import moment from 'moment'
@@ -16,7 +16,8 @@ export class MedicCalendarPage {
   appointments: any[] = [];
   loader: any;
   authUser: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public medicService: MedicServiceProvider, public modalCtrl: ModalController, public loadingCtrl: LoadingController) {
+  currentDate: any;
+  constructor(public navCtrl: NavController, public navParams: NavParams, public medicService: MedicServiceProvider, public modalCtrl: ModalController, public loadingCtrl: LoadingController, public toastCtrl: ToastController) {
 
     this.authUser = JSON.parse(window.localStorage.getItem('auth_user'));
     this.params = this.navParams.data;
@@ -182,7 +183,15 @@ export class MedicCalendarPage {
 
     let current = new Date();
     
-    if(evt.startTime < current) return 
+    if(evt.startTime < current) {
+      let toast = this.toastCtrl.create({
+          message: 'No se puede reservar en horas pasadas',
+          cssClass: 'mytoast error',
+          duration: 3000
+      });
+      toast.present(toast);
+      return
+    } 
 
     if(evt.reserved == 2)
         evt.show = 1;
@@ -201,7 +210,7 @@ export class MedicCalendarPage {
 
     let dateFrom = moment(date).format('YYYY-MM-DD');
     let dateTo = dateFrom; //moment(lastDay).format('YYYY-MM-DD');
-    
+    this.currentDate = dateFrom;
 
     console.log(dateFrom +' - '+ dateTo)
      this.loadAppointments(dateFrom, dateTo);

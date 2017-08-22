@@ -29,6 +29,52 @@ export class PatientServiceProvider {
            
              
     }
+    savePressure(patient_id, form){
+        
+         let headers = new Headers({'Accept': 'application/json',
+                    'Authorization': 'Bearer '+ window.localStorage.getItem('token')}),
+ 
+               options = new RequestOptions({headers: headers});
+ 
+        
+       
+         return this.http.post(SERVER_URL + '/api/account/patients/'+ patient_id +'/pressures', form, options)
+             .map(res => res.json())
+            .toPromise();
+ 
+            
+              
+     }
+     getPressures(patient_id) {
+        
+    
+          let headers = new Headers({'Accept': 'application/json',
+                   'Authorization': 'Bearer '+ window.localStorage.getItem('token')}),
+
+              options = new RequestOptions({headers: headers});
+
+
+        return this.http.get(SERVER_URL + '/api/account/patients/'+ patient_id +'/pressures', options)
+            .map(res => res.json())
+            .toPromise();
+
+       
+    }
+    deletePressure(id){
+        
+       
+         let headers = new Headers({'Accept': 'application/json',
+         'Authorization': 'Bearer '+ window.localStorage.getItem('token')}),
+  
+          options = new RequestOptions({headers: headers});
+         
+         return this.http.delete(SERVER_URL + '/api/account/patients/pressures/'+ id, options)
+             .map(res => res.json())
+            .toPromise();
+  
+            
+              
+     }
     update(patient_id, form){
       
      

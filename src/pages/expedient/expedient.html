@@ -1,0 +1,100 @@
+<ion-header>
+    <ion-navbar no-border-bottom>
+        <ion-title>
+            Mi Expediente
+        </ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+    <ion-segment [(ngModel)]="personal_control">
+        <ion-segment-button value="pressure">
+            Presión
+        </ion-segment-button>
+        <ion-segment-button value="sugar">
+            Azúcar
+        </ion-segment-button>
+        <ion-segment-button value="medicines">
+            Medicamentos
+        </ion-segment-button>
+        <ion-segment-button value="alergies">
+            Alergias
+        </ion-segment-button>
+    </ion-segment>
+    <div [ngSwitch]="personal_control">
+        <div *ngSwitchCase="'pressure'">
+            <form [formGroup]="pressureForm">
+                <ion-row>
+                    <ion-col>
+                        <ion-list inset>
+
+                            <ion-item>
+
+                                <ion-datetime displayFormat="MMM DD, YYYY" formControlName="date_control" [class.invalid]="!pressureForm.controls.date_control.valid && (pressureForm.controls.date_control.dirty || submitAttempt)"
+                                    placeholder="Fecha de Control"></ion-datetime>
+                                
+                            </ion-item>
+                            <ion-item>
+                                    <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" formControlName="time_control" placeholder="Hora de Control"></ion-datetime>
+                            </ion-item>
+
+                            <ion-item>
+
+                                <ion-input formControlName="pd" type="text" [class.invalid]="!pressureForm.controls.pd.valid && (pressureForm.controls.pd.dirty || submitAttempt)"
+                                    placeholder="P.D"></ion-input>
+
+                            </ion-item>
+                            <ion-item *ngIf="!pressureForm.controls.pd.valid  && (pressureForm.controls.pd.dirty || submitAttempt)">
+                                <p>Please enter a valid Pd.</p>
+                            </ion-item>
+                            <ion-item>
+
+                                <ion-input formControlName="ps" type="text" [class.invalid]="!pressureForm.controls.ps.valid && (pressureForm.controls.ps.dirty || submitAttempt)"
+                                    placeholder="P.S"></ion-input>
+
+                            </ion-item>
+                            <ion-item *ngIf="!pressureForm.controls.ps.valid  && (pressureForm.controls.ps.dirty || submitAttempt)">
+                                <p>Please enter a valid Ps.</p>
+                            </ion-item>
+
+
+                        </ion-list>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row>
+                    <ion-col class="signup-col">
+                        <button ion-button class="submit-btn" full (click)="savePressure()">Guardar</button>
+
+                    </ion-col>
+                </ion-row>
+
+            </form>
+            <ion-list>
+                   
+                <ion-item *ngFor="let item of pressures">
+                  
+                       
+                        <h2>P.S: {{ item.ps }} / P.D: {{ item.pd }} - {{ item.date_control }} {{ item.time_control }}</h2>
+                        
+                    <button ion-button clear item-end (click)="deletePressure(item)"><ion-icon name="trash"></ion-icon></button>
+                </ion-item>
+                
+        
+            </ion-list>
+        </div>
+        <div *ngSwitchCase="'sugar'">
+            sugar
+        </div>
+        <div *ngSwitchCase="'medicines'">
+            medicines
+        </div>
+        <div *ngSwitchCase="'alergies'">
+            alergies
+        </div>
+
+
+    </div>
+</ion-content>

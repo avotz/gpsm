@@ -10,6 +10,10 @@ import {RlTagInputModule} from 'angular2-tag-input';
 import { NgCalendarModule  } from 'ionic2-calendar';
 import { Geolocation } from '@ionic-native/geolocation';
 import { SocialSharing } from '@ionic-native/social-sharing';
+import { File } from '@ionic-native/file';
+import { Transfer } from '@ionic-native/transfer';
+import { FilePath } from '@ionic-native/file-path';
+import { Camera } from '@ionic-native/camera';
 //import { ReactiveFormsModule } from '@angular/forms';
 
 import { MyApp } from './app.component';
@@ -27,6 +31,7 @@ import { ModalReservationPage } from '../pages/medic-calendar/modal-reservation'
 import { AccountPage } from '../pages/account/account';
 import { PatientsPage } from '../pages/patients/patients';
 import { ModalPatientPage } from '../pages/patients/modal-patient';
+import { ExpedientPage } from '../pages/expedient/expedient';
 
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { PatientServiceProvider } from '../providers/patient-service/patient-service';
@@ -50,7 +55,8 @@ import { ClinicServiceProvider } from '../providers/clinic-service/clinic-servic
     ModalReservationPage,
     AccountPage,
     PatientsPage,
-    ModalPatientPage
+    ModalPatientPage,
+    ExpedientPage
     
   ],
   imports: [
@@ -79,15 +85,17 @@ import { ClinicServiceProvider } from '../providers/clinic-service/clinic-servic
     ModalReservationPage,
     AccountPage,
     PatientsPage,
-    ModalPatientPage
-
+    ModalPatientPage,
+    ExpedientPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     Geolocation,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
-    {provide: LOCALE_ID, useValue: 'es-CR'},
+    File,
+    Transfer,
+    Camera,
+    FilePath,
     Facebook,
     GooglePlus,
     AuthServiceProvider,
@@ -95,7 +103,10 @@ import { ClinicServiceProvider } from '../providers/clinic-service/clinic-servic
     MedicServiceProvider,
     ClinicServiceProvider,
     AppointmentServiceProvider,
-    SocialSharing
+    SocialSharing,
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    {provide: LOCALE_ID, useValue: 'es-CR'},
+    
     
   ]
 })
