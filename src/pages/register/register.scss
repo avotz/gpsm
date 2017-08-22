@@ -1,7 +1,10 @@
 page-register {
-  .invalid {
-            border: 1px solid #ea6153;
-        }
+ 
+  p.error{
+    color: #ea6153;
+    border: 0;
+    margin-bottom: 0;
+  }
   
 
 }

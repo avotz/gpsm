@@ -92,16 +92,19 @@ $colors: (
 @import "roboto";
 @import "noto-sans";
 
-.md{
-   .toolbar-background-md{
-	background:#3c8dbc;
-	color:white;
+.ios, .md{
+   .toolbar-background-md, .toolbar-background-ios{
+    background:#3c8dbc;
+    color:white;
    }
-   .toolbar-title-md{
+   .toolbar-title-md, .toolbar-title-ios{
    	color:white;
    }
-   .bar-button-default-md{
+   .bar-button-default-md, .bar-button-default-ios{
    	 color: white;
+   }
+   .list-md[inset] .item-select, .list-md[inset] .item-datetime{
+     padding-left: 0;
    }
 
 }

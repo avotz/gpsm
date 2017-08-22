@@ -75,6 +75,144 @@ export class PatientServiceProvider {
             
               
      }
+     saveSugar(patient_id, form){
+        
+         let headers = new Headers({'Accept': 'application/json',
+                    'Authorization': 'Bearer '+ window.localStorage.getItem('token')}),
+ 
+               options = new RequestOptions({headers: headers});
+ 
+        
+       
+         return this.http.post(SERVER_URL + '/api/account/patients/'+ patient_id +'/sugars', form, options)
+             .map(res => res.json())
+            .toPromise();
+ 
+            
+              
+     }
+     getSugars(patient_id) {
+        
+    
+          let headers = new Headers({'Accept': 'application/json',
+                   'Authorization': 'Bearer '+ window.localStorage.getItem('token')}),
+
+              options = new RequestOptions({headers: headers});
+
+
+        return this.http.get(SERVER_URL + '/api/account/patients/'+ patient_id +'/sugars', options)
+            .map(res => res.json())
+            .toPromise();
+
+       
+    }
+    deleteSugar(id){
+        
+       
+         let headers = new Headers({'Accept': 'application/json',
+         'Authorization': 'Bearer '+ window.localStorage.getItem('token')}),
+  
+          options = new RequestOptions({headers: headers});
+         
+         return this.http.delete(SERVER_URL + '/api/account/patients/sugars/'+ id, options)
+             .map(res => res.json())
+            .toPromise();
+  
+            
+              
+     }
+     saveMedicine(patient_id, form){
+        
+         let headers = new Headers({'Accept': 'application/json',
+                    'Authorization': 'Bearer '+ window.localStorage.getItem('token')}),
+ 
+               options = new RequestOptions({headers: headers});
+ 
+        
+       
+         return this.http.post(SERVER_URL + '/api/account/patients/'+ patient_id +'/medicines', form, options)
+             .map(res => res.json())
+            .toPromise();
+ 
+            
+              
+     }
+     getMedicines(patient_id) {
+        
+    
+          let headers = new Headers({'Accept': 'application/json',
+                   'Authorization': 'Bearer '+ window.localStorage.getItem('token')}),
+
+              options = new RequestOptions({headers: headers});
+
+
+        return this.http.get(SERVER_URL + '/api/account/patients/'+ patient_id +'/medicines', options)
+            .map(res => res.json())
+            .toPromise();
+
+       
+    }
+    deleteMedicine(id){
+        
+       
+         let headers = new Headers({'Accept': 'application/json',
+         'Authorization': 'Bearer '+ window.localStorage.getItem('token')}),
+  
+          options = new RequestOptions({headers: headers});
+         
+         return this.http.delete(SERVER_URL + '/api/account/patients/medicines/'+ id, options)
+             .map(res => res.json())
+            .toPromise();
+  
+            
+              
+     }
+     saveAllergy(patient_id, form){
+        
+         let headers = new Headers({'Accept': 'application/json',
+                    'Authorization': 'Bearer '+ window.localStorage.getItem('token')}),
+ 
+               options = new RequestOptions({headers: headers});
+ 
+        
+       
+         return this.http.post(SERVER_URL + '/api/account/patients/'+ patient_id +'/allergies', form, options)
+             .map(res => res.json())
+            .toPromise();
+ 
+            
+              
+     }
+     getAllergies(patient_id) {
+        
+    
+          let headers = new Headers({'Accept': 'application/json',
+                   'Authorization': 'Bearer '+ window.localStorage.getItem('token')}),
+
+              options = new RequestOptions({headers: headers});
+
+
+        return this.http.get(SERVER_URL + '/api/account/patients/'+ patient_id +'/allergies', options)
+            .map(res => res.json())
+            .toPromise();
+
+       
+    }
+    deleteAllergy(id){
+        
+       
+         let headers = new Headers({'Accept': 'application/json',
+         'Authorization': 'Bearer '+ window.localStorage.getItem('token')}),
+  
+          options = new RequestOptions({headers: headers});
+         
+         return this.http.delete(SERVER_URL + '/api/account/patients/allergies/'+ id, options)
+             .map(res => res.json())
+            .toPromise();
+  
+            
+              
+     }
     update(patient_id, form){
       
      
