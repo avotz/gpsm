@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { Platform, ActionSheetController, ActionSheet,  NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Platform, ActionSheet,  NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
 import {SERVER_URL} from '../../providers/config';
 import {PatientServiceProvider} from '../../providers/patient-service/patient-service';
 import moment from 'moment'
@@ -12,9 +11,7 @@ import moment from 'moment'
 })
 export class TabMedicoPage {
   shownGroup = null;
-  serverUrl: String = SERVER_URL;
   patient: any;
-  errorSave:any;
   isWaiting: boolean = null;
   appointments: any = [];
   history: any = [];
@@ -24,8 +21,7 @@ export class TabMedicoPage {
   heredos: any = [];
   ginecos: any = [];
   medical_control: string = "history";
-  loader:any;
-  constructor(public platform: Platform, public actionSheetCtrl: ActionSheetController, public navCtrl: NavController, public navParams: NavParams,public formBuilder: FormBuilder, public patientService: PatientServiceProvider, public toastCtrl: ToastController, public loadingCtrl: LoadingController) {
+  constructor(public platform: Platform, public navCtrl: NavController, public navParams: NavParams, public patientService: PatientServiceProvider, public toastCtrl: ToastController, public loadingCtrl: LoadingController) {
     
     this.patient = this.navParams.data;
     
@@ -33,6 +29,12 @@ export class TabMedicoPage {
 
   }
   getHistories(){
+    let loader = this.loadingCtrl.create({
+      content: "Espere por favor...",
+      
+      });
+  
+    loader.present();
     this.patientService.getHistory(this.patient.id)
     .then(data => {
         
@@ -43,11 +45,12 @@ export class TabMedicoPage {
         this.no_pathologicals = this.history.nopathologicals;
         this.heredos = this.history.heredos;
         this.ginecos = this.history.ginecos;
+        loader.dismissAll();
     })
     .catch(error => {
     
         console.log(error);
-        
+        loader.dismissAll();
         
     });
   }
