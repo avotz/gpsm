@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { Platform, ActionSheetController, ActionSheet,  NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
+import { NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {SERVER_URL} from '../../providers/config';
 import {PatientServiceProvider} from '../../providers/patient-service/patient-service';
 import moment from 'moment'
 
@@ -15,7 +14,6 @@ export class TabPersonalPage {
   sugarForm: FormGroup;
   medicineForm: FormGroup;
   allergyForm: FormGroup;
-  serverUrl: String = SERVER_URL;
   patient: any;
   errorSave:any;
   isWaiting: boolean = null;
@@ -26,7 +24,7 @@ export class TabPersonalPage {
   allergies: any = [];
   personal_control: string = "pressure";
   loader:any;
-  constructor(public platform: Platform, public actionSheetCtrl: ActionSheetController, public navCtrl: NavController, public navParams: NavParams,public formBuilder: FormBuilder, public patientService: PatientServiceProvider, public toastCtrl: ToastController, public loadingCtrl: LoadingController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,public formBuilder: FormBuilder, public patientService: PatientServiceProvider, public toastCtrl: ToastController, public loadingCtrl: LoadingController) {
     
     this.patient = this.navParams.data;
     this.pressureForm = formBuilder.group({

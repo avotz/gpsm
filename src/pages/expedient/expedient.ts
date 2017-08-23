@@ -1,9 +1,6 @@
 import { Component } from '@angular/core';
-import { Platform, ActionSheetController, ActionSheet,  NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {SERVER_URL} from '../../providers/config';
+import { NavController, NavParams } from 'ionic-angular';
 import {PatientServiceProvider} from '../../providers/patient-service/patient-service';
-import moment from 'moment'
 import { TabPersonalPage } from './tab-personal';
 import { TabMedicoPage } from './tab-medico';
 
@@ -18,7 +15,7 @@ export class ExpedientPage {
   tabMedico:any;
   personalTabParams:any;
   medicalTabParams:any;
-  constructor(public platform: Platform, public actionSheetCtrl: ActionSheetController, public navCtrl: NavController, public navParams: NavParams,public formBuilder: FormBuilder, public patientService: PatientServiceProvider, public toastCtrl: ToastController, public loadingCtrl: LoadingController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public patientService: PatientServiceProvider) {
     
     this.patient = this.navParams.data;
     this.personalTabParams = this.patient;

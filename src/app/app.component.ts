@@ -11,7 +11,7 @@ import { SearchMedicPage } from '../pages/search-medic/search-medic';
 import { SearchClinicPage } from '../pages/search-clinic/search-clinic';
 import { AccountPage } from '../pages/account/account';
 import { PatientsPage } from '../pages/patients/patients';
-import { ExpedientPage } from '../pages/expedient/expedient';
+
 
 @Component({
   templateUrl: 'app.html'

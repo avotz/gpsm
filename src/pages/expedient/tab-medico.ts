@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { Platform, ActionSheet,  NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
-import {SERVER_URL} from '../../providers/config';
+import { NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
 import {PatientServiceProvider} from '../../providers/patient-service/patient-service';
 import moment from 'moment'
 
@@ -21,7 +20,7 @@ export class TabMedicoPage {
   heredos: any = [];
   ginecos: any = [];
   medical_control: string = "history";
-  constructor(public platform: Platform, public navCtrl: NavController, public navParams: NavParams, public patientService: PatientServiceProvider, public toastCtrl: ToastController, public loadingCtrl: LoadingController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public patientService: PatientServiceProvider, public toastCtrl: ToastController, public loadingCtrl: LoadingController) {
     
     this.patient = this.navParams.data;
     
