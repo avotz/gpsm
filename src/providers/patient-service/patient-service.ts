@@ -244,6 +244,21 @@ export class PatientServiceProvider {
           
             
    }
+   delete(patient_id){
+    
+   
+     let headers = new Headers({'Accept': 'application/json',
+     'Authorization': 'Bearer '+ window.localStorage.getItem('token')}),
+
+      options = new RequestOptions({headers: headers});
+     
+     return this.http.delete(SERVER_URL + '/api/account/patients/'+ patient_id, options)
+         .map(res => res.json())
+        .toPromise();
+
+        
+          
+ }
 
     findAllByUser(id) {
         

@@ -14,18 +14,21 @@
     </div>
   </ion-row>
 	<div class="login-box">
-    <form (ngSubmit)="loginForm()">
+    <form [formGroup]="loginForm">
       <ion-row>
         <ion-col>
           <ion-list inset>
             
             <ion-item>
-              <ion-input type="text" placeholder="Email" name="email" [(ngModel)]="email" required></ion-input>
+              <ion-input formControlName="email" type="email" [class.invalid]="!loginForm.controls.email.valid && (loginForm.controls.email.dirty || submitAttempt)" email="true" placeholder="Correo"  required></ion-input>
             </ion-item>
+            <p *ngIf="!loginForm.controls.email.valid  && (loginForm.controls.email.dirty || submitAttempt)" class="error">Por favor ingrese un correo válido.</p>
+            
             
             <ion-item>
-              <ion-input type="password" placeholder="Contraseña" name="password" [(ngModel)]="password" required></ion-input>
+              <ion-input formControlName="password" type="password" [class.invalid]="!loginForm.controls.email.valid && (loginForm.controls.password.dirty || submitAttempt)" placeholder="Contraseña" name="password" [(ngModel)]="password" required></ion-input>
             </ion-item>
+            <p *ngIf="!loginForm.controls.password.valid  && (loginForm.controls.password.dirty || submitAttempt)" class="error">Por favor ingrese una Contraseña.</p>
             
           </ion-list>
         </ion-col>
@@ -33,7 +36,8 @@
       
       <ion-row>
         <ion-col class="signup-col">
-          <button ion-button class="submit-btn" full type="submit">Iniciar</button>
+          <button ion-button class="submit-btn" full (click)="login()">Iniciar</button>
+          
         </ion-col>
       </ion-row>
       

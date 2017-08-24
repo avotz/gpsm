@@ -20,6 +20,7 @@
       <ion-item *ngIf="!patients.length > 0" class="errors">
           <span>No se encontraron Pacientes</span>
       </ion-item>
+      
       <ion-item *ngFor="let patient of patients">
         
               <ion-avatar item-start>
@@ -27,8 +28,10 @@
               </ion-avatar>
               <h2>{{patient.fullname}}</h2>
 
-          <button ion-button clear item-end (click)="openPatientDetail(patient)">Editar</button>
-          <button ion-button clear item-end (click)="openExpedient(patient)">Expediente</button>
+          
+          <button ion-button icon-only item-end clear (click)="presentOptions(patient)">
+            <ion-icon name="more"></ion-icon>
+          </button>
       </ion-item>
       
 

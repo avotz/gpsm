@@ -6,7 +6,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { HttpModule} from '@angular/http';
 import { Facebook } from '@ionic-native/facebook';
 import { GooglePlus } from '@ionic-native/google-plus';
-import {RlTagInputModule} from 'angular2-tag-input';
+//import {RlTagInputModule} from 'angular2-tag-input';
 import { NgCalendarModule  } from 'ionic2-calendar';
 import { Geolocation } from '@ionic-native/geolocation';
 import { SocialSharing } from '@ionic-native/social-sharing';
@@ -69,7 +69,6 @@ import { ClinicServiceProvider } from '../providers/clinic-service/clinic-servic
     BrowserModule,
     IonicModule.forRoot(MyApp),
     HttpModule,
-    RlTagInputModule,
     NgCalendarModule
     
     

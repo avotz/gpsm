@@ -11,6 +11,7 @@ log.txt
 *.sublime-workspace
 .vscode/
 npm-debug.log*
+*.apk
 
 .idea/
 .sass-cache/
@@ -34,3 +35,4 @@ Thumbs.db
 UserInterfaceState.xcuserstate
 GPSMedica.sublime-project
 GPSMedica.sublime-workspace
+my-release-key.jks

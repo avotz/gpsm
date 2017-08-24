@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController } from 'ionic-angular';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {Facebook} from '@ionic-native/facebook';
 import {GooglePlus } from '@ionic-native/google-plus';
 
 import {AuthServiceProvider} from '../../providers/auth-service/auth-service';
 import { RegisterPage } from '../register/register';
+import { RegisterPatientPage } from '../register-patient/register-patient';
 import { HomePage } from '../home/home';
 
 @Component({
@@ -15,12 +17,18 @@ export class LoginPage {
   errorAuth;
   email;
   password;
-
-  constructor(public navCtrl: NavController, public navParams: NavParams, public authService: AuthServiceProvider, public loadingCtrl: LoadingController, private fb:Facebook, private gp:GooglePlus) {
+  loginForm: FormGroup;
+  submitAttempt: boolean = false;
+  constructor(public navCtrl: NavController, public navParams: NavParams, public authService: AuthServiceProvider, public loadingCtrl: LoadingController, private fb:Facebook, private gp:GooglePlus, public formBuilder: FormBuilder) {
 
   	   this.navCtrl = navCtrl;
        this.authService = authService;
        this.loadingCtrl = loadingCtrl;
+       this.loginForm = formBuilder.group({
+        email: ['',Validators.required],
+        password: ['',Validators.required]
+        
+      });
   }
 
    createAccount(){
@@ -29,40 +37,52 @@ export class LoginPage {
 
    }
 
-   loginForm() {
-
-     let loader = this.loadingCtrl.create({
-        content: "Espere por favor...",
-        //duration: 3000
-      });
-
-    loader.present();
+   login() {
      
-     this.authService.login(this.email, this.password)
-            .then(data => {
+     
+    this.submitAttempt = true;
+    let loader = this.loadingCtrl.create({
+      content: "Espere por favor...",
+      //duration: 3000
+    });
 
-               loader.dismiss();
-               console.log(data);
-               if(data.error)
-              {
-                this.errorAuth = data.error;
-                return;
-              }
-      
-              window.localStorage.setItem('token', data.access_token);
-              window.localStorage.setItem('login_type', 'email');
-              window.localStorage.setItem('auth_user', JSON.stringify(data.user));
+  
+    if(this.loginForm.valid){
+      loader.present();
+      this.authService.login(this.loginForm.value.email, this.loginForm.value.password)
+              .then(data => {
 
-              this.errorAuth = "";
-              this.navCtrl.setRoot(HomePage);   
+                loader.dismiss();
+                console.log(data);
+                if(data.error)
+                {
+                  this.errorAuth = data.error == 'Unauthenticated' ? 'Estas Credenciales no corresponden a ningun usuario registrado. Verifica!': data.error;
+                  return;
+                }
+        
+                window.localStorage.setItem('token', data.access_token);
+                window.localStorage.setItem('login_type', 'email');
+                window.localStorage.setItem('auth_user', JSON.stringify(data.user));
 
-            })
-            .catch(error => {
+                this.errorAuth = "";
+                //this.navCtrl.setRoot(HomePage);
 
-                alert(error)
-              
-               loader.dismiss();
-            });
+                if(data.patients)
+                  this.navCtrl.setRoot(HomePage);
+                else {
+                    this.navCtrl.push(RegisterPatientPage,{
+                      name: data.user.name, email:  data.user.email
+                  });  
+                }      
+
+              })
+              .catch(error => {
+
+                  alert(error)
+                
+                loader.dismiss();
+              });
+    }
     
   }
 
@@ -121,8 +141,15 @@ export class LoginPage {
                 
                 window.localStorage.setItem('token', data.access_token);
                 window.localStorage.setItem('login_type', 'facebook');
-                
-                this.navCtrl.push(HomePage);    
+                window.localStorage.setItem('auth_user', JSON.stringify(data.user));
+               
+                if(data.patients)
+                  this.navCtrl.setRoot(HomePage);
+                else {
+                    this.navCtrl.push(RegisterPatientPage,{
+                      name: data.user.name, email:  data.user.email
+                  });  
+                }    
 
             })
             .catch(error => alert(error));
@@ -138,8 +165,15 @@ export class LoginPage {
               
               window.localStorage.setItem('token', data.access_token);
               window.localStorage.setItem('login_type', 'google');
+              window.localStorage.setItem('auth_user', JSON.stringify(data.user));
               
-              this.navCtrl.push(HomePage);        
+              if(data.patients)
+                this.navCtrl.setRoot(HomePage);
+              else {
+                  this.navCtrl.push(RegisterPatientPage,{
+                    name: data.user.name, email:  data.user.email
+                });  
+              }    
 
             })
             .catch(error => alert(error));
