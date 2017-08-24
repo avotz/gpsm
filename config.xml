@@ -2,7 +2,7 @@
 <widget id="com.avotz.gpsmedica" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>GPSMedica</name>
     <description>GPS Médica App.</description>
-    <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
+    <author email="alonso@avotz.com" href="https://avotz.com/">Avotz Team</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-navigation href="http://ionic.local/*" />

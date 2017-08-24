@@ -116,7 +116,7 @@ export class ModalReservationPage {
       .catch(error => alert(JSON.stringify(error)));
   }
   parseDate(date){
-      return moment(date).format('YYYY-MM-DD HH:mm');
+      return moment(date).format('YYYY-MM-DD h:mm A');
   }
   dismiss() {
     let data = { date: this.appointment.date };
