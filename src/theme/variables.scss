@@ -93,14 +93,14 @@ $colors: (
 @import "noto-sans";
 
 .ios, .md{
-   .toolbar-background-md, .toolbar-background-ios{
+   .toolbar-background-md{
     background:#3c8dbc;
     color:white;
    }
-   .toolbar-title-md, .toolbar-title-ios{
+   .toolbar-title-md{
    	color:white;
    }
-   .bar-button-default-md, .bar-button-default-ios{
+   .bar-button-default-md{
    	 color: white;
    }
    .list-md[inset] .item-select, .list-md[inset] .item-datetime{

@@ -9,20 +9,23 @@
 
 
 <ion-content>
-    <ion-segment [(ngModel)]="personal_control">
-        <ion-segment-button value="pressure">
-            Presión
-        </ion-segment-button>
-        <ion-segment-button value="sugar">
-            Azúcar
-        </ion-segment-button>
-        <ion-segment-button value="medicines">
-            Medicamentos
-        </ion-segment-button>
-        <ion-segment-button value="alergies">
-            Alergias
-        </ion-segment-button>
-    </ion-segment>
+    <div padding>
+            <ion-segment [(ngModel)]="personal_control">
+                <ion-segment-button value="pressure">
+                    Presión
+                </ion-segment-button>
+                <ion-segment-button value="sugar">
+                    Azúcar
+                </ion-segment-button>
+                <ion-segment-button value="medicines">
+                    Medicamentos
+                </ion-segment-button>
+                <ion-segment-button value="alergies">
+                    Alergias
+                </ion-segment-button>
+            </ion-segment>
+    </div>
+    
     <div [ngSwitch]="personal_control">
         <div *ngSwitchCase="'pressure'">
             <form [formGroup]="pressureForm">

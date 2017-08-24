@@ -1,0 +1,38 @@
+modal-appointment {
+    .buttons{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: start;
+    }
+    .loading{
+        /*margin-top: 10px;
+        margin-left: 1rem;*/
+        text-align: center
+    }
+    ion-card-header{
+        background: map-get($colors, secondary);
+        color: white !important;
+    }
+    ion-card-header.disease_notes{
+        background: map-get($colors, celeste);
+        color: white !important;
+    }
+    ion-card-header.physical_exams{
+        background: map-get($colors, primary);
+        color: white !important;
+    }
+    ion-card-header.diagnostics_treatments{
+        background: map-get($colors, danger);
+        color: white !important;
+    }
+    h3{
+        color: map-get($colors, celeste) !important;
+    }
+    .vital_signs{
+        margin-top: 1rem;
+        h3{
+            text-align: center;
+            
+        }
+    }
+}

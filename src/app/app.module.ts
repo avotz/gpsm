@@ -34,6 +34,8 @@ import { ModalPatientPage } from '../pages/patients/modal-patient';
 import { ExpedientPage } from '../pages/expedient/expedient';
 import { TabPersonalPage } from '../pages/expedient/tab-personal';
 import { TabMedicoPage } from '../pages/expedient/tab-medico';
+import { ModalAppointmentPage } from '../pages/expedient/modal-appointment';
+
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { PatientServiceProvider } from '../providers/patient-service/patient-service';
 import { MedicServiceProvider } from '../providers/medic-service/medic-service';
@@ -59,7 +61,8 @@ import { ClinicServiceProvider } from '../providers/clinic-service/clinic-servic
     ModalPatientPage,
     ExpedientPage,
     TabPersonalPage,
-    TabMedicoPage
+    TabMedicoPage,
+    ModalAppointmentPage
     
   ],
   imports: [
@@ -91,7 +94,8 @@ import { ClinicServiceProvider } from '../providers/clinic-service/clinic-servic
     ModalPatientPage,
     ExpedientPage,
     TabPersonalPage,
-    TabMedicoPage
+    TabMedicoPage,
+    ModalAppointmentPage
   ],
   providers: [
     StatusBar,

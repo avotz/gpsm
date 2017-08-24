@@ -9,12 +9,13 @@
 
 <ion-content>
     <form [formGroup]="medicSearchForm" >
-
-        <ion-searchbar formControlName="q" placeholder="Buscar"></ion-searchbar>
-        <!-- <ion-item>
-            
-            <ion-input formControlName="q" placeholder="" type="text"></ion-input>
-        </ion-item> -->
+        <div padding>
+            <ion-searchbar formControlName="q" placeholder="Buscar"></ion-searchbar>
+            <!-- <ion-item>
+                
+                <ion-input formControlName="q" placeholder="" type="text"></ion-input>
+            </ion-item> -->
+        </div>
         <ion-card>
             <ion-card-header (click)="toggleGroup(1)" [ngClass]="{active: isGroupShown(1)}">
                 Parámetros de busqueda (Opcionales)

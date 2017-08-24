@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
+import { NavController, NavParams, ToastController, LoadingController, ModalController } from 'ionic-angular';
 import {PatientServiceProvider} from '../../providers/patient-service/patient-service';
 import moment from 'moment'
-
+import { ModalAppointmentPage } from './modal-appointment';
 
 @Component({
   selector: 'tab-medico',
@@ -20,7 +20,7 @@ export class TabMedicoPage {
   heredos: any = [];
   ginecos: any = [];
   medical_control: string = "history";
-  constructor(public navCtrl: NavController, public navParams: NavParams, public patientService: PatientServiceProvider, public toastCtrl: ToastController, public loadingCtrl: LoadingController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public patientService: PatientServiceProvider, public toastCtrl: ToastController, public loadingCtrl: LoadingController, public modalCtrl: ModalController) {
     
     this.patient = this.navParams.data;
     
@@ -68,6 +68,15 @@ export class TabMedicoPage {
   }
   isGroupShown(group) {
       return this.shownGroup === group;
+  }
+
+  openAppointmentDetail(appointment){
+    let modal = this.modalCtrl.create(ModalAppointmentPage, appointment);
+    modal.onDidDismiss(data => {
+      
+      
+    });
+    modal.present();
   }
   
 

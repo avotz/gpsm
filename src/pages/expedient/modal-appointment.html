@@ -1,0 +1,234 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>
+            Detalle de la cita
+        </ion-title>
+        <ion-buttons start>
+            <button ion-button (click)="dismiss()">
+          <span ion-text color="primary" showWhen="ios">Cancel</span>
+          <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+        </button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+        <ion-item >
+                <h2>{{appointment.title}}</h2>
+                <p>{{timeFormat(appointment.start)}} - {{timeFormat(appointment.end)}}</p>
+                <ion-note item-end>{{dateFormat(appointment.date)}} </ion-note>
+             
+            </ion-item>
+    <ion-card>
+        <ion-card-header (click)="toggleGroup(1)" [ngClass]="{active: isGroupShown(1)}" class="disease_notes">
+            Notas de padecimientos
+            <ion-icon color="light" item-right [name]="isGroupShown(1) ? 'arrow-dropdown' : 'arrow-dropright'"></ion-icon>
+        </ion-card-header>
+        <ion-card-content *ngIf="isGroupShown(1)">
+                <div padding>
+                    <ion-segment [(ngModel)]="disease_notes">
+                            <ion-segment-button value="reason">
+                                Razon de la visita
+                            </ion-segment-button>
+                            <ion-segment-button value="symptoms">
+                                síntomas
+                            </ion-segment-button>
+                            <ion-segment-button value="phisical_review">
+                                Exploracion física
+                            </ion-segment-button>
+                            
+                    </ion-segment>
+                </div>
+                <div [ngSwitch]="disease_notes">
+                        <div *ngSwitchCase="'reason'">
+                                <p>{{ appointment.disease_notes.reason }}</p>
+                        </div>
+                        <div *ngSwitchCase="'symptoms'">
+                                <p>{{ appointment.disease_notes.symptoms }}</p>
+                        </div>
+                        <div *ngSwitchCase="'phisical_review'">
+                                <p>{{ appointment.disease_notes.phisical_review }}</p>
+                        </div>
+                </div>
+               
+                <div class="vital_signs">
+                        <h3>Signos Vitales</h3>
+                        <ion-list>
+                            
+                            <ion-item>
+                                <ion-icon name='arrow-round-up' item-start></ion-icon>
+                                Altura
+                                <ion-note item-end>
+                                 Mts {{ vitalSigns.height }}
+                                </ion-note>
+                               
+                            </ion-item>
+                            <ion-item>
+                                <ion-icon name='speedometer' item-start></ion-icon>
+                                Peso
+                                <ion-note item-end>
+                                Kg {{ vitalSigns.weight }}
+                                </ion-note>
+                                
+                            </ion-item>
+                            <ion-item>
+                                <ion-icon name='body' item-start></ion-icon>
+                                Masa Corporal
+                                <ion-note item-end>
+                                lmc {{ vitalSigns.mass }}
+                                </ion-note>
+                                
+                            </ion-item>
+                            <ion-item>
+                                <ion-icon name='thermometer' item-start></ion-icon>
+                                Temperatura
+                                <ion-note item-end>
+                                C {{ vitalSigns.temp }}
+                                </ion-note>
+                                
+                            </ion-item>
+                            <ion-item>
+                                <ion-icon name='refresh' item-start></ion-icon>
+                                Frecuencia Respiratoria
+                                <ion-note item-end>
+                                r/m {{ vitalSigns.respiratory_rate }}
+                                </ion-note>
+                                
+                            </ion-item>
+                            <ion-item>
+                                <ion-icon name='battery-full' item-start></ion-icon>
+                                Presión Arterial
+                                <ion-note item-end>
+                                P.S {{ vitalSigns.blood_ps }}  P.D {{ vitalSigns.blood_pd }}
+                                </ion-note>
+                                
+                            </ion-item>
+                            <ion-item>
+                                <ion-icon name='heart' item-start></ion-icon>
+                                Presión Arterial
+                                <ion-note item-end>
+                                l/m {{ vitalSigns.heart_rate }}
+                                </ion-note>
+                                
+                            </ion-item>
+                           
+                        </ion-list>
+        
+                </div>
+                
+                   
+            
+        </ion-card-content>
+    </ion-card>
+    <ion-card>
+        <ion-card-header (click)="toggleGroup(2)" [ngClass]="{active: isGroupShown(2)}" class="physical_exams">
+            Examen Físico
+            <ion-icon color="light" item-right [name]="isGroupShown(2) ? 'arrow-dropdown' : 'arrow-dropright'"></ion-icon>
+        </ion-card-header>
+        <ion-card-content *ngIf="isGroupShown(2)">
+                <ion-item *ngIf="appointment.physical_exams.cardio">
+                    <h3>Cardiaco y Vascular</h3>
+                    <p>{{ appointment.physical_exams.cardio }}</p>
+                </ion-item>
+                <ion-item *ngIf="appointment.physical_exams.digestivo">
+                    <h3>Aparato Digestivo</h3>
+                    <p>{{ appointment.physical_exams.digestivo }}</p>
+                </ion-item>    
+                <ion-item *ngIf="appointment.physical_exams.urinario">
+                    <h3>Aparato Urinario</h3>
+                    <p>{{ appointment.physical_exams.urinario }}</p>
+                </ion-item>
+                <ion-item *ngIf="appointment.physical_exams.linfatico">
+                    <h3>Sistema Linfático</h3>
+                    <p>{{ appointment.physical_exams.linfatico }}</p>
+                </ion-item>
+                <ion-item *ngIf="appointment.physical_exams.dermatologico">
+                    <h3>Dermatológico</h3>
+                    <p>{{ appointment.physical_exams.dermatologico }}</p>
+                </ion-item>
+                <ion-item *ngIf="appointment.physical_exams.neurologico">
+                    <h3>Neurológico</h3>
+                    <p>{{ appointment.physical_exams.neurologico }}</p>
+                </ion-item>
+                <ion-item *ngIf="appointment.physical_exams.osteoarticular">
+                    <h3>Osteoarticular</h3>
+                    <p>{{ appointment.physical_exams.osteoarticular }}</p>
+                </ion-item>
+                <ion-item *ngIf="appointment.physical_exams.otorrinolaringologico">
+                    <h3>Otorrinolaringológico</h3>
+                    <p>{{ appointment.physical_exams.otorrinolaringologico }}</p>
+                </ion-item>
+                <ion-item *ngIf="appointment.physical_exams.pulmonar">
+                    <h3>Pulmonar o Respiratorio</h3>
+                    <p>{{ appointment.physical_exams.pulmonar }}</p>
+                </ion-item>
+                <ion-item *ngIf="appointment.physical_exams.psiquiatrico">
+                    <h3>Psiquiátrico y Psicológico</h3>
+                    <p>{{ appointment.physical_exams.psiquiatrico }}</p>
+                </ion-item>
+                <ion-item *ngIf="appointment.physical_exams.reproductor">
+                    <h3>Aparato Reproductor</h3>
+                    <p>{{ appointment.physical_exams.reproductor }}</p>
+                </ion-item>               
+            
+        </ion-card-content>
+    </ion-card>
+    <ion-card>
+        <ion-card-header (click)="toggleGroup(3)" [ngClass]="{active: isGroupShown(3)}" class="diagnostics_treatments">
+            Diagnóstico y Tratamiento
+            <ion-icon color="light" item-right [name]="isGroupShown(3) ? 'arrow-dropdown' : 'arrow-dropright'"></ion-icon>
+        </ion-card-header>
+        <ion-card-content *ngIf="isGroupShown(3)">
+                <div padding>    
+                    <ion-segment [(ngModel)]="diagnostics_treatments">
+                        <ion-segment-button value="diagnostics">
+                            Diagnósticos
+                        </ion-segment-button>
+                        <ion-segment-button value="treatment">
+                            Tratamiento
+                        </ion-segment-button>
+                        <ion-segment-button value="recomendations">
+                            Recomendaciones
+                        </ion-segment-button>
+                        
+                    </ion-segment>
+                </div>
+                <div [ngSwitch]="diagnostics_treatments">
+                        <div *ngSwitchCase="'diagnostics'">
+                                <ion-list>
+                                        
+                                        <ion-item *ngFor="let item of appointment.diagnostics">
+                                            
+                                            {{ item.name }}
+                                           
+                                        </ion-item>
+                                        
+                                       
+                                </ion-list>
+                        </div>
+                        <div *ngSwitchCase="'treatment'">
+                                <ion-list>
+                                        
+                                        <ion-item *ngFor="let item of appointment.treatments">
+                                            
+                                            {{ item.name }} : {{ item.comments }}
+                                           
+                                        </ion-item>
+                                        
+                                       
+                                </ion-list>
+                        </div>
+                        <div *ngSwitchCase="'recomendations'">
+                                {{ appointment.medical_instructions }}
+                        </div>
+                </div>    
+                
+                      
+                    
+            
+        </ion-card-content>
+    </ion-card>
+
+
+
+</ion-content>

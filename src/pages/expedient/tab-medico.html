@@ -9,15 +9,17 @@
 
 
 <ion-content>
-    <ion-segment [(ngModel)]="medical_control">
-        <ion-segment-button value="history">
-            Historial médico
-        </ion-segment-button>
-        <ion-segment-button value="appointments">
-            Historial consulta
-        </ion-segment-button>
-        
-    </ion-segment>
+    <div padding>
+        <ion-segment [(ngModel)]="medical_control">
+            <ion-segment-button value="history">
+                Historial médico
+            </ion-segment-button>
+            <ion-segment-button value="appointments">
+                Historial consulta
+            </ion-segment-button>
+            
+        </ion-segment>
+    </div>
     <div [ngSwitch]="medical_control">
         <div *ngSwitchCase="'history'">
                 <ion-card>
@@ -139,7 +141,8 @@
                     <ion-item *ngFor="let item of appointments">
                         <h2>{{item.title}}</h2>
                         <p>{{timeFormat(item.start)}} - {{timeFormat(item.end)}}</p>
-                        <ion-note item-end>{{dateFormat(item.date)}} </ion-note>     
+                        <ion-note item-end>{{dateFormat(item.date)}} </ion-note>
+                        <button ion-button clear item-end (click)="openAppointmentDetail(item)">Ver</button>
                     </ion-item>
                 </ion-list>
         </div>
