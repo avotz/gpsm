@@ -1,6 +1,6 @@
 {
   "name": "GPSMedica",
-  "app_id": "",
+  "app_id": "1c58e5ab",
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}
