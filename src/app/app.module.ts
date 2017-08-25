@@ -14,6 +14,8 @@ import { File } from '@ionic-native/file';
 import { Transfer } from '@ionic-native/transfer';
 import { FilePath } from '@ionic-native/file-path';
 import { Camera } from '@ionic-native/camera';
+import { LaunchNavigator } from '@ionic-native/launch-navigator';
+import { FCM } from '@ionic-native/fcm';
 //import { ReactiveFormsModule } from '@angular/forms';
 
 import { MyApp } from './app.component';
@@ -106,6 +108,8 @@ import { ClinicServiceProvider } from '../providers/clinic-service/clinic-servic
     FilePath,
     Facebook,
     GooglePlus,
+    LaunchNavigator,
+    FCM,
     AuthServiceProvider,
     PatientServiceProvider,
     MedicServiceProvider,

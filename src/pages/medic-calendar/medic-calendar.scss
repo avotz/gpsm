@@ -2,4 +2,13 @@ page-medic-calendar {
     .header-title{
         text-align: center;
     }
+    ion-card-header{
+        text-align: center;
+        background: map-get($colors, celeste);
+        color: white !important;
+    }
+    h4, h6{
+        text-align: center;
+    }
+    
 }

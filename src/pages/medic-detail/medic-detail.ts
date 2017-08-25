@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Platform, ActionSheetController, ActionSheet,  NavController, NavParams } from 'ionic-angular';
+import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator';
 import {SERVER_URL} from '../../providers/config';
 import {MedicCalendarPage} from '../medic-calendar/medic-calendar';
 import { MedicServiceProvider } from '../../providers/medic-service/medic-service';
@@ -15,7 +16,7 @@ export class MedicDetailPage {
   medic: any;
   isWaiting: boolean = null;
 
-  constructor(public platform: Platform, public actionSheetCtrl: ActionSheetController, public navCtrl: NavController, public navParams: NavParams, public medicService: MedicServiceProvider, private socialSharing: SocialSharing) {
+  constructor(public platform: Platform, public actionSheetCtrl: ActionSheetController, public navCtrl: NavController, public navParams: NavParams, public medicService: MedicServiceProvider, private socialSharing: SocialSharing, private launchNavigator: LaunchNavigator) {
     
     this.medic = this.navParams.data;
     this.isWaiting = true;
@@ -58,20 +59,31 @@ export class MedicDetailPage {
                 {
                     text: 'Abrir Ubicación',
                     handler: () => {
-
                         let destination = clinic.lat + ',' + clinic.lon;
-                        
-                        if(this.platform.is('ios')){
-                            window.open('maps://?q=' + destination, '_system');
-                           // window.open('maps:?daddr=' + destination, '_system');
+                        let options: LaunchNavigatorOptions = {
                             
-                        } else {
-                            let label = encodeURI('Ubicación de '+ clinic.name);
-                            window.open('geo:0,0?q=' + destination + '(' + label + ')', '_system');
-                            //window.open('geo:?daddr=' + destination + '(' + label + ')', '_system');
+                            //app: LaunchNavigator.APPS.UBER
+                          };
+                          
+                          this.launchNavigator.navigate(destination, options)
+                            .then(
+                              success => console.log('Launched navigator'),
+                              error => console.log('Error launching navigator', error)
+                            );
+
+                        // let destination = clinic.lat + ',' + clinic.lon;
+                        
+                        // if(this.platform.is('ios')){
+                        //     window.open('maps://?q=' + destination, '_system');
+                        //    // window.open('maps:?daddr=' + destination, '_system');
+                            
+                        // } else {
+                        //     let label = encodeURI('Ubicación de '+ clinic.name);
+                        //     window.open('geo:0,0?q=' + destination + '(' + label + ')', '_system');
+                        //     //window.open('geo:?daddr=' + destination + '(' + label + ')', '_system');
                           
                             
-                        }
+                        // }
 
                     }
                 },

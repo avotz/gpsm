@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "673440482992",
+    "firebase_url": "https://gps-medica.firebaseio.com",
+    "project_id": "gps-medica",
+    "storage_bucket": "gps-medica.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:673440482992:android:97f77bdd73091ac6",
+        "android_client_info": {
+          "package_name": "com.avotz.gpsmedica"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "673440482992-857qhg7jcitm8nrhqvqt4v74n9am9tbl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5qFUqJ3POcYGDUKSH8R8R2m4rW005tHc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -4,6 +4,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import {Facebook} from '@ionic-native/facebook';
 import {GooglePlus } from '@ionic-native/google-plus';
+import { FCM } from '@ionic-native/fcm';
 
 import { HomePage } from '../pages/home/home';
 import { LandingPage } from '../pages/landing/landing';
@@ -12,7 +13,7 @@ import { SearchClinicPage } from '../pages/search-clinic/search-clinic';
 import { AccountPage } from '../pages/account/account';
 import { PatientsPage } from '../pages/patients/patients';
 
-
+declare var FirebasePlugin: any;
 @Component({
   templateUrl: 'app.html'
 })
@@ -23,12 +24,50 @@ export class MyApp {
 
   pages: Array<{title: string, component: any}>
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private fb:Facebook, private gp:GooglePlus) {
+  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private fb:Facebook, private gp:GooglePlus, private fcm: FCM) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
+
+      fcm.getToken().then(token=>{
+        console.log(`Obtained token: ${token}`);
+     })
+     fcm.onTokenRefresh().subscribe(token=>{
+      console.log(`Obtained token: ${token}`);
+    })
+    fcm.onNotification().subscribe(data=>{
+      if(data.wasTapped){
+        console.log("Received in background");
+        alert( JSON.stringify(data) );
+      } else {
+        console.log("Received in foreground");
+        alert( JSON.stringify(data) );
+      };
+    })
+      // FirebasePlugin.getToken(token => {
+      //   // save this server-side and use it to push notifications to this device
+      //   console.log(`Obtained token: ${token}`);
+      //   FirebasePlugin.subscribe('all');
+      // }, error => {
+      //   console.error(`Error: ${error}`);
+      // });
+
+      // FirebasePlugin.onTokenRefresh(token => {
+      //   // save this server-side and use it to push notifications to this device
+      //   console.log(`Refreshed token: ${token}`);
+      // }, function(error) {
+      //   console.error(`Error: ${error}`);
+      // });
+
+      // FirebasePlugin.onNotificationOpen(notification => {
+      //   // check notification contents and react accordingly
+      //   console.log(JSON.stringify(notification));
+      // }, function(error) {
+      //   console.error(`Error: ${error}`);
+      // });
+
     });
 
     // used for an example of ngFor and navigation

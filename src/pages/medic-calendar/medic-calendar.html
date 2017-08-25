@@ -8,11 +8,27 @@
 </ion-header>
 
 
-<ion-content padding>
-  <div class="header-title">
-    <p>Selecciona el dia y la hora en que quieres reservar la cita</p>
-    <h4>{{ currentDate }}</h4>
-  </div>
+<ion-content >
+    <ion-card>
+        
+        <ion-card-header>
+            Dr. {{ params.medic.name }}
+        </ion-card-header>
+        <ion-card-content>
+            
+            <div class="header-title">
+                <p> Reserve su cita en la hora deseada y llame para confirmar su espacio</p>
+                <p *ngIf="params.medic.phone">Tel: <a href="tel:{{ params.medic.phone }}">Llamar ({{params.medic.phone }})</a></p>
+                
+              </div>
+
+
+        </ion-card-content>
+
+
+
+    </ion-card>
+    <h6>{{ currentDate }}</h6>
 
   <calendar [eventSource]="eventSource" [calendarMode]="calendar.mode" [currentDate]="calendar.currentDate" (onCurrentDateChanged)="onCurrentDateChanged($event)"
     (onEventSelected)="onEventSelected($event)" step="30" [markDisabled]="markDisabled" noEventsLabel="No hay horario disponible">
