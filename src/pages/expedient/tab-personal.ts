@@ -162,14 +162,14 @@ export class TabPersonalPage {
           
               this.errorSave = error.statusText;
               console.log(error);
-              
+              this.isWaiting = null;
           });
   }
 }
 deleteAllergy(allergy){
     let message ='Alergia eliminada Correctamente';
     let styleClass ='success';
-   
+    this.isWaiting = true;
     this.patientService.deleteAllergy(allergy.id)
     .then(resp => {
         
@@ -197,6 +197,7 @@ deleteAllergy(allergy){
         });
 
         toast.present(toast);
+        this.isWaiting = null;
         
     });
   }
@@ -238,14 +239,14 @@ deleteAllergy(allergy){
           
               this.errorSave = error.statusText;
               console.log(error);
-              
+              this.isWaiting = null;
           });
   }
 }
 deleteMedicine(medicine){
     let message ='Medicamento eliminado Correctamente';
     let styleClass ='success';
-   
+    this.isWaiting = true;
     this.patientService.deleteMedicine(medicine.id)
     .then(resp => {
         
@@ -273,7 +274,7 @@ deleteMedicine(medicine){
         });
 
         toast.present(toast);
-        
+        this.isWaiting = null;
     });
   }
   saveSugar(){
@@ -314,14 +315,14 @@ deleteMedicine(medicine){
           
               this.errorSave = error.statusText;
               console.log(error);
-              
+              this.isWaiting = null;
           });
   }
 }
 deleteSugar(sugar){
     let message ='Control eliminado Correctamente';
     let styleClass ='success';
-   
+    this.isWaiting = true;
     this.patientService.deleteSugar(sugar.id)
     .then(resp => {
         
@@ -349,7 +350,7 @@ deleteSugar(sugar){
         });
 
         toast.present(toast);
-        
+        this.isWaiting = null;
     });
   }
   savePressure(){
@@ -390,6 +391,7 @@ deleteSugar(sugar){
             
                 this.errorSave = error.statusText;
                 console.log(error);
+                this.isWaiting = null;
                 
             });
     }
@@ -397,7 +399,7 @@ deleteSugar(sugar){
   deletePressure(pressure){
     let message ='Control eliminado Correctamente';
     let styleClass ='success';
-   
+    this.isWaiting = true;
     this.patientService.deletePressure(pressure.id)
     .then(resp => {
         
@@ -425,6 +427,7 @@ deleteSugar(sugar){
         });
 
         toast.present(toast);
+        this.isWaiting = null;
         
     });
   }

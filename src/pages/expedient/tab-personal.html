@@ -95,7 +95,7 @@
                         }}</small>
                     </h2>
 
-                    <button ion-button clear item-end (click)="deletePressure(item)" color="danger"><ion-icon name="trash"></ion-icon></button>
+                    <button ion-button clear item-end (click)="deletePressure(item)" color="danger" disabled={{isWaiting}}><ion-icon name="trash"></ion-icon></button>
                 </ion-item>
 
 
@@ -163,7 +163,7 @@
                                 }}</small>
                             </h2>
         
-                            <button ion-button clear item-end (click)="deleteSugar(item)" color="danger"><ion-icon name="trash"></ion-icon></button>
+                            <button ion-button clear item-end (click)="deleteSugar(item)" color="danger" disabled={{isWaiting}}><ion-icon name="trash"></ion-icon></button>
                         </ion-item>
         
         
@@ -211,7 +211,7 @@
                                
                             </h2>
         
-                            <button ion-button clear item-end (click)="deleteMedicine(item)" color="danger"><ion-icon name="trash"></ion-icon></button>
+                            <button ion-button clear item-end (click)="deleteMedicine(item)" color="danger" disabled={{isWaiting}}><ion-icon name="trash"></ion-icon></button>
                         </ion-item>
         
         
@@ -259,7 +259,7 @@
                                
                             </h2>
         
-                            <button ion-button clear item-end (click)="deleteAllergy(item)" color="danger" *ngIf="item.user.roles[0].name == 'paciente'"><ion-icon name="trash"></ion-icon></button>
+                            <button ion-button clear item-end (click)="deleteAllergy(item)" color="danger" *ngIf="item.user.roles[0].name == 'paciente'" disabled={{isWaiting}}><ion-icon name="trash"></ion-icon></button>
                         </ion-item>
         
         
