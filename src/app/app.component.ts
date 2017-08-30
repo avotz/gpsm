@@ -1,10 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform  } from 'ionic-angular';
+import { Nav, Platform, AlertController  } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import {Facebook} from '@ionic-native/facebook';
 import {GooglePlus } from '@ionic-native/google-plus';
-import { FCM } from '@ionic-native/fcm';
+//import { FCM } from '@ionic-native/fcm';
+import {AuthServiceProvider} from '../providers/auth-service/auth-service';
 
 import { HomePage } from '../pages/home/home';
 import { LandingPage } from '../pages/landing/landing';
@@ -24,49 +25,51 @@ export class MyApp {
 
   pages: Array<{title: string, component: any}>
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private fb:Facebook, private gp:GooglePlus, private fcm: FCM) {
+  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private fb:Facebook, private gp:GooglePlus, public alertCtrl: AlertController, public authService: AuthServiceProvider) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
 
-      fcm.getToken().then(token=>{
-        console.log(`Obtained token: ${token}`);
-     })
-     fcm.onTokenRefresh().subscribe(token=>{
-      console.log(`Obtained token: ${token}`);
+      FirebasePlugin.getToken( token => {
+        // save this server-side and use it to push notifications to this device
+         
+          if(token){
+            window.localStorage.setItem('push_token', token)
+            this.savePushToken(token)
+          }
+      }, (error) => {
+          console.error(error);
+          window.localStorage.setItem('push_token', '')
+      })
+      
+      FirebasePlugin.onTokenRefresh(token => {
+        // save this server-side and use it to push notifications to this device
+       
+        if(token){
+          window.localStorage.setItem('push_token', token)
+          this.savePushToken(token)
+        }
+        
+    }, (error) => {
+        console.error(error)
+        window.localStorage.setItem('push_token', '')
     })
-    fcm.onNotification().subscribe(data=>{
-      if(data.wasTapped){
-        console.log("Received in background");
-        alert( JSON.stringify(data) );
-      } else {
-        console.log("Received in foreground");
-        alert( JSON.stringify(data) );
-      };
+    
+      FirebasePlugin.onNotificationOpen(notification => {
+        if(!notification.tap){
+          let alert = alertCtrl.create({
+            title: 'Notificación',
+            message: notification.body
+          })
+          alert.present()
+        }
+    }, (error) => {
+        console.error(error);
     })
-      // FirebasePlugin.getToken(token => {
-      //   // save this server-side and use it to push notifications to this device
-      //   console.log(`Obtained token: ${token}`);
-      //   FirebasePlugin.subscribe('all');
-      // }, error => {
-      //   console.error(`Error: ${error}`);
-      // });
 
-      // FirebasePlugin.onTokenRefresh(token => {
-      //   // save this server-side and use it to push notifications to this device
-      //   console.log(`Refreshed token: ${token}`);
-      // }, function(error) {
-      //   console.error(`Error: ${error}`);
-      // });
 
-      // FirebasePlugin.onNotificationOpen(notification => {
-      //   // check notification contents and react accordingly
-      //   console.log(JSON.stringify(notification));
-      // }, function(error) {
-      //   console.error(`Error: ${error}`);
-      // });
 
     });
 
@@ -79,17 +82,67 @@ export class MyApp {
       { title: 'Pacientes', component: PatientsPage },
       { title: 'Cuenta', component: AccountPage }
     ];
-
+    //this.pushSetup();
     this.checkPreviousAuthorization(); 
+    
   }
+  savePushToken(token){
+    let auth = JSON.parse(window.localStorage.getItem('auth_user'));
+    
+      if(auth){
+        this.authService.updatePushToken({push_token: token})
+        .then(data => {
+
+          console.log('se actualizo token de las notificaciones '+ token)
+          window.localStorage.setItem('auth_user', JSON.stringify(data));
+          window.localStorage.setItem('push_token', data.push_token);
+          this.rootPage = HomePage;
+      
+
+        })
+        .catch(error => {
+            
+          console.error(error);
+          
+        });
+  }
+}
+  // pushSetup(){
+  //   FirebasePlugin.getToken(function(token) {
+  //       // save this server-side and use it to push notifications to this device
+  //       console.log(token);
+  //       window.localStorage.setItem('push_token', token);
+  //   }, function(error) {
+  //       console.error(error);
+  //       window.localStorage.setItem('push_token', '');
+  //   });
+    
+  //   FirebasePlugin.onTokenRefresh(function(token) {
+  //     // save this server-side and use it to push notifications to this device
+  //     console.log(token);
+  //     window.localStorage.setItem('push_token', token);
+  // }, function(error) {
+  //     console.error(error);
+  //     window.localStorage.setItem('push_token', '');
+  // });
+  
+  //   FirebasePlugin.onNotificationOpen(function(notification) {
+  //     alert(notification.body);
+  // }, function(error) {
+  //     console.error(error);
+  // });
+    
+   
+  // }
 
   checkPreviousAuthorization(): void { 
   
     if((window.localStorage.getItem('token') === "undefined" || window.localStorage.getItem('token') === null)) {
       this.rootPage = LandingPage;
     } else {
-      this.rootPage = HomePage;
+        this.rootPage = HomePage;
     }
+    
     
   } 
   
@@ -102,7 +155,8 @@ export class MyApp {
   logout(): void {
    
 	    window.localStorage.removeItem('auth_user');
-	    window.localStorage.removeItem('token');
+      window.localStorage.removeItem('token');
+    
        
       if(window.localStorage.getItem('login_type') === 'google')
         this.googlePlus_logout();

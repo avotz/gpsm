@@ -138,6 +138,9 @@
         </div>
         <div *ngSwitchCase="'appointments'">
                 <ion-list>
+                    <ion-item *ngIf="!appointments.length > 0" class="errors">
+                            <span>No tiene un historial de citas</span>
+                        </ion-item>
                     <ion-item *ngFor="let item of appointments">
                         <h2>{{item.title}}</h2>
                         <p>{{timeFormat(item.start)}} - {{timeFormat(item.end)}}</p>

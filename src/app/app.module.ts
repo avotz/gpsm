@@ -15,7 +15,10 @@ import { Transfer } from '@ionic-native/transfer';
 import { FilePath } from '@ionic-native/file-path';
 import { Camera } from '@ionic-native/camera';
 import { LaunchNavigator } from '@ionic-native/launch-navigator';
-import { FCM } from '@ionic-native/fcm';
+import { Network } from '@ionic-native/network';
+import { Diagnostic } from '@ionic-native/diagnostic';
+
+//import { FCM } from '@ionic-native/fcm';
 //import { ReactiveFormsModule } from '@angular/forms';
 
 import { MyApp } from './app.component';
@@ -38,6 +41,7 @@ import { TabPersonalPage } from '../pages/expedient/tab-personal';
 import { TabMedicoPage } from '../pages/expedient/tab-medico';
 import { ModalAppointmentPage } from '../pages/expedient/modal-appointment';
 
+import { NetworkServiceProvider } from '../providers/network-service/network-service';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { PatientServiceProvider } from '../providers/patient-service/patient-service';
 import { MedicServiceProvider } from '../providers/medic-service/medic-service';
@@ -109,7 +113,9 @@ import { ClinicServiceProvider } from '../providers/clinic-service/clinic-servic
     Facebook,
     GooglePlus,
     LaunchNavigator,
-    FCM,
+    Network,
+    Diagnostic,
+    NetworkServiceProvider,
     AuthServiceProvider,
     PatientServiceProvider,
     MedicServiceProvider,

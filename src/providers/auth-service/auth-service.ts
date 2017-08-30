@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions} from '@angular/http';
 import 'rxjs/Rx';
 import {SERVER_URL} from '../config';
-
 //import {Observable} from 'rxjs/Observable';
 //import 'rxjs/add/operator/map';
 
@@ -22,7 +21,7 @@ export class AuthServiceProvider {
   login(email, password){
         postData.email = email
         postData.password = password
-          
+       
         return this.http.post(SERVER_URL + '/api/token', postData)
             .map(res => res.json())
             .toPromise();
@@ -34,7 +33,8 @@ export class AuthServiceProvider {
         let postDataRegister = {
           name: name,
           email:email,
-          api_token: access_token
+          api_token: access_token,
+          push_token : window.localStorage.getItem('push_token')  
         }
         
         return this.http.post(SERVER_URL + '/api/user/social/register', postDataRegister)
@@ -46,7 +46,7 @@ export class AuthServiceProvider {
     }
     register(form){
        
-        
+        form.push_token = window.localStorage.getItem('push_token') 
         /*let postDataRegister = {
           name: form.name,
           email: form.email,
@@ -63,7 +63,8 @@ export class AuthServiceProvider {
     }
     update(form){
       
-     
+       form.push_token = window.localStorage.getItem('push_token') 
+       
        let headers = new Headers({'Accept': 'application/json',
        'Authorization': 'Bearer '+ window.localStorage.getItem('token')}),
 
@@ -76,6 +77,21 @@ export class AuthServiceProvider {
           
             
    }
+   updatePushToken(token){
+    
+   
+     let headers = new Headers({'Accept': 'application/json',
+     'Authorization': 'Bearer '+ window.localStorage.getItem('token')}),
+
+      options = new RequestOptions({headers: headers});
+     
+     return this.http.put(SERVER_URL + '/api/account/updatepush', token, options)
+         .map(res => res.json())
+        .toPromise();
+
+        
+          
+ }
     findAll() {
         
       

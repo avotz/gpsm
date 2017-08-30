@@ -5,8 +5,9 @@ import { File } from '@ionic-native/file';
 import { Transfer, TransferObject } from '@ionic-native/transfer';
 import { FilePath } from '@ionic-native/file-path';
 import { Camera } from '@ionic-native/camera';
-import {AuthServiceProvider} from '../../providers/auth-service/auth-service';
-import {SERVER_URL} from '../../providers/config';
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+import { SERVER_URL } from '../../providers/config';
+import { NetworkServiceProvider } from '../../providers/network-service/network-service';
 
 declare var cordova: any;
 
@@ -22,21 +23,21 @@ export class AccountPage {
   accountForm: FormGroup;
   errorAuth;
   tags;
-  user:any;
+  user: any;
   lastImage: string = null;
- 
-  submitAttempt: boolean = false;
-  constructor(public navCtrl: NavController, public navParams: NavParams,public authService: AuthServiceProvider, public loadingCtrl: LoadingController, public formBuilder: FormBuilder, public toastCtrl: ToastController, private camera: Camera, private transfer: Transfer, private file: File, private filePath: FilePath, public actionSheetCtrl: ActionSheetController, public platform: Platform,) {
 
-  	   this.navCtrl = navCtrl;
-       this.user = JSON.parse(window.localStorage.getItem('auth_user'));
-       console.log(this.user);
-       this.accountForm = formBuilder.group({
-        name: [this.user.name,Validators.required],
-        email: [this.user.email,Validators.required],
-        password: ['',Validators.minLength(6)]
-       
-      });
+  submitAttempt: boolean = false;
+  constructor(public navCtrl: NavController, public navParams: NavParams, public authService: AuthServiceProvider, public loadingCtrl: LoadingController, public formBuilder: FormBuilder, public toastCtrl: ToastController, private camera: Camera, private transfer: Transfer, private file: File, private filePath: FilePath, public actionSheetCtrl: ActionSheetController, public platform: Platform, public networkService: NetworkServiceProvider) {
+
+    this.navCtrl = navCtrl;
+    this.user = JSON.parse(window.localStorage.getItem('auth_user'));
+    console.log(this.user);
+    this.accountForm = formBuilder.group({
+      name: [this.user.name, Validators.required],
+      email: [this.user.email, Validators.required],
+      password: ['', Validators.minLength(6)]
+
+    });
   }
 
   public presentActionSheet() {
@@ -71,7 +72,7 @@ export class AccountPage {
       saveToPhotoAlbum: false,
       correctOrientation: true
     };
-   
+
     // Get the data of an image
     this.camera.getPicture(options).then((imagePath) => {
       // Special handling for Android library
@@ -95,11 +96,11 @@ export class AccountPage {
   // Create a new name for the image
   private createFileName() {
     var d = new Date(),
-    n = d.getTime(),
-    newFileName =  n + ".jpg";
+      n = d.getTime(),
+      newFileName = n + ".jpg";
     return newFileName;
   }
-   
+
   // Copy the image to a local folder
   private copyFileToLocalDir(namePath, currentName, newFileName) {
     this.file.copyFile(namePath, currentName, cordova.file.dataDirectory, newFileName).then(success => {
@@ -108,7 +109,7 @@ export class AccountPage {
       this.presentToast('Error while storing file.');
     });
   }
-   
+
   private presentToast(text) {
     let toast = this.toastCtrl.create({
       message: text,
@@ -117,7 +118,7 @@ export class AccountPage {
     });
     toast.present();
   }
-   
+
   // Always get the accurate path to your apps folder
   public pathForImage(img) {
     if (img === null) {
@@ -128,110 +129,118 @@ export class AccountPage {
   }
 
   public uploadImage() {
-    // Destination URL
-    var url = `${this.serverUrl}/api/account/avatars`;
-   
-    // File for Upload
-    var targetPath = this.pathForImage(this.lastImage);
-   
-    // File name only
-    var filename = this.lastImage;
+    if (this.networkService.noConnection()) {
+      this.networkService.showNetworkAlert();
+    } else {
+      // Destination URL
+      var url = `${this.serverUrl}/api/account/avatars`;
+
+      // File for Upload
+      var targetPath = this.pathForImage(this.lastImage);
+
+      // File name only
+      var filename = this.lastImage;
 
 
-    var options = {
-      fileKey: "photo",
-      fileName: filename,
-      chunkedMode: false,
-      mimeType: "multipart/form-data",
-      params : {'fileName': filename},
-      headers: {'Accept': 'application/json',
-      'Authorization': 'Bearer '+ window.localStorage.getItem('token')}
-    };
-   
-    const fileTransfer: TransferObject = this.transfer.create();
-   
-    let loader = this.loadingCtrl.create({
-      content: 'Subiendo...',
-    });
-    loader.present();
-   
-    // Use the FileTransfer to upload the image
-    fileTransfer.upload(targetPath, url, options).then(data => {
-      loader.dismissAll()
-      this.presentToast('Imagen subida correctamente.');
+      var options = {
+        fileKey: "photo",
+        fileName: filename,
+        chunkedMode: false,
+        mimeType: "multipart/form-data",
+        params: { 'fileName': filename },
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ' + window.localStorage.getItem('token')
+        }
+      };
 
-      console.log(data);
-      let d = new Date();
-      this.user.photo = '/storage/'+data.response+'?'+d.getTime();
-      window.localStorage.setItem('auth_user', JSON.stringify(this.user));
-      this.lastImage = null;
-    }, err => {
-      loader.dismissAll()
-      console.log(err);
-      this.presentToast('Error mientras se subia el archivo.');
-    });
-  }
+      const fileTransfer: TransferObject = this.transfer.create();
 
-   update(){
-
-     this.submitAttempt = true;
-     let message ='Cuenta Actualizada Correctamente';
-     let styleClass ='success';
-
-    if(this.accountForm.valid){
-      
- 
-     let loader = this.loadingCtrl.create({
-        content: "Espere por favor...",
-        //duration: 3000
+      let loader = this.loadingCtrl.create({
+        content: 'Subiendo...',
       });
+      loader.present();
 
-    loader.present();
-   
-     this.authService.update(this.accountForm.value)
-            .then(data => {
+      // Use the FileTransfer to upload the image
+      fileTransfer.upload(targetPath, url, options).then(data => {
+        loader.dismissAll()
+        this.presentToast('Imagen subida correctamente.');
 
-               loader.dismiss();
-               console.log(data);
-               if(data.error)
-              {
-                this.errorAuth = data.error;
-                return;
-              }
-      
-             
-             window.localStorage.setItem('auth_user', JSON.stringify(data));
-             
-
-              let toast = this.toastCtrl.create({
-                message: message,
-                cssClass: 'mytoast '+ styleClass,
-                duration: 3000
-            });
-              toast.present(toast);
-              this.errorAuth = "";
-              this.clearForm(this.accountForm);
-             
-            
-
-            })
-            .catch(error => {
-
-                alert(error)
-              
-               loader.dismiss();
-            });
-      }
+        console.log(data);
+        let d = new Date();
+        this.user.photo = '/storage/' + data.response + '?' + d.getTime();
+        window.localStorage.setItem('auth_user', JSON.stringify(this.user));
+        this.lastImage = null;
+      }, err => {
+        loader.dismissAll()
+        console.log(err);
+        this.presentToast('Error mientras se subia el archivo.');
+      });
+    }
   }
 
-  clearForm(form){
-    
-     form.get('password').setValue('')
-     
-   
-   }
+  update() {
+    if (this.networkService.noConnection()) {
+      this.networkService.showNetworkAlert();
+    } else {
+      this.submitAttempt = true;
+      let message = 'Cuenta Actualizada Correctamente';
+      let styleClass = 'success';
 
-  
+      if (this.accountForm.valid) {
+
+
+        let loader = this.loadingCtrl.create({
+          content: "Espere por favor...",
+          //duration: 3000
+        });
+
+        loader.present();
+
+        this.authService.update(this.accountForm.value)
+          .then(data => {
+
+            loader.dismiss();
+            console.log(data);
+            if (data.error) {
+              this.errorAuth = data.error;
+              return;
+            }
+
+
+            window.localStorage.setItem('auth_user', JSON.stringify(data));
+
+
+            let toast = this.toastCtrl.create({
+              message: message,
+              cssClass: 'mytoast ' + styleClass,
+              duration: 3000
+            });
+            toast.present(toast);
+            this.errorAuth = "";
+            this.clearForm(this.accountForm);
+
+
+
+          })
+          .catch(error => {
+
+            alert(error)
+
+            loader.dismiss();
+          });
+      }
+    }
+  }
+
+  clearForm(form) {
+
+    form.get('password').setValue('')
+
+
+  }
+
+
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad RegisterPage');

@@ -3,6 +3,7 @@ import { NavController, NavParams, LoadingController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Geolocation } from '@ionic-native/geolocation';
 import { ClinicServiceProvider } from '../../providers/clinic-service/clinic-service';
+import { NetworkServiceProvider } from '../../providers/network-service/network-service';
 import { provinces } from '../../providers/provinces';
 import {SERVER_URL} from '../../providers/config';
 import {ClinicDetailPage} from '../clinic-detail/clinic-detail';
@@ -22,7 +23,7 @@ export class SearchClinicPage {
     currentPage: any = 1;
     lastPage:any = 1;
     shownGroup = null;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public clinicService: ClinicServiceProvider, public formBuilder: FormBuilder, public geolocation: Geolocation) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public clinicService: ClinicServiceProvider, public formBuilder: FormBuilder, public geolocation: Geolocation,public networkService: NetworkServiceProvider) {
       
        this.navCtrl = navCtrl;
        this.clinics = [];
@@ -51,7 +52,9 @@ export class SearchClinicPage {
   }
   doInfinite(infiniteScroll) {
     console.log('Begin async operation');
-
+    if (this.networkService.noConnection()) {
+      this.networkService.showNetworkAlert();
+    } else {
       
     if(this.currentPage === this.lastPage)
       {
@@ -83,10 +86,12 @@ export class SearchClinicPage {
            
           });
 
-     
+   }
   }
   onGetGeolocalitation () {
-    
+    if (this.networkService.noConnection()) {
+      this.networkService.showNetworkAlert();
+    } else {
     this.geolocation.getCurrentPosition().then((position) => {
            
            console.log(position.coords.latitude, position.coords.longitude);
@@ -101,6 +106,7 @@ export class SearchClinicPage {
          }, (err) => {
            console.log(err);
          });
+      }
   }
   openClinicDetail(clinic: any) {
         this.navCtrl.push(ClinicDetailPage, clinic);
@@ -135,13 +141,17 @@ export class SearchClinicPage {
 
   }
   onSearch(){
-    this.submitAttempt = true;
-    this.clinicSearchForm.get('page').setValue(1);
-    this.currentPage = 1;
-    this.lastPage = 1;
-    if(this.clinicSearchForm.valid){
+    if (this.networkService.noConnection()) {
+      this.networkService.showNetworkAlert();
+    } else {
+      this.submitAttempt = true;
+      this.clinicSearchForm.get('page').setValue(1);
+      this.currentPage = 1;
+      this.lastPage = 1;
+      if(this.clinicSearchForm.valid){
 
-      this.fetchClinics(this.clinicSearchForm.value) 
+        this.fetchClinics(this.clinicSearchForm.value) 
+      }
     }
   }
   onInput(event) {

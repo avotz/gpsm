@@ -4,6 +4,7 @@ import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-na
 import {SERVER_URL} from '../../providers/config';
 import {MedicCalendarPage} from '../medic-calendar/medic-calendar';
 import { MedicServiceProvider } from '../../providers/medic-service/medic-service';
+import { NetworkServiceProvider } from '../../providers/network-service/network-service';
 import { SocialSharing } from '@ionic-native/social-sharing';
 
 @Component({
@@ -16,16 +17,20 @@ export class MedicDetailPage {
   medic: any;
   isWaiting: boolean = null;
 
-  constructor(public platform: Platform, public actionSheetCtrl: ActionSheetController, public navCtrl: NavController, public navParams: NavParams, public medicService: MedicServiceProvider, private socialSharing: SocialSharing, private launchNavigator: LaunchNavigator) {
+  constructor(public platform: Platform, public actionSheetCtrl: ActionSheetController, public navCtrl: NavController, public navParams: NavParams, public medicService: MedicServiceProvider, private socialSharing: SocialSharing, private launchNavigator: LaunchNavigator, public networkService: NetworkServiceProvider) {
     
     this.medic = this.navParams.data;
     this.isWaiting = true;
-    this.medicService.findById(this.medic.id)
-    .then(resp => {
-        this.medic = resp.data;
-        this.isWaiting = null;
-    })
-    .catch(error => alert(JSON.stringify(error)));
+    if (this.networkService.noConnection()) {
+      this.networkService.showNetworkAlert();
+    } else {
+      this.medicService.findById(this.medic.id)
+      .then(resp => {
+          this.medic = resp.data;
+          this.isWaiting = null;
+      })
+      .catch(error => alert(JSON.stringify(error)));
+    }
 
   }
   

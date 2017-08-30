@@ -7,6 +7,7 @@ import {AuthServiceProvider} from '../../providers/auth-service/auth-service';
 import { PasswordValidator } from '../../validators/password';
 import { HomePage } from '../home/home';
 import { RegisterPatientPage } from '../register-patient/register-patient';
+import { NetworkServiceProvider } from '../../providers/network-service/network-service';
 
 
 
@@ -23,7 +24,7 @@ export class RegisterPage {
   password;
   password_confirmation;*/
   submitAttempt: boolean = false;
-  constructor(public navCtrl: NavController, public navParams: NavParams,public authService: AuthServiceProvider, public loadingCtrl: LoadingController, private fb:Facebook, private gp:GooglePlus, public formBuilder: FormBuilder) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,public authService: AuthServiceProvider, public loadingCtrl: LoadingController, private fb:Facebook, private gp:GooglePlus, public formBuilder: FormBuilder, public networkService: NetworkServiceProvider) {
 
   	   this.navCtrl = navCtrl;
        this.authService = authService;
@@ -40,7 +41,10 @@ export class RegisterPage {
 
    newAccount(){
 
-     this.submitAttempt = true;
+    if (this.networkService.noConnection()) {
+      this.networkService.showNetworkAlert();
+    } else {
+    this.submitAttempt = true;
  
     if(this.registerForm.valid){
       
@@ -82,10 +86,14 @@ export class RegisterPage {
                loader.dismiss();
             });
       }
+    }
   }
 
    loginFacebook(){
-        this.fb.login(['public_profile', 'email'])
+    if (this.networkService.noConnection()) {
+      this.networkService.showNetworkAlert();
+    } else {   
+    this.fb.login(['public_profile', 'email'])
         .then(rta => {
           console.log(rta.status)
           let access_token = rta.authResponse.accessToken;
@@ -104,10 +112,14 @@ export class RegisterPage {
         .catch(error =>{
           console.error( error );
         });
+      }
    }
    
    loginGoogle() {
-      this.gp.login(
+    if (this.networkService.noConnection()) {
+      this.networkService.showNetworkAlert();
+    } else {  
+    this.gp.login(
           {
               'scopes': '',
               'webClientId': '',
@@ -128,6 +140,7 @@ export class RegisterPage {
               console.log('GOOGLE+ login FAILED', failure);
           }
       );
+    }
   }
 
   registerFromFB(data, access_token) {
@@ -139,9 +152,16 @@ export class RegisterPage {
                 
                 window.localStorage.setItem('token', data.access_token);
                 window.localStorage.setItem('login_type', 'facebook');
-                
-                this.navCtrl.push(HomePage);    
+                window.localStorage.setItem('auth_user', JSON.stringify(data.user));
 
+                if(data.patients)
+                  this.navCtrl.setRoot(HomePage);
+                else {
+                    this.navCtrl.push(RegisterPatientPage,{
+                      name: data.user.name, email:  data.user.email
+                  });  
+                }    
+                
             })
             .catch(error => alert(error));
          
@@ -156,8 +176,15 @@ export class RegisterPage {
               
               window.localStorage.setItem('token', data.access_token);
               window.localStorage.setItem('login_type', 'google');
+              window.localStorage.setItem('auth_user', JSON.stringify(data.user));
               
-              this.navCtrl.push(HomePage);        
+              if(data.patients)
+                this.navCtrl.setRoot(HomePage);
+              else {
+                  this.navCtrl.push(RegisterPatientPage,{
+                    name: data.user.name, email:  data.user.email
+                });  
+              }        
 
             })
             .catch(error => alert(error));

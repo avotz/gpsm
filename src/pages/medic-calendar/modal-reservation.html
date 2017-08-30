@@ -46,6 +46,10 @@
                                 Reservar
                             </button>
 
+                <button ion-button (click)="deleteAppointment(appointment)" color="danger" *ngIf="appointment.delete_id && appointment.show" disabled={{isWaiting}}>
+                        
+                            Cancelar Cita
+                        </button>
             </div>
 
 

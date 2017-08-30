@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController, ModalController, ToastController, ActionSheetController } from 'ionic-angular';
-import {PatientServiceProvider} from '../../providers/patient-service/patient-service';
+import { PatientServiceProvider } from '../../providers/patient-service/patient-service';
+import { NetworkServiceProvider } from '../../providers/network-service/network-service';
 import { ModalPatientPage } from './modal-patient';
 import { ExpedientPage } from '../expedient/expedient';
-import {SERVER_URL} from '../../providers/config';
+import { SERVER_URL } from '../../providers/config';
 
 @Component({
   selector: 'page-patients',
@@ -12,107 +13,115 @@ import {SERVER_URL} from '../../providers/config';
 export class PatientsPage {
 
   serverUrl: String = SERVER_URL;
-  patients:any = [];
+  patients: any = [];
   authUser: any;
   submitAttempt: boolean = false;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public patientService: PatientServiceProvider, public loadingCtrl: LoadingController, public modalCtrl: ModalController, public toastCtrl: ToastController, public actionSheetCtrl: ActionSheetController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public patientService: PatientServiceProvider, public loadingCtrl: LoadingController, public modalCtrl: ModalController, public toastCtrl: ToastController, public actionSheetCtrl: ActionSheetController, public networkService: NetworkServiceProvider) {
 
-       this.navCtrl = navCtrl;
-       this.authUser = JSON.parse(window.localStorage.getItem('auth_user'));
-      
-       this.getPatientsFromUser();
+    this.navCtrl = navCtrl;
+    this.authUser = JSON.parse(window.localStorage.getItem('auth_user'));
+
+    this.getPatientsFromUser();
 
   }
 
-  newPatient(){
+  newPatient() {
 
     let modal = this.modalCtrl.create(ModalPatientPage);
     modal.onDidDismiss(data => {
-      
-      if(data)
+
+      if (data)
         this.getPatientsFromUser();
 
     });
     modal.present();
 
   }
-  openExpedient(patient){
-    
+  openExpedient(patient) {
+
     this.navCtrl.push(ExpedientPage, patient);
   }
 
-  openPatientDetail(patient){
+  openPatientDetail(patient) {
 
     let modal = this.modalCtrl.create(ModalPatientPage, patient);
     modal.onDidDismiss(data => {
-      
-      if(data)
+
+      if (data)
         this.getPatientsFromUser();
 
     });
     modal.present();
   }
-  deletePatient(patient){
-    let loader = this.loadingCtrl.create({
-      content: "Espere por favor...",
-      
-    });
+  deletePatient(patient) {
+    if (this.networkService.noConnection()) {
+      this.networkService.showNetworkAlert();
+    } else {
+      let loader = this.loadingCtrl.create({
+        content: "Espere por favor...",
 
-    loader.present();
-    this.patientService.delete(patient.id)
-    .then(data => {
-       console.log(data)
-       let index = this.patients.indexOf(patient)
-       this.patients.splice(index, 1);
-     
-           
-       loader.dismiss();
-        
-         
-     })
-     .catch(error => {
-        let message =  'Ha ocurrido un error eliminado el paciente';
+      });
 
-        if(error.status == 403)
-          message =  'No se puede eliminar paciente por que tiene citas iniciadas';
+      loader.present();
+      this.patientService.delete(patient.id)
+        .then(data => {
+          console.log(data)
+          let index = this.patients.indexOf(patient)
+          this.patients.splice(index, 1);
 
-              let toast = this.toastCtrl.create({
-                  message: message,
-                  cssClass: 'mytoast error',
-                  duration: 3000
-              });
-      
-              toast.present(toast);
-        loader.dismiss();
-     });
+
+          loader.dismiss();
+
+
+        })
+        .catch(error => {
+          let message = 'Ha ocurrido un error eliminado el paciente';
+
+          if (error.status == 403)
+            message = 'No se puede eliminar paciente por que tiene citas iniciadas';
+
+          let toast = this.toastCtrl.create({
+            message: message,
+            cssClass: 'mytoast error',
+            duration: 3000
+          });
+
+          toast.present(toast);
+          loader.dismiss();
+        });
+    }
   }
-  getPatientsFromUser(){
+  getPatientsFromUser() {
+    if (this.networkService.noConnection()) {
+      this.networkService.showNetworkAlert();
+  } else {
     let loader = this.loadingCtrl.create({
       content: "Espere por favor...",
-      
+
     });
 
     loader.present();
     this.patientService.findAllByUser(this.authUser.id)
-    .then(data => {
-       console.log(data)
-       this.patients = data;
-       loader.dismiss();
-        
-         
-     })
-     .catch(error => {
-        let message =  'Ha ocurrido un error en consultado tus pacientes ';
-      
-              let toast = this.toastCtrl.create({
-                  message: message,
-                  cssClass: 'mytoast error',
-                  duration: 3000
-              });
-      
-              toast.present(toast);
+      .then(data => {
+        console.log(data)
+        this.patients = data;
         loader.dismiss();
-     });
+
+
+      })
+      .catch(error => {
+        let message = 'Ha ocurrido un error en consultado tus pacientes ';
+
+        let toast = this.toastCtrl.create({
+          message: message,
+          cssClass: 'mytoast error',
+          duration: 3000
+        });
+
+        toast.present(toast);
+        loader.dismiss();
+      });
+    }
   }
   presentOptions(patient) {
     let actionSheet = this.actionSheetCtrl.create({
@@ -123,17 +132,17 @@ export class PatientsPage {
           handler: () => {
             this.openPatientDetail(patient)
           }
-        },{
+        }, {
           text: 'Ver Expediente',
           handler: () => {
             this.openExpedient(patient)
           }
-        },{
+        }, {
           text: 'Eliminar',
           handler: () => {
             this.deletePatient(patient)
           }
-        },{
+        }, {
           text: 'Cancel',
           role: 'cancel',
           handler: () => {
@@ -144,8 +153,8 @@ export class PatientsPage {
     });
     actionSheet.present();
   }
-  
-  
+
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad PatientsPage');
   }

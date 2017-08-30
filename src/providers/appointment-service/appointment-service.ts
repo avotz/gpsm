@@ -50,6 +50,21 @@ export class AppointmentServiceProvider {
           
             
    }
+   delete(appointment_id){
+    
+   
+     let headers = new Headers({'Accept': 'application/json',
+     'Authorization': 'Bearer '+ window.localStorage.getItem('token')}),
+
+      options = new RequestOptions({headers: headers});
+     
+     return this.http.delete(SERVER_URL + '/api/appointments/'+ appointment_id +'/delete', options)
+         .map(res => res.json())
+        .toPromise();
+
+        
+          
+ }
    findById(id) {
     
      
