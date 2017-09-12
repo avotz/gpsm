@@ -85,7 +85,30 @@ export class ModalPatientPage {
                         })
                         .catch(error => {
 
-                            this.errorSave = error.statusText;
+                            let message = 'Ha ocurrido un error registrando el paciente.';
+                            let errorSaveText = error.statusText;
+                            
+                            if(error.status == 422)
+                            {
+                                let body = JSON.parse(error._body)
+                                
+                                errorSaveText = body.errors.email[0]
+
+                                message = message + errorSaveText
+                                
+                             }
+
+                            let toast = this.toastCtrl.create({
+                               message: message,
+                               cssClass: 'mytoast error',
+                               duration: 3000
+                             });
+                   
+                             toast.present(toast);
+                             this.isWaiting = null;
+                           
+                            
+                            this.errorSave = errorSaveText
                             console.log(error);
 
                         });
@@ -115,8 +138,30 @@ export class ModalPatientPage {
 
                         })
                         .catch(error => {
+                            let message = 'Ha ocurrido un error registrando el paciente.';
+                            let errorSaveText = error.statusText;
+                            
+                            if(error.status == 422)
+                            {
+                                let body = JSON.parse(error._body)
+                                
+                                errorSaveText = body.errors.email[0]
 
-                            this.errorSave = error.statusText;
+                                message = message + errorSaveText
+                                
+                             }
+
+                            let toast = this.toastCtrl.create({
+                               message: message,
+                               cssClass: 'mytoast error',
+                               duration: 3000
+                             });
+                   
+                             toast.present(toast);
+                             this.isWaiting = null;
+                           
+                            
+                            this.errorSave = errorSaveText
                             console.log(error);
 
                         });

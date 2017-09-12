@@ -1,5 +1,13 @@
 page-register {
  
+  .errors
+  {
+     text-align:center;
+     width:100%;
+     margin-top: 1rem;
+     color: red;
+   }
+
   p.error{
     color: #ea6153;
     border: 0;

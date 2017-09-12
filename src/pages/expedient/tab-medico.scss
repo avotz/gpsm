@@ -37,8 +37,16 @@ tab-medico {
         background: map-get($colors, light);
         color: white !important;
     }
+    ion-card-header.labresults{
+        background: map-get($colors, secondary);
+        color: white !important;
+    }
+    
     ion-note{
         font-size: 13px;
+    }
+    .margin-patient-bar{
+        margin-top: 30px;
     }
 
 }

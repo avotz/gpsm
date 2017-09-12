@@ -24,6 +24,9 @@ export class SearchMedicPage {
   currentPage: any = 1;
   lastPage: any = 1;
   shownGroup = null;
+  located = null;
+  lat;
+  lon;
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public medicService: MedicServiceProvider, public formBuilder: FormBuilder, public geolocation: Geolocation, public networkService: NetworkServiceProvider) {
 
     this.navCtrl = navCtrl;
@@ -84,6 +87,7 @@ export class SearchMedicPage {
           infiniteScroll.complete();
         })
         .catch(error => {
+          alert(error.statusText)
           console.log(JSON.stringify(error))
 
         });
@@ -94,6 +98,13 @@ export class SearchMedicPage {
     if (this.networkService.noConnection()) {
       this.networkService.showNetworkAlert();
     } else {
+      let loader = this.loadingCtrl.create({
+        content: "Buscando Coordenadas. Espere por favor...",
+        //duration: 3000
+      });
+  
+      loader.present();
+      
       this.geolocation.getCurrentPosition().then((position) => {
 
         console.log(position.coords.latitude, position.coords.longitude);
@@ -101,11 +112,15 @@ export class SearchMedicPage {
         //this.medicSearchForm.value.lat = position.coords.latitude
         //this.medicSearchForm.value.lon = position.coords.longitude
         this.medicSearchForm.get('lat').setValue(position.coords.latitude)
-        this.medicSearchForm.get('lon').setValue(position.coords.latitude)
-
+        this.medicSearchForm.get('lon').setValue(position.coords.longitude)
+        this.located = true;
+        this.lat = position.coords.latitude;
+        this.lon = position.coords.longitude;
+        loader.dismiss();
         this.onSearch();
 
       }, (err) => {
+        loader.dismiss();
         console.log(err);
       });
     }
@@ -131,7 +146,7 @@ export class SearchMedicPage {
         this.specialities = data;
 
       })
-        .catch(error => alert(JSON.stringify(error)));
+        .catch(error => alert(error.statusText));
     }
 
   }
@@ -196,7 +211,11 @@ export class SearchMedicPage {
       .then(data => {
         loader.dismiss();
 
-        this.medics = data.data;
+        // if(this.lat && this.lon)
+        //   this.clinics = data.data;
+        // else 
+          this.medics = data.data;
+
         this.medicSearchForm.get('page').setValue(data.current_page)
         this.currentPage = data.current_page;
         this.lastPage = data.last_page;
@@ -205,13 +224,13 @@ export class SearchMedicPage {
         this.submitAttempt = false;
       })
       .catch(error => {
-        console.log(JSON.stringify(error))
+        alert(error.statusText)
         loader.dismiss();
       });
 
   }
   clearForm(form) {
-
+    this.medics = [];
     form.get('q').setValue('')
     form.get('province').setValue('')
     form.get('canton').setValue('')
@@ -220,7 +239,11 @@ export class SearchMedicPage {
     form.get('lat').setValue('')
     form.get('lon').setValue('')
     form.get('page').setValue(1)
+    this.located = null
+    this.lat = null 
+    this.lon = null
     this.searchKey = 0;
+    
 
   }
   toggleGroup(group) {

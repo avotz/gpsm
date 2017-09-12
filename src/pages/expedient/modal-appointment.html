@@ -19,12 +19,82 @@
                 <ion-note item-end>{{dateFormat(appointment.date)}} </ion-note>
              
             </ion-item>
+            <ion-card>
+                    <ion-card-header (click)="toggleGroup(1)" [ngClass]="{active: isGroupShown(1)}" class="vital_signs">
+                            Signos Vitales
+                            <ion-icon color="light" item-right [name]="isGroupShown(1) ? 'arrow-dropdown' : 'arrow-dropright'"></ion-icon>
+                        </ion-card-header>
+                    <ion-card-content *ngIf="isGroupShown(1)">
+                    <ion-list>
+                        
+                        <ion-item>
+                            <ion-icon name='arrow-round-up' item-start></ion-icon>
+                            Altura
+                            <ion-note item-end>
+                             Mts {{ vitalSigns.height }}
+                            </ion-note>
+                           
+                        </ion-item>
+                        <ion-item>
+                            <ion-icon name='speedometer' item-start></ion-icon>
+                            Peso
+                            <ion-note item-end>
+                            Kg {{ vitalSigns.weight }}
+                            </ion-note>
+                            
+                        </ion-item>
+                        <ion-item>
+                            <ion-icon name='body' item-start></ion-icon>
+                            Masa Corporal
+                            <ion-note item-end>
+                            lmc {{ vitalSigns.mass }}
+                            </ion-note>
+                            
+                        </ion-item>
+                        <ion-item>
+                            <ion-icon name='thermometer' item-start></ion-icon>
+                            Temperatura
+                            <ion-note item-end>
+                            C {{ vitalSigns.temp }}
+                            </ion-note>
+                            
+                        </ion-item>
+                        <ion-item>
+                            <ion-icon name='refresh' item-start></ion-icon>
+                            Frecuencia Respiratoria
+                            <ion-note item-end>
+                            r/m {{ vitalSigns.respiratory_rate }}
+                            </ion-note>
+                            
+                        </ion-item>
+                        <ion-item>
+                            <ion-icon name='battery-full' item-start></ion-icon>
+                            Presión Arterial
+                            <ion-note item-end>
+                            P.S {{ vitalSigns.blood_ps }}  P.D {{ vitalSigns.blood_pd }}
+                            </ion-note>
+                            
+                        </ion-item>
+                        <ion-item>
+                            <ion-icon name='heart' item-start></ion-icon>
+                            Presión Arterial
+                            <ion-note item-end>
+                            l/m {{ vitalSigns.heart_rate }}
+                            </ion-note>
+                            
+                        </ion-item>
+                       
+                    </ion-list>
+                    </ion-card-content>
+    
+            </ion-card>
+            
     <ion-card>
-        <ion-card-header (click)="toggleGroup(1)" [ngClass]="{active: isGroupShown(1)}" class="disease_notes">
+        <ion-card-header (click)="toggleGroup(2)" [ngClass]="{active: isGroupShown(2)}" class="disease_notes">
             Notas de padecimientos
-            <ion-icon color="light" item-right [name]="isGroupShown(1) ? 'arrow-dropdown' : 'arrow-dropright'"></ion-icon>
+            <ion-icon color="light" item-right [name]="isGroupShown(2) ? 'arrow-dropdown' : 'arrow-dropright'"></ion-icon>
         </ion-card-header>
-        <ion-card-content *ngIf="isGroupShown(1)">
+        <ion-card-content *ngIf="isGroupShown(2)">
                 <div padding>
                     <ion-segment [(ngModel)]="disease_notes">
                             <ion-segment-button value="reason">
@@ -51,81 +121,17 @@
                         </div>
                 </div>
                
-                <div class="vital_signs">
-                        <h3>Signos Vitales</h3>
-                        <ion-list>
-                            
-                            <ion-item>
-                                <ion-icon name='arrow-round-up' item-start></ion-icon>
-                                Altura
-                                <ion-note item-end>
-                                 Mts {{ vitalSigns.height }}
-                                </ion-note>
-                               
-                            </ion-item>
-                            <ion-item>
-                                <ion-icon name='speedometer' item-start></ion-icon>
-                                Peso
-                                <ion-note item-end>
-                                Kg {{ vitalSigns.weight }}
-                                </ion-note>
-                                
-                            </ion-item>
-                            <ion-item>
-                                <ion-icon name='body' item-start></ion-icon>
-                                Masa Corporal
-                                <ion-note item-end>
-                                lmc {{ vitalSigns.mass }}
-                                </ion-note>
-                                
-                            </ion-item>
-                            <ion-item>
-                                <ion-icon name='thermometer' item-start></ion-icon>
-                                Temperatura
-                                <ion-note item-end>
-                                C {{ vitalSigns.temp }}
-                                </ion-note>
-                                
-                            </ion-item>
-                            <ion-item>
-                                <ion-icon name='refresh' item-start></ion-icon>
-                                Frecuencia Respiratoria
-                                <ion-note item-end>
-                                r/m {{ vitalSigns.respiratory_rate }}
-                                </ion-note>
-                                
-                            </ion-item>
-                            <ion-item>
-                                <ion-icon name='battery-full' item-start></ion-icon>
-                                Presión Arterial
-                                <ion-note item-end>
-                                P.S {{ vitalSigns.blood_ps }}  P.D {{ vitalSigns.blood_pd }}
-                                </ion-note>
-                                
-                            </ion-item>
-                            <ion-item>
-                                <ion-icon name='heart' item-start></ion-icon>
-                                Presión Arterial
-                                <ion-note item-end>
-                                l/m {{ vitalSigns.heart_rate }}
-                                </ion-note>
-                                
-                            </ion-item>
-                           
-                        </ion-list>
-        
-                </div>
-                
+               
                    
             
         </ion-card-content>
     </ion-card>
     <ion-card>
-        <ion-card-header (click)="toggleGroup(2)" [ngClass]="{active: isGroupShown(2)}" class="physical_exams">
+        <ion-card-header (click)="toggleGroup(3)" [ngClass]="{active: isGroupShown(3)}" class="physical_exams">
             Examen Físico
-            <ion-icon color="light" item-right [name]="isGroupShown(2) ? 'arrow-dropdown' : 'arrow-dropright'"></ion-icon>
+            <ion-icon color="light" item-right [name]="isGroupShown(3) ? 'arrow-dropdown' : 'arrow-dropright'"></ion-icon>
         </ion-card-header>
-        <ion-card-content *ngIf="isGroupShown(2)">
+        <ion-card-content *ngIf="isGroupShown(3)">
                 <ion-item *ngIf="appointment.physical_exams.cardio">
                     <h3>Cardiaco y Vascular</h3>
                     <p>{{ appointment.physical_exams.cardio }}</p>
@@ -174,11 +180,11 @@
         </ion-card-content>
     </ion-card>
     <ion-card>
-        <ion-card-header (click)="toggleGroup(3)" [ngClass]="{active: isGroupShown(3)}" class="diagnostics_treatments">
+        <ion-card-header (click)="toggleGroup(4)" [ngClass]="{active: isGroupShown(4)}" class="diagnostics_treatments">
             Diagnóstico y Tratamiento
-            <ion-icon color="light" item-right [name]="isGroupShown(3) ? 'arrow-dropdown' : 'arrow-dropright'"></ion-icon>
+            <ion-icon color="light" item-right [name]="isGroupShown(4) ? 'arrow-dropdown' : 'arrow-dropright'"></ion-icon>
         </ion-card-header>
-        <ion-card-content *ngIf="isGroupShown(3)">
+        <ion-card-content *ngIf="isGroupShown(4)">
                 <div padding>    
                     <ion-segment [(ngModel)]="diagnostics_treatments">
                         <ion-segment-button value="diagnostics">

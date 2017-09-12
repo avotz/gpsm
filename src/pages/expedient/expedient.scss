@@ -10,5 +10,22 @@ page-expedient {
         margin-left: 1rem;*/
         text-align: center
     }
+    .patient-bar{
+        background:  map-get($colors, light);
+        //color:#000;
+        padding: 1rem .5rem;
+        text-align: center;
+        a {
+            color:map-get($colors, celeste);
+        }
+    }
+    .tabs-md .tab-button[aria-selected=false] {
+        color: #fff; /*your  text color */
+        background: map-get($colors, primary); /* your background color*/
+    }
+    .tabs-md .tab-button[aria-selected=true] {
+        color: #fff; /*your  text color */
+        background: map-get($colors, danger); /* your background color*/
+    }
 
 }

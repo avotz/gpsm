@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { Platform, NavParams, ViewController, ToastController, LoadingController } from 'ionic-angular';
+import { Platform, NavParams, ViewController, ToastController, LoadingController, NavController } from 'ionic-angular';
 import { PatientServiceProvider } from '../../providers/patient-service/patient-service';
 import { AppointmentServiceProvider } from '../../providers/appointment-service/appointment-service';
 import { NetworkServiceProvider } from '../../providers/network-service/network-service';
+import { HomePage } from '../home/home';
 import moment from 'moment'
 @Component({
     selector: 'modal-reservation',
@@ -20,7 +21,7 @@ export class ModalReservationPage {
     patientIdSelected: any;
     reminder_time: string = "02:00:00";
     isWaiting: boolean = null;
-    constructor(public platform: Platform, public navParams: NavParams, public viewCtrl: ViewController, public toastCtrl: ToastController, public patientService: PatientServiceProvider, public appointmentService: AppointmentServiceProvider, public loadingCtrl: LoadingController, public networkService: NetworkServiceProvider) {
+    constructor(public platform: Platform, public navParams: NavParams, public viewCtrl: ViewController, public toastCtrl: ToastController, public patientService: PatientServiceProvider, public appointmentService: AppointmentServiceProvider, public loadingCtrl: LoadingController, public networkService: NetworkServiceProvider, public navCtrl: NavController) {
 
         this.appointment = this.navParams.data;
         this.medic = this.appointment.medic;
@@ -183,6 +184,9 @@ export class ModalReservationPage {
                     loader.dismiss();
                 });
         }
+    }
+    goHome(){
+        this.navCtrl.setRoot(HomePage);
     }
     parseDate(date) {
         return moment(date).format('YYYY-MM-DD h:mm A');

@@ -4,10 +4,13 @@
                 Mi Expediente
             </ion-title>
         </ion-navbar>
-    
+        <div class="patient-bar">
+                Paciente: {{ patient.fullname }}.  <a item-right clear (click)="goPatients()" color="light">Otro?</a>
+        </div>
     </ion-header>
-    <ion-tabs class="tabs-basic" [color]="'danger'">
-            <ion-tab tabTitle="Control Personal" [root]="tabPersonal" [rootParams]="personalTabParams"></ion-tab>
+    
+    <ion-tabs class="tabs-basic" >
+            <ion-tab tabTitle="Control Personal" [root]="tabPersonal" [rootParams]="personalTabParams" color="'danger'"></ion-tab>
             <ion-tab tabTitle="Control Medico" [root]="tabMedico" [rootParams]="medicalTabParams"></ion-tab>
             
         </ion-tabs>

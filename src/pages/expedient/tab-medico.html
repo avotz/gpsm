@@ -9,7 +9,7 @@
 
 
 <ion-content>
-    <div padding>
+    <div padding class="margin-patient-bar">
         <ion-segment [(ngModel)]="medical_control">
             <ion-segment-button value="history">
                 Historial médico
@@ -134,6 +134,23 @@
                         
                     </ion-card-content>
                 </ion-card>
+                <ion-card>
+                        <ion-card-header (click)="toggleGroup(7)" [ngClass]="{active: isGroupShown(7)}" class="labresults">
+                           Resultados de laboratorio
+                            <ion-icon color="light" item-right [name]="isGroupShown(7) ? 'arrow-dropdown' : 'arrow-dropright'"></ion-icon>
+                        </ion-card-header>
+                        <ion-card-content *ngIf="isGroupShown(7)">
+                            
+                                        <ion-item *ngFor="let item of labresults" >
+                                                <h2>{{ dateFormat(item.date) }}- <a (click)="download(item)">Descargar</a></h2>
+                                                
+                                                
+                                        
+                                        </ion-item>
+                                    
+                            
+                        </ion-card-content>
+                    </ion-card>
                 
         </div>
         <div *ngSwitchCase="'appointments'">

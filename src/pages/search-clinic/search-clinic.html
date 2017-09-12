@@ -53,14 +53,18 @@
                         </ion-select>
                     </ion-item>
                     <ion-item>
-                        <a ion-button (click)="onGetGeolocalitation()" icon-left>
+                        <a ion-button (click)="onGetGeolocalitation()" icon-left color="{{ located ? 'secondary' : 'primary' }}">
                             <ion-icon name="locate"></ion-icon>   
                             Cerca tuyo
                         </a>
-                        <a ion-button (click)="clearForm(this.medicSearchForm)" icon-left color="light">
+                        <a ion-button (click)="clearForm(this.clinicSearchForm)" icon-left color="light">
                             <ion-icon name="trash"></ion-icon>   
                             Limpiar
                         </a>
+                        <div *ngIf="lat && lon">
+                            <small>Lat:{{ lat }} </small>    
+                            <small>lng: {{ lon }} </small>   
+                        </div>
                     </ion-item>
                 </div>
                 

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, ToastController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {Facebook} from '@ionic-native/facebook';
 import {GooglePlus } from '@ionic-native/google-plus';
@@ -19,12 +19,13 @@ export class RegisterPage {
   registerForm: FormGroup;
   errorAuth;
   tags;
+  errorSave;
   /*name;
   email;
   password;
   password_confirmation;*/
   submitAttempt: boolean = false;
-  constructor(public navCtrl: NavController, public navParams: NavParams,public authService: AuthServiceProvider, public loadingCtrl: LoadingController, private fb:Facebook, private gp:GooglePlus, public formBuilder: FormBuilder, public networkService: NetworkServiceProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,public authService: AuthServiceProvider, public loadingCtrl: LoadingController, private fb:Facebook, private gp:GooglePlus, public formBuilder: FormBuilder, public networkService: NetworkServiceProvider, public toastCtrl: ToastController) {
 
   	   this.navCtrl = navCtrl;
        this.authService = authService;
@@ -69,6 +70,7 @@ export class RegisterPage {
       
               window.localStorage.setItem('token', data.access_token);
               window.localStorage.setItem('login_type', 'email');
+              window.localStorage.setItem('auth_user', JSON.stringify(data.user));
              
 
               this.errorAuth = "";
@@ -81,9 +83,31 @@ export class RegisterPage {
             })
             .catch(error => {
 
-                alert(error)
+                let message = 'Ha ocurrido un error registrando el usuario.';
+                let errorSaveText = error.statusText;
+                
+                if(error.status == 422)
+                {
+                    let body = JSON.parse(error._body)
+                    
+                    errorSaveText = body.errors.email[0]
+
+                    message = message + errorSaveText
+                    
+                }
+
+                let toast = this.toastCtrl.create({
+                  message: message,
+                  cssClass: 'mytoast error',
+                  duration: 3000
+                });
+      
+                toast.present(toast);
+               
               
-               loader.dismiss();
+                loader.dismiss();
+                this.errorSave = errorSaveText
+                console.log(error);
             });
       }
     }

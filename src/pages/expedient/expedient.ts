@@ -3,6 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import {PatientServiceProvider} from '../../providers/patient-service/patient-service';
 import { TabPersonalPage } from './tab-personal';
 import { TabMedicoPage } from './tab-medico';
+import { PatientsPage } from '../patients/patients';
 
 @Component({
   selector: 'page-expedient',
@@ -26,6 +27,11 @@ export class ExpedientPage {
    
 
   }
+  
+  goPatients(){
+    this.navCtrl.push(PatientsPage);
+}
+
   
   
   ionViewDidLoad() {

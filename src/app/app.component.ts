@@ -103,7 +103,8 @@ export class MyApp {
         .catch(error => {
             
           console.error(error);
-          
+         
+
         });
   }
 }
@@ -140,6 +141,7 @@ export class MyApp {
     if((window.localStorage.getItem('token') === "undefined" || window.localStorage.getItem('token') === null)) {
       this.rootPage = LandingPage;
     } else {
+        
         this.rootPage = HomePage;
     }
     

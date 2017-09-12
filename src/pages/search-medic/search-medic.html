@@ -59,14 +59,19 @@
                         </ion-select>
                     </ion-item>
                     <ion-item>
-                        <a ion-button (click)="onGetGeolocalitation()" icon-left>
+                        <a ion-button (click)="onGetGeolocalitation()" color="{{ located ? 'secondary' : 'primary' }}" icon-left>
                             <ion-icon name="locate"></ion-icon>   
                             Cerca tuyo
                         </a>
+                       
                         <a ion-button (click)="clearForm(this.medicSearchForm)" icon-left color="light">
                             <ion-icon name="trash"></ion-icon>   
                             Limpiar
                         </a>
+                        <div *ngIf="lat && lon">
+                            <small>Lat:{{ lat }} </small>    
+                            <small>lng: {{ lon }} </small>   
+                        </div>
                     </ion-item>
                 </div>
                 
@@ -77,23 +82,44 @@
         </ion-card>
         
     </form>
-    <ion-list>
+    <ion-list *ngIf="lat && lon; else elseBlockLat">
             <ion-item *ngIf="!medics.length > 0 && searchKey" class="errors">
                 <span>No se encontraron Médicos</span>
             </ion-item>
-        <ion-item *ngFor="let medic of medics">
-          
-                <ion-avatar item-start>
-                    <img src="{{ serverUrl}}{{ medic.photo }}"/>
-                </ion-avatar>
-                <h2>{{medic.name}}</h2>
-                <p *ngIf="medic.specialities.length; else elseBlock"><span *ngFor="let speciality of medic.specialities">{{ speciality.name}}</span></p>
-                <ng-template #elseBlock><p>Médico General</p></ng-template>
-            <button ion-button clear item-end (click)="openMedicDetail(medic)">Ver</button>
+           <ion-item *ngFor="let medic of medics">
+              <ion-item *ngFor="let doctor of medic.users" >
+                    <ion-avatar item-start>
+                        <img src="{{ serverUrl}}{{ doctor.photo }}"/>
+                    </ion-avatar>
+                    <h2>{{doctor.name}}</h2>
+                    <p *ngIf="doctor.specialities.length; else elseBlock"><span *ngFor="let speciality of doctor.specialities">{{ speciality.name}}</span></p>
+                    <ng-template #elseBlock><p>Médico General</p></ng-template>
+                <button ion-button clear item-end (click)="openMedicDetail(doctor)">Ver</button>
+            </ion-item>
         </ion-item>
         
 
     </ion-list>
+    <ng-template #elseBlockLat>
+        <ion-list>
+                <ion-item *ngIf="!medics.length > 0 && searchKey" class="errors">
+                    <span>No se encontraron Médicos</span>
+                </ion-item>
+            <ion-item *ngFor="let medic of medics">
+                
+                        <ion-avatar item-start>
+                            <img src="{{ serverUrl}}{{ medic.photo }}"/>
+                        </ion-avatar>
+                        <h2>{{medic.name}}</h2>
+                        <p *ngIf="medic.specialities.length; else elseBlock"><span *ngFor="let speciality of medic.specialities">{{ speciality.name}}</span></p>
+                        <ng-template #elseBlock><p>Médico General</p></ng-template>
+                    <button ion-button clear item-end (click)="openMedicDetail(medic)">Ver</button>
+               
+            </ion-item>
+            
+
+        </ion-list>
+    </ng-template>
     <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
         <ion-infinite-scroll-content></ion-infinite-scroll-content>
       </ion-infinite-scroll>

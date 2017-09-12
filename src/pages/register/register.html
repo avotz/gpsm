@@ -15,7 +15,11 @@
 <p *ngIf="submitAttempt" style="color: #ea6153;">Por favor rellene todos los campos.</p>
 
 <ion-content padding>
-
+    <ion-row class="errors-row">
+        <div *ngIf="errorSave" class="errors">
+          <span>{{ errorSave }}</span>
+        </div>
+    </ion-row>
 	<form [formGroup]="registerForm">
       <ion-row>
         <ion-col>

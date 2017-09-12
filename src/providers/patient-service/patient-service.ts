@@ -292,6 +292,24 @@ export class PatientServiceProvider {
 
     }
 
+    firstByUser(id) {
+        
+        
+                let headers = new Headers({
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer ' + window.localStorage.getItem('token')
+                }),
+        
+                    options = new RequestOptions({ headers: headers });
+        
+        
+                return this.http.get(SERVER_URL + '/api/users/' + id + '/patients/first', options)
+                    .map(res => res.json())
+                    .toPromise();
+        
+        
+            }
+
     findAllByUser(id) {
 
 

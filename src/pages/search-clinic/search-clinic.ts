@@ -23,6 +23,9 @@ export class SearchClinicPage {
     currentPage: any = 1;
     lastPage:any = 1;
     shownGroup = null;
+    located = null;
+    lat;
+    lon;
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public clinicService: ClinicServiceProvider, public formBuilder: FormBuilder, public geolocation: Geolocation,public networkService: NetworkServiceProvider) {
       
        this.navCtrl = navCtrl;
@@ -83,7 +86,7 @@ export class SearchClinicPage {
           })
           .catch(error => {
             console.log(JSON.stringify(error))
-           
+            alert(error.statusText)
           });
 
    }
@@ -92,6 +95,12 @@ export class SearchClinicPage {
     if (this.networkService.noConnection()) {
       this.networkService.showNetworkAlert();
     } else {
+      let loader = this.loadingCtrl.create({
+        content: "Buscando Coordenadas. Espere por favor...",
+        //duration: 3000
+      });
+
+      loader.present();
     this.geolocation.getCurrentPosition().then((position) => {
            
            console.log(position.coords.latitude, position.coords.longitude);
@@ -99,11 +108,15 @@ export class SearchClinicPage {
             //this.clinicSearchForm.value.lat = position.coords.latitude
             //this.clinicSearchForm.value.lon = position.coords.longitude
             this.clinicSearchForm.get('lat').setValue(position.coords.latitude)
-            this.clinicSearchForm.get('lon').setValue(position.coords.latitude)
-    
+            this.clinicSearchForm.get('lon').setValue(position.coords.longitude)
+            this.located = true;
+            this.lat = position.coords.latitude;
+            this.lon = position.coords.longitude;
+            loader.dismiss();
             this.onSearch();
       
          }, (err) => {
+            loader.dismiss();
            console.log(err);
          });
       }
@@ -189,13 +202,14 @@ export class SearchClinicPage {
                     this.searchKey = 1;
                 })
                 .catch(error => {
+                  alert(error.statusText)
                   console.log(JSON.stringify(error))
                   loader.dismiss();
                 });
         
   }
   clearForm(form){
-   
+    this.clinics = [];
     form.get('q').setValue('')
     form.get('province').setValue('')
     form.get('canton').setValue('')
@@ -204,6 +218,9 @@ export class SearchClinicPage {
     form.get('lon').setValue('')
     form.get('page').setValue(1)
     this.searchKey = 0;
+    this.lat = null;
+    this.lon = null;
+    this.located = null;
   }
   toggleGroup(group) {
       if (this.isGroupShown(group)) {
