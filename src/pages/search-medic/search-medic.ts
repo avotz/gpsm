@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Geolocation } from '@ionic-native/geolocation';
 import { MedicServiceProvider } from '../../providers/medic-service/medic-service';
@@ -7,6 +7,7 @@ import { NetworkServiceProvider } from '../../providers/network-service/network-
 import { provinces } from '../../providers/provinces';
 import { SERVER_URL } from '../../providers/config';
 import { MedicDetailPage } from '../medic-detail/medic-detail';
+import { Diagnostic } from '@ionic-native/diagnostic';
 //import { SearchValidator } from '../../validators/search';
 @Component({
   selector: 'page-search-medic',
@@ -27,7 +28,7 @@ export class SearchMedicPage {
   located = null;
   lat;
   lon;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public medicService: MedicServiceProvider, public formBuilder: FormBuilder, public geolocation: Geolocation, public networkService: NetworkServiceProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public medicService: MedicServiceProvider, public formBuilder: FormBuilder, public geolocation: Geolocation, public networkService: NetworkServiceProvider, public alertCtrl: AlertController,  private diagnostic: Diagnostic) {
 
     this.navCtrl = navCtrl;
     this.medics = [];
@@ -36,6 +37,18 @@ export class SearchMedicPage {
     this.createForm();
 
     this.loadSpecialities();
+
+    this.diagnostic.isLocationEnabled().then(
+      (isAvailable) => {
+    
+        if(!isAvailable){
+          this.networkService.showLocationAlert();
+        }
+      
+      
+      }).catch( (e) => {
+        console.log(JSON.stringify(e));
+      });
 
 
 
@@ -98,31 +111,59 @@ export class SearchMedicPage {
     if (this.networkService.noConnection()) {
       this.networkService.showNetworkAlert();
     } else {
-      let loader = this.loadingCtrl.create({
-        content: "Buscando Coordenadas. Espere por favor...",
-        //duration: 3000
-      });
-  
-      loader.present();
+
+          let loader = this.loadingCtrl.create({
+            content: "Buscando Coordenadas. Espere por favor...",
+            //duration: 3000
+          });
+          loader.present();
+          let options = {
+            timeout: 30000
+          }
+          this.geolocation.getCurrentPosition(options).then((position) => {
+
+            console.log(position.coords.latitude, position.coords.longitude);
+
+            //this.medicSearchForm.value.lat = position.coords.latitude
+            //this.medicSearchForm.value.lon = position.coords.longitude
+            this.medicSearchForm.get('lat').setValue(position.coords.latitude)
+            this.medicSearchForm.get('lon').setValue(position.coords.longitude)
+            this.located = true;
+            this.lat = position.coords.latitude;
+            this.lon = position.coords.longitude;
+            loader.dismiss();
+            this.onSearch();
+
+          }, (err) => {
+            loader.dismiss();
+
+            let locationAlert = this.alertCtrl.create({
+              title: 'La aplicación tardo mucho en contrar las coordenadas!',
+              subTitle: 'Por favor verifica que tu GPS este activo',
+              buttons:  [
+                {
+                  text: 'Cancelar',
+                  handler: () => {
+                    this.medicSearchForm.get('lat').setValue('')
+                    this.medicSearchForm.get('lon').setValue('')
+                    this.lat = null
+                    this.lon = null
+                    this.located = null
+                  }
+                },
+                {
+                  text: 'Reintentar',
+                  handler: () => {
+                    this.onGetGeolocalitation()
+                  }
+                }
+              ]
+            });
+
+            locationAlert.present();
+            console.log(err);
+          });
       
-      this.geolocation.getCurrentPosition().then((position) => {
-
-        console.log(position.coords.latitude, position.coords.longitude);
-
-        //this.medicSearchForm.value.lat = position.coords.latitude
-        //this.medicSearchForm.value.lon = position.coords.longitude
-        this.medicSearchForm.get('lat').setValue(position.coords.latitude)
-        this.medicSearchForm.get('lon').setValue(position.coords.longitude)
-        this.located = true;
-        this.lat = position.coords.latitude;
-        this.lon = position.coords.longitude;
-        loader.dismiss();
-        this.onSearch();
-
-      }, (err) => {
-        loader.dismiss();
-        console.log(err);
-      });
     }
   }
   openMedicDetail(medic: any) {

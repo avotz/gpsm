@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Geolocation } from '@ionic-native/geolocation';
 import { ClinicServiceProvider } from '../../providers/clinic-service/clinic-service';
@@ -7,6 +7,7 @@ import { NetworkServiceProvider } from '../../providers/network-service/network-
 import { provinces } from '../../providers/provinces';
 import {SERVER_URL} from '../../providers/config';
 import {ClinicDetailPage} from '../clinic-detail/clinic-detail';
+import { Diagnostic } from '@ionic-native/diagnostic';
 //import { SearchValidator } from '../../validators/search';
 @Component({
   selector: 'page-search-clinic',
@@ -26,7 +27,7 @@ export class SearchClinicPage {
     located = null;
     lat;
     lon;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public clinicService: ClinicServiceProvider, public formBuilder: FormBuilder, public geolocation: Geolocation,public networkService: NetworkServiceProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public clinicService: ClinicServiceProvider, public formBuilder: FormBuilder, public geolocation: Geolocation,public networkService: NetworkServiceProvider, public alertCtrl: AlertController,  private diagnostic: Diagnostic) {
       
        this.navCtrl = navCtrl;
        this.clinics = [];
@@ -34,6 +35,17 @@ export class SearchClinicPage {
        this.districts = [];
        this.createForm();
        
+       this.diagnostic.isLocationEnabled().then(
+        (isAvailable) => {
+      
+          if(!isAvailable){
+            this.networkService.showLocationAlert();
+          }
+        
+        
+        }).catch( (e) => {
+          console.log(JSON.stringify(e));
+        });
       
 
 
@@ -95,30 +107,59 @@ export class SearchClinicPage {
     if (this.networkService.noConnection()) {
       this.networkService.showNetworkAlert();
     } else {
-      let loader = this.loadingCtrl.create({
-        content: "Buscando Coordenadas. Espere por favor...",
-        //duration: 3000
-      });
+     
+            let loader = this.loadingCtrl.create({
+              content: "Buscando Coordenadas. Espere por favor...",
+              //duration: 3000
+            });
+            let options = {
+              timeout: 30000
+            }
+            loader.present();
 
-      loader.present();
-    this.geolocation.getCurrentPosition().then((position) => {
-           
-           console.log(position.coords.latitude, position.coords.longitude);
-      
-            //this.clinicSearchForm.value.lat = position.coords.latitude
-            //this.clinicSearchForm.value.lon = position.coords.longitude
-            this.clinicSearchForm.get('lat').setValue(position.coords.latitude)
-            this.clinicSearchForm.get('lon').setValue(position.coords.longitude)
-            this.located = true;
-            this.lat = position.coords.latitude;
-            this.lon = position.coords.longitude;
-            loader.dismiss();
-            this.onSearch();
-      
-         }, (err) => {
-            loader.dismiss();
-           console.log(err);
-         });
+          this.geolocation.getCurrentPosition(options).then((position) => {
+                
+                console.log(position.coords.latitude, position.coords.longitude);
+            
+                  //this.clinicSearchForm.value.lat = position.coords.latitude
+                  //this.clinicSearchForm.value.lon = position.coords.longitude
+                  this.clinicSearchForm.get('lat').setValue(position.coords.latitude)
+                  this.clinicSearchForm.get('lon').setValue(position.coords.longitude)
+                  this.located = true;
+                  this.lat = position.coords.latitude;
+                  this.lon = position.coords.longitude;
+                  loader.dismiss();
+                  this.onSearch();
+            
+              }, (err) => {
+                let locationAlert = this.alertCtrl.create({
+                  title: 'La aplicación tardo mucho en contrar las coordenadas!',
+                  subTitle: 'Por favor verifica que tu GPS este activo',
+                  buttons:  [
+                    {
+                      text: 'Cancelar',
+                      handler: () => {
+                        this.clinicSearchForm.get('lat').setValue('')
+                        this.clinicSearchForm.get('lon').setValue('')
+                        this.lat = null
+                        this.lon = null
+                        this.located = null
+                      }
+                    },
+                    {
+                      text: 'Reintentar',
+                      handler: () => {
+                        this.onGetGeolocalitation()
+                      }
+                    }
+                  ]
+                });
+    
+                locationAlert.present();
+                  loader.dismiss();
+                console.log(err);
+              });
+        
       }
   }
   openClinicDetail(clinic: any) {
