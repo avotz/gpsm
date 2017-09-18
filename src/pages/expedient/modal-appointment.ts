@@ -16,6 +16,7 @@ export class ModalAppointmentPage {
   vitalSigns: any;
   disease_notes: string = "reason";
   diagnostics_treatments: string = "diagnostics";
+  labexams: any = [];
   constructor(public platform: Platform, public navParams: NavParams, public viewCtrl: ViewController, public toastCtrl: ToastController, public patientService: PatientServiceProvider, public appointmentService: AppointmentServiceProvider, public loadingCtrl: LoadingController, public networkService: NetworkServiceProvider) {
 
     this.appointment = this.navParams.data;
@@ -36,6 +37,7 @@ export class ModalAppointmentPage {
         .then(resp => {
           this.appointment = resp.appointment;
           this.vitalSigns = resp.vitalSigns;
+          this.labexams = resp.labexams;
           this.isWaiting = null;
           loader.dismissAll();
         })

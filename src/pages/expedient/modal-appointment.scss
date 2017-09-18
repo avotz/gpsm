@@ -25,6 +25,11 @@ modal-appointment {
         background: map-get($colors, danger);
         color: white !important;
     }
+    ion-card-header.labresults{
+        background: map-get($colors, verde);
+        color: white !important;
+    }
+    
     h3{
         color: map-get($colors, celeste) !important;
     }

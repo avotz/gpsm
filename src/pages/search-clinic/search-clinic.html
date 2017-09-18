@@ -17,11 +17,26 @@
             </ion-item> -->
         </div>
         <ion-card>
+                <ion-item class="text-center">
+                        <a ion-button (click)="onGetGeolocalitation()" icon-left color="{{ located ? 'secondary' : 'primary' }}">
+                            <ion-icon name="locate"></ion-icon>   
+                            Cerca tuyo
+                        </a>
+                        <a ion-button (click)="clearForm(this.clinicSearchForm)" icon-left color="light">
+                            <ion-icon name="trash"></ion-icon>   
+                            Limpiar
+                        </a>
+                        <div *ngIf="lat && lon">
+                            <small>Lat:{{ lat }} </small>    
+                            <small>lng: {{ lon }} </small>   
+                        </div>
+                    </ion-item>
             <ion-card-header (click)="toggleGroup(1)" [ngClass]="{active: isGroupShown(1)}">
                 Parámetros de busqueda (Opcionales)
                 <ion-icon color="success" item-right [name]="isGroupShown(1) ? 'arrow-dropdown' : 'arrow-dropright'"></ion-icon>
             </ion-card-header>
             <ion-card-content >
+                    
                 <div class="optional-fields" *ngIf="isGroupShown(1)">
                    
                     <ion-item>
@@ -52,20 +67,7 @@
     
                         </ion-select>
                     </ion-item>
-                    <ion-item>
-                        <a ion-button (click)="onGetGeolocalitation()" icon-left color="{{ located ? 'secondary' : 'primary' }}">
-                            <ion-icon name="locate"></ion-icon>   
-                            Cerca tuyo
-                        </a>
-                        <a ion-button (click)="clearForm(this.clinicSearchForm)" icon-left color="light">
-                            <ion-icon name="trash"></ion-icon>   
-                            Limpiar
-                        </a>
-                        <div *ngIf="lat && lon">
-                            <small>Lat:{{ lat }} </small>    
-                            <small>lng: {{ lon }} </small>   
-                        </div>
-                    </ion-item>
+                    
                 </div>
                 
                 <button ion-button type="submit" (click)="onSearch()" full color="verde">

@@ -180,6 +180,34 @@
         </ion-card-content>
     </ion-card>
     <ion-card>
+        <ion-card-header (click)="toggleGroup(7)" [ngClass]="{active: isGroupShown(7)}" class="labresults">
+            Examenes de laboratorio
+            <ion-icon color="light" item-right [name]="isGroupShown(7) ? 'arrow-dropdown' : 'arrow-dropright'"></ion-icon>
+        </ion-card-header>
+        <ion-card-content *ngIf="isGroupShown(7)">
+            
+                        <ion-item *ngFor="let item of labexams" >
+                                <h2>{{ dateFormat(item.date) }}</h2>
+                                <ul>
+                                    <li *ngFor="let exam of item.exams">
+                                        <b>{{ exam.name }}</b>
+                                        <ul>
+                                                <li *ngFor="let item of exam.results">
+                                                        <a href="#" (click)="download(item)">{{ item.name }}</a>
+                                                    </li>
+                                            </ul> 
+                                        
+                                    </li>
+                                </ul>
+                                
+                                
+                        
+                        </ion-item>
+                    
+            
+        </ion-card-content>
+    </ion-card>
+    <ion-card>
         <ion-card-header (click)="toggleGroup(4)" [ngClass]="{active: isGroupShown(4)}" class="diagnostics_treatments">
             Diagnóstico y Tratamiento
             <ion-icon color="light" item-right [name]="isGroupShown(4) ? 'arrow-dropdown' : 'arrow-dropright'"></ion-icon>

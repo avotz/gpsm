@@ -26,7 +26,7 @@ export class TabMedicoPage {
   no_pathologicals: any = [];
   heredos: any = [];
   ginecos: any = [];
-  labresults: any = [];
+  labexams: any = [];
   medical_control: string = "history";
   storageDirectory: string;
   constructor(public navCtrl: NavController, public navParams: NavParams, public patientService: PatientServiceProvider, public toastCtrl: ToastController, public loadingCtrl: LoadingController, public modalCtrl: ModalController, public networkService: NetworkServiceProvider, private transfer: Transfer, private file: File, private filePath: FilePath,public platform: Platform, public alertCtrl: AlertController/*, private fileOpener: FileOpener*/) {
@@ -43,7 +43,7 @@ export class TabMedicoPage {
     this.getHistories()
 
   }
-  getHistories() {
+  getHistories(refresher:any = null) {
     if (this.networkService.noConnection()) {
       this.networkService.showNetworkAlert();
     } else {
@@ -51,13 +51,14 @@ export class TabMedicoPage {
         content: "Espere por favor...",
 
       });
+     
 
       loader.present();
       this.patientService.getHistory(this.patient.id)
         .then(data => {
 
           this.appointments = data.appointments;
-          this.labresults = data.labresults;
+          //this.labexams = data.labexams;
           this.history = data.history;
           this.allergies = this.history.allergies;
           this.pathologicals = this.history.pathologicals;
@@ -65,11 +66,18 @@ export class TabMedicoPage {
           this.heredos = this.history.heredos;
           this.ginecos = this.history.ginecos;
           loader.dismissAll();
+          
+          if(refresher)
+            refresher.complete()
+
         })
         .catch(error => {
 
           console.log(error);
           loader.dismissAll();
+
+          if(refresher)
+            refresher.complete()
 
         });
     }
@@ -123,6 +131,11 @@ export class TabMedicoPage {
       console.log(error)
     });
       
+  }
+  doRefresh(refresher:any){
+    console.log(refresher)
+    this.getHistories(refresher)
+
   }
 
   ionViewDidLoad() {
