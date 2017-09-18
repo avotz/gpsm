@@ -12,6 +12,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { File } from '@ionic-native/file';
 //import { FileOpener } from '@ionic-native/file-opener';
+import { PhotoViewer } from '@ionic-native/photo-viewer';
 import { Transfer } from '@ionic-native/transfer';
 import { FilePath } from '@ionic-native/file-path';
 import { Camera } from '@ionic-native/camera';
@@ -110,6 +111,7 @@ import { ClinicServiceProvider } from '../providers/clinic-service/clinic-servic
     File,
     Transfer,
     Camera,
+    PhotoViewer,
     FilePath,
     Facebook,
     GooglePlus,

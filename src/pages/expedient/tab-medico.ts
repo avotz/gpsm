@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, Platform, ToastController, LoadingController, ModalController, AlertController } from 'ionic-angular';
+import { NavController, NavParams, Platform, ToastController, LoadingController, ModalController } from 'ionic-angular';
 import { PatientServiceProvider } from '../../providers/patient-service/patient-service';
-import { File } from '@ionic-native/file';
-//import { FileOpener } from '@ionic-native/file-opener';
-import { Transfer, TransferObject } from '@ionic-native/transfer';
-import { FilePath } from '@ionic-native/file-path';
+//import { File } from '@ionic-native/file';
+//import { Transfer, TransferObject } from '@ionic-native/transfer';
+//import { FilePath } from '@ionic-native/file-path';
 import moment from 'moment'
 import { SERVER_URL } from '../../providers/config';
 import { ModalAppointmentPage } from './modal-appointment';
@@ -29,16 +28,16 @@ export class TabMedicoPage {
   labexams: any = [];
   medical_control: string = "history";
   storageDirectory: string;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public patientService: PatientServiceProvider, public toastCtrl: ToastController, public loadingCtrl: LoadingController, public modalCtrl: ModalController, public networkService: NetworkServiceProvider, private transfer: Transfer, private file: File, private filePath: FilePath,public platform: Platform, public alertCtrl: AlertController/*, private fileOpener: FileOpener*/) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public patientService: PatientServiceProvider, public toastCtrl: ToastController, public loadingCtrl: LoadingController, public modalCtrl: ModalController, public networkService: NetworkServiceProvider, public platform: Platform) {
 
     this.patient = this.navParams.data;
 
-    if (this.platform.is('ios')) {
-      this.storageDirectory = this.file.cacheDirectory; //cordova.file.documentsDirectory;
-    }
-    else{ //android
-      this.storageDirectory = this.file.cacheDirectory; //cordova.file.dataDirectory;
-    }
+    // if (this.platform.is('ios')) {
+    //   this.storageDirectory = this.file.cacheDirectory; //cordova.file.documentsDirectory;
+    // }
+    // else{ //android
+    //   this.storageDirectory = this.file.cacheDirectory; //cordova.file.dataDirectory;
+    // }
 
     this.getHistories()
 
@@ -108,30 +107,30 @@ export class TabMedicoPage {
     modal.present();
   }
 
-  download(item) {
-    const fileTransfer: TransferObject = this.transfer.create();
+  // download(item) {
+  //   const fileTransfer: TransferObject = this.transfer.create();
     
-    var url = encodeURI(`${this.serverUrl}/storage/patients/${this.patient.id }/labresults/${item.id}/${item.name}`);
-    var fileName = item.name;
-    //window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, fileSystemSuccess, fileSystemFail);
-    fileTransfer.download(url, this.storageDirectory  + 'gpsmedica/'+ fileName).then((entry) => {
-      console.log('download complete: ' + entry.toURL());
-      /*this.fileOpener.open(this.file.cacheDirectory  + 'gpsmedica/'+ fileName, 'image')
-      .then(() => console.log('File is opened'))
-      .catch(e => console.log('Error openening file', e));*/
-      //alert("File downloaded to "+this.file.cacheDirectory + 'gpsmedica/');
-      const alertSuccess = this.alertCtrl.create({
-        title: `Download Succeeded!`,
-        subTitle: `${fileName} was successfully downloaded to: ${entry.toURL()}`,
-        buttons: ['Ok']
-      });
+  //   var url = encodeURI(`${this.serverUrl}/storage/patients/${this.patient.id }/labresults/${item.id}/${item.name}`);
+  //   var fileName = item.name;
+  //   //window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, fileSystemSuccess, fileSystemFail);
+  //   fileTransfer.download(url, this.storageDirectory  + 'gpsmedica/'+ fileName).then((entry) => {
+  //     console.log('download complete: ' + entry.toURL());
+  //     /*this.fileOpener.open(this.file.cacheDirectory  + 'gpsmedica/'+ fileName, 'image')
+  //     .then(() => console.log('File is opened'))
+  //     .catch(e => console.log('Error openening file', e));*/
+  //     //alert("File downloaded to "+this.file.cacheDirectory + 'gpsmedica/');
+  //     const alertSuccess = this.alertCtrl.create({
+  //       title: `Download Succeeded!`,
+  //       subTitle: `${fileName} was successfully downloaded to: ${entry.toURL()}`,
+  //       buttons: ['Ok']
+  //     });
 
-      alertSuccess.present();
-    }, (error) => {
-      console.log(error)
-    });
+  //     alertSuccess.present();
+  //   }, (error) => {
+  //     console.log(error)
+  //   });
       
-  }
+  // }
   doRefresh(refresher:any){
     console.log(refresher)
     this.getHistories(refresher)
