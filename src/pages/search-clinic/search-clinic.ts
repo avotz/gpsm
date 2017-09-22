@@ -113,7 +113,7 @@ export class SearchClinicPage {
               //duration: 3000
             });
             let options = {
-              timeout: 30000
+              timeout: 60000
             }
             loader.present();
 

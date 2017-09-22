@@ -118,7 +118,7 @@ export class SearchMedicPage {
           });
           loader.present();
           let options = {
-            timeout: 30000
+            timeout: 60000
           }
           this.geolocation.getCurrentPosition(options).then((position) => {
 

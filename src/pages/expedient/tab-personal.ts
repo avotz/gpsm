@@ -26,14 +26,27 @@ export class TabPersonalPage {
     allergies: any = [];
     personal_control: string = "pressure";
     loader: any;
+    // optionsGlicemia: any = [];
+    // optionsPD: any = [];
+    // optionsPS: any = [];
+
     constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public patientService: PatientServiceProvider, public toastCtrl: ToastController, public loadingCtrl: LoadingController, public networkService: NetworkServiceProvider) {
 
         this.patient = this.navParams.data;
+       
+        
+        // for (var i = 40; i <= 150; i++) {
+        //     this.optionsPD.push(i);
+        // }
+        // for (var i = 60; i <= 250; i++) {
+        //     this.optionsPS.push(i);
+        // }
+
         this.pressureForm = formBuilder.group({
             date_control: [moment(new Date()).format("YYYY-MM-DD"), Validators.required],
             time_control: [moment(new Date()).format("HH:MM"), Validators.required],
-            pd: ['', Validators.compose([Validators.pattern('[0-9.]*'), Validators.required])],
-            ps: ['', Validators.compose([Validators.pattern('[0-9.]*'), Validators.required])],
+            pd: ['80', Validators.compose([Validators.pattern('[0-9.]*'), Validators.required])],
+            ps: ['120', Validators.compose([Validators.pattern('[0-9.]*'), Validators.required])],
 
         });
         this.sugarForm = formBuilder.group({
@@ -410,8 +423,8 @@ export class TabPersonalPage {
                         this.pressures.push(data);
                         this.isWaiting = null;
                         this.submitAttempt = false;
-                        //this.clearPressure(this.pressureForm)
-                        this.pressureForm.reset();
+                        this.clearPressure(this.pressureForm)
+                       // this.pressureForm.reset();
 
 
 
@@ -466,19 +479,19 @@ export class TabPersonalPage {
         }
     }
     clearPressure(form) {
-
-        form.get('date_control').setValue('')
-        form.get('time_control').setValue('')
-        form.get('pd').setValue('')
-        form.get('ps').setValue('')
+       
+        form.get('date_control').setValue(moment(new Date()).format("YYYY-MM-DD"))
+        form.get('time_control').setValue(moment(new Date()).format("HH:MM"))
+        form.get('pd').setValue('80')
+        form.get('ps').setValue('120')
 
 
 
     }
     clearSugar(form) {
 
-        form.get('date_control').setValue('')
-        form.get('time_control').setValue('')
+        form.get('date_control').setValue(moment(new Date()).format("YYYY-MM-DD"))
+        form.get('time_control').setValue(moment(new Date()).format("HH:MM"))
         form.get('glicemia').setValue('')
 
 

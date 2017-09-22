@@ -186,24 +186,25 @@
         </ion-card-header>
         <ion-card-content *ngIf="isGroupShown(7)">
             
-                        <ion-item *ngFor="let item of labexams" >
-                                <h2>{{ dateFormat(item.date) }}</h2>
-                                <ul>
-                                    <li *ngFor="let exam of item.exams">
-                                        <b>{{ exam.name }}</b>
-                                        <ul>
-                                                <li *ngFor="let item of exam.results">
-                                                        <a href="#" (click)="showImage(item)">{{ item.name }}</a>
-                                                    </li>
-                                            </ul> 
-                                        
-                                    </li>
-                                </ul>
+                <ion-item *ngFor="let item of labexams" >
+                        <h2>{{ dateFormat(item.date) }}</h2>
+                        <ul>
+                            <li *ngFor="let exam of item.exams">
+                                <b>{{ exam.name }}</b>
                                 
                                 
+                            </li>
+                        </ul>
                         
-                        </ion-item>
-                    
+                        
+                
+                </ion-item>
+                <h2>Resultados</h2>
+                <ul>
+                    <li *ngFor="let item of labresults">
+                            <a href="#" (click)="showImage(item)"><b>{{ dateFormat(item.date) }} - {{ item.name }}</b></a>
+                        </li>
+                </ul> 
             
         </ion-card-content>
     </ion-card>

@@ -6,6 +6,7 @@ import { NetworkServiceProvider } from '../../providers/network-service/network-
 import { PhotoViewer } from '@ionic-native/photo-viewer';
 import { SERVER_URL } from '../../providers/config';
 import moment from 'moment'
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 @Component({
   selector: 'modal-appointment',
   templateUrl: 'modal-appointment.html',
@@ -20,8 +21,9 @@ export class ModalAppointmentPage {
   disease_notes: string = "reason";
   diagnostics_treatments: string = "diagnostics";
   labexams: any = [];
+  labresults: any = [];
   storageDirectory: string;
-  constructor(public platform: Platform, public navParams: NavParams, public viewCtrl: ViewController, public toastCtrl: ToastController, public patientService: PatientServiceProvider, public appointmentService: AppointmentServiceProvider, public loadingCtrl: LoadingController, public networkService: NetworkServiceProvider, private photoViewer: PhotoViewer) {
+  constructor(public platform: Platform, public navParams: NavParams, public viewCtrl: ViewController, public toastCtrl: ToastController, public patientService: PatientServiceProvider, public appointmentService: AppointmentServiceProvider, public loadingCtrl: LoadingController, public networkService: NetworkServiceProvider, private photoViewer: PhotoViewer, public iab: InAppBrowser) {
 
     this.appointment = this.navParams.data;
 
@@ -42,6 +44,7 @@ export class ModalAppointmentPage {
           this.appointment = resp.appointment;
           this.vitalSigns = resp.vitalSigns;
           this.labexams = resp.labexams;
+          this.labresults = resp.labresults;
           this.isWaiting = null;
           loader.dismissAll();
         })
@@ -97,7 +100,13 @@ export class ModalAppointmentPage {
   showImage(result){
     let url = `${this.serverUrl}/storage/patients/${this.appointment.patient.id }/labresults/${result.id}/${result.name}`
 
-    this.photoViewer.show(url);
+  
+    let ext =  result.name.split('.').pop();
+
+    if(ext == 'pdf')
+      this.iab.create(url,'_system')
+    else 
+      this.photoViewer.show(url,'_blank');
     
   }
   dismiss() {

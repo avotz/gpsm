@@ -19,7 +19,7 @@ import { Camera } from '@ionic-native/camera';
 import { LaunchNavigator } from '@ionic-native/launch-navigator';
 import { Network } from '@ionic-native/network';
 import { Diagnostic } from '@ionic-native/diagnostic';
-
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 //import { FCM } from '@ionic-native/fcm';
 //import { ReactiveFormsModule } from '@angular/forms';
 
@@ -118,6 +118,7 @@ import { ClinicServiceProvider } from '../providers/clinic-service/clinic-servic
     LaunchNavigator,
     Network,
     Diagnostic,
+    InAppBrowser,
     NetworkServiceProvider,
     AuthServiceProvider,
     PatientServiceProvider,
