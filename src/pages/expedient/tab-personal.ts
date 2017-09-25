@@ -45,8 +45,8 @@ export class TabPersonalPage {
         this.pressureForm = formBuilder.group({
             date_control: [moment(new Date()).format("YYYY-MM-DD"), Validators.required],
             time_control: [moment(new Date()).format("HH:MM"), Validators.required],
-            pd: ['80', Validators.compose([Validators.pattern('[0-9.]*'), Validators.required])],
-            ps: ['120', Validators.compose([Validators.pattern('[0-9.]*'), Validators.required])],
+            pd: ['', Validators.compose([Validators.pattern('[0-9.]*'), Validators.required])],
+            ps: ['', Validators.compose([Validators.pattern('[0-9.]*'), Validators.required])],
 
         });
         this.sugarForm = formBuilder.group({

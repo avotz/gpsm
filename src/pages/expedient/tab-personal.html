@@ -52,42 +52,43 @@
                         </ion-col>
                     </ion-row>
                     <ion-row>
+                            <ion-col col-6>
+                                    <ion-item>
+                                        <ion-label >P.S</ion-label>
+                                        <!-- <ion-range min="60" max="250"  formControlName="ps" color="secondary">
+                                            <ion-label range-left>60</ion-label>
+                                            <ion-label range-right>250</ion-label>
+                                          </ion-range> --> 
+                                        <!-- <ion-select formControlName="ps" interface="action-sheet"  [class.invalid]="!pressureForm.controls.ps.valid && (pressureForm.controls.ps.dirty || submitAttempt)">
+                                            <ion-option value="{{ item }}" *ngFor="let item of optionsPS">{{ item }}</ion-option>
+                                            
+                                          </ion-select>-->
+                                        <ion-input formControlName="ps" type="number" [class.invalid]="!pressureForm.controls.ps.valid && (pressureForm.controls.ps.dirty || submitAttempt)"></ion-input>
+        
+                                    </ion-item>
+        
+                                    <p *ngIf="!pressureForm.controls.ps.valid  && (pressureForm.controls.ps.dirty || submitAttempt)" class="error">Ingrese un P.S válido.</p>
+        
+                                </ion-col>
                         <ion-col col-6>
                             <ion-item>
-                                <ion-label >P.D:  <ion-badge>{{ pressureForm.controls.pd.value }}</ion-badge></ion-label>
-                                <ion-range min="40" max="150"  formControlName="pd" color="secondary">
+                                <ion-label >P.D</ion-label>
+                               <!-- <ion-range min="40" max="150"  formControlName="pd" color="secondary">
                                     <ion-label range-left>40</ion-label>
                                     <ion-label range-right>150</ion-label>
-                                  </ion-range>
+                                  </ion-range> -->
                                  <!-- <ion-select formControlName="pd" interface="action-sheet" [class.invalid]="!pressureForm.controls.pd.valid && (pressureForm.controls.pd.dirty || submitAttempt)">
                                             <ion-option value="{{ item }}" *ngFor="let item of optionsPD">{{ item }}</ion-option>
                                             
                                           </ion-select> -->
-                                <!-- <ion-input formControlName="pd" type="number" [class.invalid]="!pressureForm.controls.pd.valid && (pressureForm.controls.pd.dirty || submitAttempt)"></ion-input> -->
+                                <ion-input formControlName="pd" type="number" [class.invalid]="!pressureForm.controls.pd.valid && (pressureForm.controls.pd.dirty || submitAttempt)"></ion-input>
 
                             </ion-item>
 
                             <p *ngIf="!pressureForm.controls.pd.valid  && (pressureForm.controls.pd.dirty || submitAttempt)" class="error">Ingrese un P.D válido.</p>
 
                         </ion-col>
-                        <ion-col col-6>
-                            <ion-item>
-                                <ion-label >P.S:  <ion-badge>{{ pressureForm.controls.ps.value }}</ion-badge></ion-label>
-                                <ion-range min="60" max="250"  formControlName="ps" color="secondary">
-                                    <ion-label range-left>60</ion-label>
-                                    <ion-label range-right>250</ion-label>
-                                  </ion-range>
-                                <!-- <ion-select formControlName="ps" interface="action-sheet"  [class.invalid]="!pressureForm.controls.ps.valid && (pressureForm.controls.ps.dirty || submitAttempt)">
-                                    <ion-option value="{{ item }}" *ngFor="let item of optionsPS">{{ item }}</ion-option>
-                                    
-                                  </ion-select> -->
-                                <!-- <ion-input formControlName="ps" type="number" [class.invalid]="!pressureForm.controls.ps.valid && (pressureForm.controls.ps.dirty || submitAttempt)"></ion-input> -->
-
-                            </ion-item>
-
-                            <p *ngIf="!pressureForm.controls.ps.valid  && (pressureForm.controls.ps.dirty || submitAttempt)" class="error">Ingrese un P.S válido.</p>
-
-                        </ion-col>
+                       
                     </ion-row>
                     <ion-row>
                         <ion-col class="signup-col">

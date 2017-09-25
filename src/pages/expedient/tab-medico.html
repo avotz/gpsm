@@ -16,144 +16,115 @@
             
         <ion-segment [(ngModel)]="medical_control">
             <ion-segment-button value="history">
-                Historial médico
+                Resumen ultimas 3 consultas
             </ion-segment-button>
-            <ion-segment-button value="appointments">
-                Historial consulta
-            </ion-segment-button>
+         
             
         </ion-segment>
     </div>
     <div [ngSwitch]="medical_control">
         <div *ngSwitchCase="'history'">
-                <ion-card>
-                    <ion-card-header (click)="toggleGroup(1)" [ngClass]="{active: isGroupShown(1)}" class="diagnostics">
-                        Diagnosticos
-                        <ion-icon color="light" item-right [name]="isGroupShown(1) ? 'arrow-dropdown' : 'arrow-dropright'"></ion-icon>
+            <ion-item *ngIf="!appointments.length > 0" class="errors">
+                <span>No tiene un historial de citas</span>
+            </ion-item>
+       
+            <ion-card *ngFor="let appointment of appointments">
+                    <ion-card-header class="diagnostics">
+                        Resumen cita {{ appointment.id }} - {{ timeFormat(appointment.start) }}
+                       
                     </ion-card-header>
-                    <ion-card-content *ngIf="isGroupShown(1)">
+                    <ion-card-content>
                         
-                                    <ion-item *ngFor="let appointment of appointments"  >
-                                        
-                                            <h2>{{ appointment.created_at }} - Dr. {{ appointment.user.name }} </h2> 
-                                            <ul *ngIf="appointment.diagnostics.length">
-                                                <li *ngFor="let diagnostic of appointment.diagnostics">
-                                                    <span><span class="text"> {{ diagnostic.name }}</span></span>
-                                                </li>
-                                            </ul>
-                                        
-                                        
-                                    </ion-item>
+                        <ion-item text-wrap>
+                            
+                                <h2>Notas de padecimiento </h2> 
+                                
+                                <ul>
+                                    <li>
+                                        <span><b>Razón de la visita:</b> {{ appointment.disease_notes.reason }}</span>
+                                    </li>
+                                    <li>
+                                        <span><b>Síntomas subjetivos:</b> {{ appointment.disease_notes.symptoms }}</span>
+                                    </li>
+                                    <li>
+                                        <span><b>Exploración Física:</b> {{ appointment.disease_notes.phisical_review }}</span>
+                                    </li>
+                                </ul>
+                            
+                            
+                        </ion-item>
+                        <ion-item text-wrap>
+                        
+                            <h2>Examen Físico </h2>
+                            <ul>
+                                
+                            
+                            <li *ngIf="appointment.physical_exams.cardio"><strong>Cardiaco y Vascular: </strong>{{ appointment.physical_exams.cardio }} </li> 
+                            <li *ngIf="appointment.physical_exams.linfatico"><strong >Sistema Linfático: </strong>{{ appointment.physical_exams.linfatico }} </li> 
+                            <li *ngIf="appointment.physical_exams.osteoarticular"><strong>Osteoarticular: </strong>{{ appointment.physical_exams.osteoarticular }}</li> 
+                            <li *ngIf="appointment.physical_exams.psiquiatrico"><strong>Psiquiátrico y Psicológico: </strong>{{ appointment.physical_exams.psiquiatrico }} </li> 
+                            <li *ngIf="appointment.physical_exams.digestivo"><strong>Aparato Digestivo: </strong>{{ appointment.physical_exams.digestivo }} </li> 
+                            <li *ngIf="appointment.physical_exams.dermatologico"><strong>Dermatológico: </strong>{{ appointment.physical_exams.dermatologico }} </li> 
+                            <li *ngIf="appointment.physical_exams.otorrinolaringologico"><strong>Otorrinolaringológico: </strong>{{ appointment.physical_exams.otorrinolaringologico }} </li> 
+                            <li *ngIf="appointment.physical_exams.reproductor"><strong>Aparato Reproductor: </strong>{{ appointment.physical_exams.reproductor }} </li> 
+                            <li *ngIf="appointment.physical_exams.urinario"><strong>Aparato Urinario: </strong>{{ appointment.physical_exams.urinario }} </li> 
+                            <li *ngIf="appointment.physical_exams.neurologico"><strong>Neurológico: </strong>{{ appointment.physical_exams.neurologico }}</li> 
+                            <li *ngIf="appointment.physical_exams.pulmonar"><strong>Pulmonar o Respiratorio: </strong>{{ appointment.physical_exams.pulmonar }}</li> 
+                        </ul>
+                        
+                        
+                    </ion-item>
+                    <ion-item text-wrap>
+                        
+                            <h2>Examen Laboratorio</h2> 
+                              <ul *ngIf="appointment.labexams.length">
+                                <li *ngFor="let exam of appointment.labexams">
+                                    <span><span class="text"> {{ exam.name }}</span></span>
+                                </li>
+                            </ul>
+                            <h2>Resultados</h2>
+                            <ul>
+                                <li *ngFor="let result of labresults">
+                                        <a href="#" (click)="showImage(result)"><b>{{ dateFormat(result.date) }} - {{ result.name }}</b></a>
+                                    </li>
+                            </ul> 
+                        
+                        
+                    </ion-item>
+                    <ion-item text-wrap>
+                        
+                            <h2>Diagnóstico</h2> 
+                              <ul *ngIf="appointment.diagnostics.length">
+                                <li *ngFor="let diagnostic of appointment.diagnostics">
+                                    <span><span class="text"> {{ diagnostic.name }}</span></span>
+                                </li>
+                            </ul>
+                        
+                        
+                    </ion-item>
+                    <ion-item text-wrap>
+                        
+                            <h2>Tratamiento</h2> 
+                              <ul *ngIf="appointment.treatments.length">
+                                <li *ngFor="let treatment of appointment.treatments">
+                                    <span><b> {{ treatment.name }}: </b> {{ treatment.comments }}</span>
+                                </li>
+                                <li>
+                                    <span><b>Recomendaciones Médicas: </b>{{ appointment.medical_instructions }}</span>
+                                </li>
+                            </ul>
+                        
+                        
+                    </ion-item>
                                
                         
                     </ion-card-content>
                 </ion-card>
-                <ion-card>
-                    <ion-card-header (click)="toggleGroup(2)" [ngClass]="{active: isGroupShown(2)}" class="allergies">
-                        Alergias
-                        <ion-icon color="light" item-right [name]="isGroupShown(2) ? 'arrow-dropdown' : 'arrow-dropright'"></ion-icon>
-                    </ion-card-header>
-                    <ion-card-content *ngIf="isGroupShown(2)">
-                        
-                                    <ion-item *ngFor="let item of allergies" >
-                                            <h2>{{ item.name }}</h2>
-                                            <p>Agregado por: {{ item.user.name }} - {{ item.created_at }}</p>
-                                               
-                                              
-                                    
-                                    </ion-item>
-                                
-                        
-                    </ion-card-content>
-                </ion-card>
-                <ion-card>
-                    <ion-card-header (click)="toggleGroup(3)" [ngClass]="{active: isGroupShown(3)}" class="pathologicals">
-                        Antecedentes Patológicos
-                        <ion-icon color="light" item-right [name]="isGroupShown(3) ? 'arrow-dropdown' : 'arrow-dropright'"></ion-icon>
-                    </ion-card-header>
-                    <ion-card-content *ngIf="isGroupShown(3)">
-                        
-                                    <ion-item *ngFor="let item of pathologicals" >
-                                            <h2>{{ item.name }}</h2>
-                                            <p>Dr. {{ item.user.name }} - {{ item.created_at }}</p>
-                                                
-                                                
-                                    
-                                    </ion-item>
-                                
-                        
-                    </ion-card-content>
-                </ion-card>
-                <ion-card>
-                    <ion-card-header (click)="toggleGroup(4)" [ngClass]="{active: isGroupShown(4)}" class="nopathologicals">
-                        Antecedentes No Patológicos
-                        <ion-icon color="light" item-right [name]="isGroupShown(4) ? 'arrow-dropdown' : 'arrow-dropright'"></ion-icon>
-                    </ion-card-header>
-                    <ion-card-content *ngIf="isGroupShown(4)">
-                        
-                                    <ion-item *ngFor="let item of no_pathologicals" >
-                                            <h2>{{ item.name }}</h2>
-                                            <p>Dr. {{ item.user.name }} - {{ item.created_at }}</p>
-                                                
-                                                
-                                    
-                                    </ion-item>
-                                
-                        
-                    </ion-card-content>
-                </ion-card>
-                <ion-card>
-                    <ion-card-header (click)="toggleGroup(5)" [ngClass]="{active: isGroupShown(5)}" class="heredo">
-                        Antecedentes Heredofamiliares
-                        <ion-icon color="light" item-right [name]="isGroupShown(5) ? 'arrow-dropdown' : 'arrow-dropright'"></ion-icon>
-                    </ion-card-header>
-                    <ion-card-content *ngIf="isGroupShown(5)">
-                        
-                                    <ion-item *ngFor="let item of heredos" >
-                                            <h2>{{ item.name }}</h2>
-                                            <p>Dr. {{ item.user.name }} - {{ item.created_at }}</p>
-                                                
-                                                
-                                    
-                                    </ion-item>
-                                
-                        
-                    </ion-card-content>
-                </ion-card>
-                <ion-card>
-                    <ion-card-header (click)="toggleGroup(6)" [ngClass]="{active: isGroupShown(6)}" class="gineco">
-                        Antecedentes Gineco-obstetricios
-                        <ion-icon color="light" item-right [name]="isGroupShown(6) ? 'arrow-dropdown' : 'arrow-dropright'"></ion-icon>
-                    </ion-card-header>
-                    <ion-card-content *ngIf="isGroupShown(6)">
-                        
-                                    <ion-item *ngFor="let item of ginecos" >
-                                            <h2>{{ item.name }}</h2>
-                                            <p>Dr. {{ item.user.name }} - {{ item.created_at }}</p>
-                                                
-                                                
-                                    
-                                    </ion-item>
-                                
-                        
-                    </ion-card-content>
-                </ion-card>
+                
                
                 
         </div>
-        <div *ngSwitchCase="'appointments'">
-                <ion-list>
-                    <ion-item *ngIf="!appointments.length > 0" class="errors">
-                            <span>No tiene un historial de citas</span>
-                        </ion-item>
-                    <ion-item *ngFor="let item of appointments">
-                        <h2>{{item.title}}</h2>
-                        <p>{{timeFormat(item.start)}} - {{timeFormat(item.end)}}</p>
-                        <ion-note item-end>{{dateFormat(item.date)}} </ion-note>
-                        <button ion-button clear item-end (click)="openAppointmentDetail(item)">Ver</button>
-                    </ion-item>
-                </ion-list>
-        </div>
+       
        
     </div>
    

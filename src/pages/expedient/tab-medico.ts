@@ -8,6 +8,8 @@ import moment from 'moment'
 import { SERVER_URL } from '../../providers/config';
 import { ModalAppointmentPage } from './modal-appointment';
 import { NetworkServiceProvider } from '../../providers/network-service/network-service';
+import { PhotoViewer } from '@ionic-native/photo-viewer';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 @Component({
   selector: 'tab-medico',
@@ -26,9 +28,10 @@ export class TabMedicoPage {
   heredos: any = [];
   ginecos: any = [];
   labexams: any = [];
+  labresults: any = [];
   medical_control: string = "history";
   storageDirectory: string;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public patientService: PatientServiceProvider, public toastCtrl: ToastController, public loadingCtrl: LoadingController, public modalCtrl: ModalController, public networkService: NetworkServiceProvider, public platform: Platform) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public patientService: PatientServiceProvider, public toastCtrl: ToastController, public loadingCtrl: LoadingController, public modalCtrl: ModalController, public networkService: NetworkServiceProvider, public platform: Platform, private photoViewer: PhotoViewer, public iab: InAppBrowser) {
 
     this.patient = this.navParams.data;
 
@@ -57,13 +60,13 @@ export class TabMedicoPage {
         .then(data => {
 
           this.appointments = data.appointments;
-          //this.labexams = data.labexams;
-          this.history = data.history;
-          this.allergies = this.history.allergies;
-          this.pathologicals = this.history.pathologicals;
-          this.no_pathologicals = this.history.nopathologicals;
-          this.heredos = this.history.heredos;
-          this.ginecos = this.history.ginecos;
+          this.labresults = data.labresults;
+          // this.history = data.history;
+          // this.allergies = this.history.allergies;
+          // this.pathologicals = this.history.pathologicals;
+          // this.no_pathologicals = this.history.nopathologicals;
+          // this.heredos = this.history.heredos;
+          // this.ginecos = this.history.ginecos;
           loader.dismissAll();
           
           if(refresher)
@@ -105,6 +108,18 @@ export class TabMedicoPage {
 
     });
     modal.present();
+  }
+  showImage(result){
+    let url = `${this.serverUrl}/storage/patients/${this.patient.id }/labresults/${result.id}/${result.name}`
+
+  
+    let ext =  result.name.split('.').pop();
+
+    if(ext == 'pdf')
+      this.iab.create(url,'_system')
+    else 
+      this.photoViewer.show(url,'_blank');
+    
   }
 
   // download(item) {

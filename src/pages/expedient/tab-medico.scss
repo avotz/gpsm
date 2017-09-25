@@ -45,6 +45,9 @@ tab-medico {
     ion-note{
         font-size: 13px;
     }
+    h2{
+        color: map-get($colors, celeste) !important;
+    }
     .margin-patient-bar{
         margin-top: 30px;
     }
