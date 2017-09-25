@@ -75,7 +75,9 @@ import { ClinicServiceProvider } from '../providers/clinic-service/clinic-servic
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp, {
+      backButtonText: 'Atras'
+    }),
     HttpModule,
     NgCalendarModule
     
