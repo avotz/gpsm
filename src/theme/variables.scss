@@ -93,10 +93,17 @@ $colors: (
 @import "noto-sans";
 
 .ios, .md{
-   .toolbar-background-md{
+   .toolbar-background-md, .toolbar-background-ios{
     background:#3c8dbc;
     color:white;
    }
+   .bar-button-default-ios, .toolbar-title-ios{
+    color:white;
+    .text-ios-primary{
+      color:white;
+    }
+   }
+   
    .toolbar-title-md{
    	color:white;
    }

@@ -340,8 +340,8 @@ export class TabPersonalPage {
                         this.sugars.push(data);
                         this.isWaiting = null;
                         this.submitAttempt = false;
-                        //this.clearSugar(this.sugarForm)
                         this.sugarForm.reset();
+                        this.clearSugar(this.sugarForm)
 
 
 
@@ -423,8 +423,8 @@ export class TabPersonalPage {
                         this.pressures.push(data);
                         this.isWaiting = null;
                         this.submitAttempt = false;
+                        this.pressureForm.reset();
                         this.clearPressure(this.pressureForm)
-                       // this.pressureForm.reset();
 
 
 
@@ -482,8 +482,8 @@ export class TabPersonalPage {
        
         form.get('date_control').setValue(moment(new Date()).format("YYYY-MM-DD"))
         form.get('time_control').setValue(moment(new Date()).format("HH:MM"))
-        form.get('pd').setValue('80')
-        form.get('ps').setValue('120')
+       // form.get('pd').setValue('')
+       // form.get('ps').setValue('')
 
 
 
@@ -492,7 +492,7 @@ export class TabPersonalPage {
 
         form.get('date_control').setValue(moment(new Date()).format("YYYY-MM-DD"))
         form.get('time_control').setValue(moment(new Date()).format("HH:MM"))
-        form.get('glicemia').setValue('')
+        //form.get('glicemia').setValue('')
 
 
     }

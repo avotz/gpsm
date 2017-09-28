@@ -1,5 +1,13 @@
 tab-medico {
-   
+    .content-md, .content-ios{
+        
+    }
+    .card-md, .card-ios{
+        background: #eee;
+        .item-md, .item-ios{
+            background: transparent;
+        }
+    }
     .errors{
         text-align: center;
     }
