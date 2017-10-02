@@ -8,6 +8,11 @@
           <span ion-text color="primary" showWhen="ios">Cancel</span>
           <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
         </button>
+        <button ion-button (click)="goHome()" color="primary">
+          
+              Ir a Inicio
+          </button>
+
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -113,7 +118,7 @@
     <ion-row>
       <ion-col class="signup-col">
         <button ion-button class="submit-btn" full (click)="savePatient()">Guardar</button>
-
+        
       </ion-col>
     </ion-row>
 

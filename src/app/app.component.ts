@@ -13,6 +13,7 @@ import { SearchMedicPage } from '../pages/search-medic/search-medic';
 import { SearchClinicPage } from '../pages/search-clinic/search-clinic';
 import { AccountPage } from '../pages/account/account';
 import { PatientsPage } from '../pages/patients/patients';
+import { ReviewPage } from '../pages/review/review';
 
 declare var FirebasePlugin: any;
 @Component({
@@ -80,7 +81,8 @@ export class MyApp {
       { title: 'Buscar Clínica', component: SearchClinicPage },
       { title: 'Mi Expediente', component: PatientsPage },
       { title: 'Pacientes', component: PatientsPage },
-      { title: 'Cuenta', component: AccountPage }
+      { title: 'Cuenta', component: AccountPage },
+      { title: 'Califica esta Aplicación', component: ReviewPage }
     ];
     //this.pushSetup();
     this.checkPreviousAuthorization(); 
@@ -151,7 +153,7 @@ export class MyApp {
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
-    this.nav.setRoot(page.component);
+    this.nav.push(page.component);
   }
 
   logout(): void {

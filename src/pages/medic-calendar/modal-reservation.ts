@@ -3,7 +3,7 @@ import { Platform, NavParams, ViewController, ToastController, LoadingController
 import { PatientServiceProvider } from '../../providers/patient-service/patient-service';
 import { AppointmentServiceProvider } from '../../providers/appointment-service/appointment-service';
 import { NetworkServiceProvider } from '../../providers/network-service/network-service';
-import { HomePage } from '../home/home';
+
 import moment from 'moment'
 @Component({
     selector: 'modal-reservation',
@@ -186,7 +186,10 @@ export class ModalReservationPage {
         }
     }
     goHome(){
-        this.navCtrl.setRoot(HomePage);
+        
+        let data = { toHome: true };
+        this.viewCtrl.dismiss(data);
+        
     }
     parseDate(date) {
         return moment(date).format('YYYY-MM-DD h:mm A');

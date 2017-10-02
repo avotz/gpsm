@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-navbar>
+      <button ion-button menuToggle>
+    <ion-icon name="menu"></ion-icon>
+  </button>
+      <ion-title>Califica esta aplicación</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<p *ngIf="submitAttempt" style="color: #ea6153;">Por favor revisa los campos con errores.</p>
+
+<ion-content padding>
+    
+  <ion-card>
+    
+    <ion-card-content>
+      <form [formGroup]="reviewForm">
+        <ion-row>
+          <ion-col>
+            <ion-list inset>
+              <ion-label>¿Que te parecio la app?</ion-label>
+              <ion-item>
+                  
+                  <ion-textarea formControlName="comment"[class.invalid]="!reviewForm.controls.comment.valid && (reviewForm.controls.comment.dirty || submitAttempt)"></ion-textarea>
+                <!-- <ion-input formControlName="comment" type="text" [class.invalid]="!reviewForm.controls.comment.valid && (reviewForm.controls.comment.dirty || submitAttempt)"></ion-input> -->
+  
+              </ion-item>
+               <ion-item *ngIf="!reviewForm.controls.comment.valid  && (reviewForm.controls.comment.dirty || submitAttempt)">
+                  <p>Por favor ingrese un comentario</p>
+              </ion-item>
+              
+            </ion-list>
+          </ion-col>
+        </ion-row>
+        
+        <ion-row>
+          <ion-col class="signup-col">
+            <button ion-button class="submit-btn" full (click)="send()">Enviar</button>
+           
+          </ion-col>
+        </ion-row>
+         
+      </form>
+    </ion-card-content>
+</ion-card>
+	
+    
+    <!-- <h3 [hidden]="lastImage !== null">Selecciona una imagen para cambiar de foto</h3> -->
+</ion-content>
+

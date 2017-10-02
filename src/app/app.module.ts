@@ -42,6 +42,7 @@ import { ExpedientPage } from '../pages/expedient/expedient';
 import { TabPersonalPage } from '../pages/expedient/tab-personal';
 import { TabMedicoPage } from '../pages/expedient/tab-medico';
 import { ModalAppointmentPage } from '../pages/expedient/modal-appointment';
+import { ReviewPage } from '../pages/review/review';
 
 import { NetworkServiceProvider } from '../providers/network-service/network-service';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
@@ -49,6 +50,7 @@ import { PatientServiceProvider } from '../providers/patient-service/patient-ser
 import { MedicServiceProvider } from '../providers/medic-service/medic-service';
 import { AppointmentServiceProvider } from '../providers/appointment-service/appointment-service';
 import { ClinicServiceProvider } from '../providers/clinic-service/clinic-service';
+import { ReviewServiceProvider } from '../providers/review-service/review-service';
 
 @NgModule({
   declarations: [
@@ -70,7 +72,8 @@ import { ClinicServiceProvider } from '../providers/clinic-service/clinic-servic
     ExpedientPage,
     TabPersonalPage,
     TabMedicoPage,
-    ModalAppointmentPage
+    ModalAppointmentPage,
+    ReviewPage
     
   ],
   imports: [
@@ -105,7 +108,8 @@ import { ClinicServiceProvider } from '../providers/clinic-service/clinic-servic
     ExpedientPage,
     TabPersonalPage,
     TabMedicoPage,
-    ModalAppointmentPage
+    ModalAppointmentPage,
+    ReviewPage
   ],
   providers: [
     StatusBar,
@@ -128,6 +132,7 @@ import { ClinicServiceProvider } from '../providers/clinic-service/clinic-servic
     MedicServiceProvider,
     ClinicServiceProvider,
     AppointmentServiceProvider,
+    ReviewServiceProvider,
     SocialSharing,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     {provide: LOCALE_ID, useValue: 'es-CR'},

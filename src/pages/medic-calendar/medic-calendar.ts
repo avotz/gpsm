@@ -219,8 +219,11 @@ export class MedicCalendarPage {
     let modal = this.modalCtrl.create(ModalReservationPage, evt);
     modal.onDidDismiss(data => {
 
-      if (data)
+      if (data.date)
         this.onCurrentDateChanged(data.date);
+
+      if(data.toHome)
+        this.goHome()
 
     });
     modal.present();
@@ -236,6 +239,9 @@ export class MedicCalendarPage {
     this.loadAppointments(dateFrom, dateTo);
 
 
+  }
+  goHome(){
+    this.navCtrl.popToRoot()
   }
 
 

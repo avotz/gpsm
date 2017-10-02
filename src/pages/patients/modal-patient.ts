@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Platform, NavParams, ViewController, ToastController, LoadingController } from 'ionic-angular';
+import { Platform, NavParams, ViewController, ToastController, LoadingController, NavController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PatientServiceProvider } from '../../providers/patient-service/patient-service';
 import { NetworkServiceProvider } from '../../providers/network-service/network-service';
@@ -17,7 +17,7 @@ export class ModalPatientPage {
     errorSave;
     submitAttempt: boolean = false;
     isSaved: boolean = false;
-    constructor(public platform: Platform, public navParams: NavParams, public viewCtrl: ViewController, public toastCtrl: ToastController, public patientService: PatientServiceProvider, public loadingCtrl: LoadingController, public formBuilder: FormBuilder, public networkService: NetworkServiceProvider) {
+    constructor(public platform: Platform, public navParams: NavParams, public navCtrl: NavController, public viewCtrl: ViewController, public toastCtrl: ToastController, public patientService: PatientServiceProvider, public loadingCtrl: LoadingController, public formBuilder: FormBuilder, public networkService: NetworkServiceProvider) {
 
         this.patient = this.navParams.data;
 
@@ -175,13 +175,16 @@ export class ModalPatientPage {
 
     }//savePatient
 
-
+    goHome(){
+       
+        this.viewCtrl.dismiss({ toHome: true });
+    }
 
     dismiss() {
         if (this.isSaved)
-            this.viewCtrl.dismiss({ data: true });
+            this.viewCtrl.dismiss({ fromUser: true });
         else
-            this.viewCtrl.dismiss();
+            this.viewCtrl.dismiss({});
 
     }
 

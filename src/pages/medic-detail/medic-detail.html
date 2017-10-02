@@ -23,11 +23,11 @@
                 <ion-icon name="home" item-left></ion-icon>
                 <p>{{clinic.name}}</p>
                 <h2>{{clinic.address}}</h2>
-                <button ion-button round item-right (click)="openCalendar(medic, clinic)" color="danger">
+                <button ion-button round item-right (click)="openCalendar(medic, clinic)" color="danger" >
                     <ion-icon name="calendar"></ion-icon>
                 
                 </button>
-                <button ion-button round item-right (click)="share(clinic)">
+                <button ion-button round item-right (click)="share(clinic)" *ngIf="clinic.lat && clinic.lon">
                     <ion-icon name="share"></ion-icon>
                 
                 </button>

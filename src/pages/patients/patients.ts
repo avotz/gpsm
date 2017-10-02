@@ -30,8 +30,11 @@ export class PatientsPage {
     let modal = this.modalCtrl.create(ModalPatientPage);
     modal.onDidDismiss(data => {
 
-      if (data)
+      if (data.fromUser)
         this.getPatientsFromUser();
+      
+        if(data.toHome)
+          this.goHome()
 
     });
     modal.present();
@@ -47,8 +50,11 @@ export class PatientsPage {
     let modal = this.modalCtrl.create(ModalPatientPage, patient);
     modal.onDidDismiss(data => {
 
-      if (data)
+      if (data.fromUser)
         this.getPatientsFromUser();
+
+      if(data.toHome)
+        this.goHome()
 
     });
     modal.present();
@@ -152,6 +158,11 @@ export class PatientsPage {
       ]
     });
     actionSheet.present();
+  }
+
+  goHome(){
+    this.navCtrl.popToRoot();
+   
   }
 
 

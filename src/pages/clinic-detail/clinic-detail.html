@@ -16,7 +16,7 @@
             <h2>{{clinic.name}}</h2>
             <h3>{{ clinic.address}}</h3>
             <p>{{clinic.phone}}</p>
-            <button ion-button round item-right (click)="share(clinic)" color="light">
+            <button ion-button round item-right (click)="share(clinic)" color="light" *ngIf="clinic.lat && clinic.lon">
                 <ion-icon name="share"></ion-icon>
             
             </button>

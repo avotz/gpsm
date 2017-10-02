@@ -1,13 +1,15 @@
 <ion-header>
   <ion-navbar>
-      <button ion-button menuToggle>
-        <ion-icon name="menu"></ion-icon>
-      </button>
+      
       <ion-title>Tus Pacientes</ion-title>
       <ion-buttons end>
         <button ion-button icon-only color="royal" (click)="newPatient()">
           <ion-icon name="person-add"></ion-icon>
         </button>
+        <button ion-button (click)="goHome()" color="primary">
+            
+                Ir a Inicio
+            </button>
       </ion-buttons>
   </ion-navbar>
 </ion-header>
