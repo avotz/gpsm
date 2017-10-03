@@ -6,6 +6,7 @@ import { SearchMedicPage } from '../search-medic/search-medic';
 import { SearchClinicPage } from '../search-clinic/search-clinic';
 //import { PatientsPage } from '../patients/patients';
 import { ExpedientPage } from '../expedient/expedient';
+import { ReviewPage } from '../review/review';
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -66,6 +67,9 @@ export class HomePage {
     this.navCtrl.push(SearchClinicPage)
     //this.navCtrl.setRoot(SearchMedicPage);
 
+  }
+  review(){
+    this.navCtrl.push(ReviewPage);
   }
 
 

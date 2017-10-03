@@ -20,6 +20,7 @@ import { LaunchNavigator } from '@ionic-native/launch-navigator';
 import { Network } from '@ionic-native/network';
 import { Diagnostic } from '@ionic-native/diagnostic';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { Ionic2RatingModule } from 'ionic2-rating';
 //import { FCM } from '@ionic-native/fcm';
 //import { ReactiveFormsModule } from '@angular/forms';
 
@@ -83,7 +84,8 @@ import { ReviewServiceProvider } from '../providers/review-service/review-servic
       
     }),
     HttpModule,
-    NgCalendarModule
+    NgCalendarModule,
+    Ionic2RatingModule
     
     
 

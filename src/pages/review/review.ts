@@ -12,6 +12,7 @@ import { NetworkServiceProvider } from '../../providers/network-service/network-
 export class ReviewPage {
  
   reviewForm: FormGroup;
+  //rate:any;
   errorAuth;
 
   submitAttempt: boolean = false;
@@ -21,6 +22,7 @@ export class ReviewPage {
    
     this.reviewForm = formBuilder.group({
       comment: ['', Validators.required],
+      rating: [3, Validators.required],
      
 
     });
@@ -38,6 +40,11 @@ export class ReviewPage {
     toast.present();
   }
 
+  onRateChange(event){
+
+    console.log(event)
+
+  }
   
   send() {
     if (this.networkService.noConnection()) {
@@ -94,6 +101,7 @@ export class ReviewPage {
 
     //form.get('password').setValue('')
     form.reset()
+    form.get('rating').setValue('3')
 
   }
 
