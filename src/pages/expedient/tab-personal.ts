@@ -170,7 +170,7 @@ export class TabPersonalPage {
                             duration: 3000
                         });
                         toast.present(toast);
-                        this.allergies.push(data);
+                        this.allergies.unshift(data);
                         this.isWaiting = null;
                         this.submitAttempt = false;
                         this.allergyForm.reset();
@@ -254,7 +254,7 @@ export class TabPersonalPage {
                             duration: 3000
                         });
                         toast.present(toast);
-                        this.medicines.push(data);
+                        this.medicines.unshift(data);
                         this.isWaiting = null;
                         this.submitAttempt = false;
                         this.medicineForm.reset();//.get('name').setValue('')
@@ -337,7 +337,7 @@ export class TabPersonalPage {
                             duration: 3000
                         });
                         toast.present(toast);
-                        this.sugars.push(data);
+                        this.sugars.unshift(data);
                         this.isWaiting = null;
                         this.submitAttempt = false;
                         this.sugarForm.reset();
@@ -420,7 +420,7 @@ export class TabPersonalPage {
                             duration: 3000
                         });
                         toast.present(toast);
-                        this.pressures.push(data);
+                        this.pressures.unshift(data);
                         this.isWaiting = null;
                         this.submitAttempt = false;
                         this.pressureForm.reset();

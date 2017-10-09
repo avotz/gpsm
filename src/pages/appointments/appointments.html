@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-navbar>
+      
+      <ion-title>Tus citas programadas</ion-title>
+      <ion-buttons end>
+        
+        <button ion-button (click)="goHome()" color="primary">
+            
+                Ir a Inicio
+            </button>
+      </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+
+
+<ion-content padding>
+  <ion-list>
+      <ion-item *ngIf="!scheduledAppointments.length > 0" class="errors">
+          <span>No se encontraron citas programadas</span>
+      </ion-item>
+      
+      <ion-item *ngFor="let item of scheduledAppointments">
+        <h2>{{item.title}}</h2>
+        <p>{{timeFormat(item.start)}} - {{timeFormat(item.end)}}</p>
+        <ion-note item-end>{{dateFormat(item.date)}} </ion-note>
+        <button ion-button clear item-end (click)="openAppointmentDetail(item)">Ver</button>
+      </ion-item>
+      
+
+  </ion-list>
+</ion-content>

@@ -91,8 +91,10 @@
                        
                     </ion-row>
                     <ion-row>
+                            
                         <ion-col class="signup-col">
-                            <button ion-button class="submit-btn" full (click)="savePressure()" disabled={{isWaiting}}>Guardar</button>
+                                <p *ngIf="pressures.length >= 10" class="error">Haz alcanzado el limite de 10 registros</p>
+                            <button ion-button class="submit-btn" full (click)="savePressure()" [disabled]="iswaiting || pressures.length >= 10">Guardar</button>
 
                         </ion-col>
                     </ion-row>
@@ -161,7 +163,8 @@
                             </ion-row>
                             <ion-row>
                                 <ion-col class="signup-col">
-                                    <button ion-button class="submit-btn" full (click)="saveSugar()" disabled={{isWaiting}}>Guardar</button>
+                                    <p *ngIf="sugars.length >= 10" class="error">Haz alcanzado el limite de 10 registros</p>
+                                    <button ion-button class="submit-btn" full (click)="saveSugar()" [disabled]="iswaiting || sugars.length >= 10">Guardar</button>
         
                                 </ion-col>
                             </ion-row>

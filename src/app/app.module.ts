@@ -44,6 +44,7 @@ import { TabPersonalPage } from '../pages/expedient/tab-personal';
 import { TabMedicoPage } from '../pages/expedient/tab-medico';
 import { ModalAppointmentPage } from '../pages/expedient/modal-appointment';
 import { ReviewPage } from '../pages/review/review';
+import { AppointmentsPage } from '../pages/appointments/appointments';
 
 import { NetworkServiceProvider } from '../providers/network-service/network-service';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
@@ -74,7 +75,8 @@ import { ReviewServiceProvider } from '../providers/review-service/review-servic
     TabPersonalPage,
     TabMedicoPage,
     ModalAppointmentPage,
-    ReviewPage
+    ReviewPage,
+    AppointmentsPage
     
   ],
   imports: [
@@ -111,7 +113,8 @@ import { ReviewServiceProvider } from '../providers/review-service/review-servic
     TabPersonalPage,
     TabMedicoPage,
     ModalAppointmentPage,
-    ReviewPage
+    ReviewPage,
+    AppointmentsPage
   ],
   providers: [
     StatusBar,

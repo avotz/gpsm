@@ -257,6 +257,7 @@ export class PatientServiceProvider {
 
 
     }
+   
     update(patient_id, form) {
 
 

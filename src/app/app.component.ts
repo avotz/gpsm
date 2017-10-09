@@ -14,6 +14,7 @@ import { SearchClinicPage } from '../pages/search-clinic/search-clinic';
 import { AccountPage } from '../pages/account/account';
 import { PatientsPage } from '../pages/patients/patients';
 import { ReviewPage } from '../pages/review/review';
+import { AppointmentsPage } from '../pages/appointments/appointments';
 
 declare var FirebasePlugin: any;
 @Component({
@@ -80,6 +81,7 @@ export class MyApp {
       { title: 'Buscar Médico', component: SearchMedicPage },
       { title: 'Buscar Clínica', component: SearchClinicPage },
       { title: 'Mi Expediente', component: PatientsPage },
+      { title: 'Consultas programadas', component: AppointmentsPage },
       { title: 'Pacientes', component: PatientsPage },
       { title: 'Cuenta', component: AccountPage },
       { title: 'Califica esta Aplicación', component: ReviewPage }

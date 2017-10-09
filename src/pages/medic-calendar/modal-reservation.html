@@ -37,8 +37,11 @@
                     <ion-icon name="calendar" item-left></ion-icon>
                     {{ parseDate(appointment.start) }}
                 </ion-item>
+                <ion-item text-wrap>
+                    <p *ngIf="medic.phone">Si lo desea puede confirmar su cita al tel: <a href="tel:{{ medic.phone }}">{{ medic.phone }}</a></p>
+                </ion-item>
            
-
+                
            
             <div class="buttons">
                 <button ion-button (click)="saveAppointment()" color="danger" *ngIf="!appointment.id && !appointment.show" disabled={{isWaiting}}>
@@ -64,7 +67,7 @@
 
     </ion-card>
 
-    <ion-card *ngIf="appointment.id">
+    <ion-card *ngIf="appointment.id && !appointment.fromScheduledAppointments">
 
         <ion-card-content>
             <h2>Deseas agregar un recordatorio a la cita recien creada?</h2>

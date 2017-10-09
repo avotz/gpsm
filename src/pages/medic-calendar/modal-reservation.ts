@@ -21,6 +21,7 @@ export class ModalReservationPage {
     patientIdSelected: any;
     reminder_time: string = "02:00:00";
     isWaiting: boolean = null;
+
     constructor(public platform: Platform, public navParams: NavParams, public viewCtrl: ViewController, public toastCtrl: ToastController, public patientService: PatientServiceProvider, public appointmentService: AppointmentServiceProvider, public loadingCtrl: LoadingController, public networkService: NetworkServiceProvider, public navCtrl: NavController) {
 
         this.appointment = this.navParams.data;
@@ -161,10 +162,11 @@ export class ModalReservationPage {
             this.appointmentService.delete(appointment.delete_id)
                 .then(data => {
                     console.log(data)
-
+                   
+                    let dataAppointment = { date: appointment.start };
 
                     loader.dismiss();
-                    this.dismiss();
+                    this.dismiss(dataAppointment);
 
 
                 })
@@ -179,7 +181,7 @@ export class ModalReservationPage {
                         cssClass: 'mytoast error',
                         duration: 3000
                     });
-
+                    console.log(error);
                     toast.present(toast);
                     loader.dismiss();
                 });
@@ -194,13 +196,25 @@ export class ModalReservationPage {
     parseDate(date) {
         return moment(date).format('YYYY-MM-DD h:mm A');
     }
-    dismiss() {
+    dismiss(dataDelete:any) {
+       
         let data = { date: this.appointment.date };
+       
+         if(this.appointment.fromScheduledAppointments){
 
-        // if(this.appointment.id)
-        this.viewCtrl.dismiss(data);
-        // else
-        //     this.viewCtrl.dismiss();
+            if(dataDelete)
+                this.viewCtrl.dismiss(dataDelete);
+            else 
+                this.viewCtrl.dismiss({date:''});  
+
+         }else{
+            if(dataDelete)
+                this.viewCtrl.dismiss(dataDelete);
+            else 
+                this.viewCtrl.dismiss(data);   
+          
+         
+        }
     }
 
 }
