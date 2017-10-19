@@ -110,9 +110,10 @@
                 <ion-item *ngFor="let item of pressures">
 
 
-                    <h2><b>P.S:</b> {{ item.ps }} / <b>P.D:</b> {{ item.pd }} - <small> {{ item.date_control }} {{ item.time_control
-                        }}</small>
+                    <h2>P.S: <b>{{ item.ps }}</b> / P.D: <b>{{ item.pd }}</b> 
                     </h2>
+                     <small item-end> {{ item.date_control }} {{ item.time_control
+                        }}</small>
 
                     <button ion-button clear item-end (click)="deletePressure(item)" color="danger" disabled={{isWaiting}}><ion-icon name="trash"></ion-icon></button>
                 </ion-item>
@@ -183,9 +184,10 @@
                         <ion-item *ngFor="let item of sugars">
         
         
-                            <h2><b>Glicemia:</b> {{ item.glicemia }} {{ item.pd }} - <small>{{ item.date_control }} {{ item.time_control
-                                }}</small>
+                            <h2>Glicemia: <b>{{ item.glicemia }}</b>   
                             </h2>
+                            <small item-end>{{ item.date_control }} {{ item.time_control
+                                }}</small>
         
                             <button ion-button clear item-end (click)="deleteSugar(item)" color="danger" disabled={{isWaiting}}><ion-icon name="trash"></ion-icon></button>
                         </ion-item>
@@ -235,7 +237,7 @@
                                
                             </h2>
         
-                            <button ion-button clear item-end (click)="deleteMedicine(item)" color="danger" disabled={{isWaiting}}><ion-icon name="trash"></ion-icon></button>
+                            <button ion-button clear item-end (click)="deleteMedicine(item)" color="danger" disabled={{isWaiting}} *ngIf="item.medic_id == medic_id"><ion-icon name="trash"></ion-icon></button>
                         </ion-item>
         
         

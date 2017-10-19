@@ -26,6 +26,7 @@ export class TabPersonalPage {
     allergies: any = [];
     personal_control: string = "pressure";
     loader: any;
+    medic_id: any;
     // optionsGlicemia: any = [];
     // optionsPD: any = [];
     // optionsPS: any = [];
@@ -33,7 +34,7 @@ export class TabPersonalPage {
     constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public patientService: PatientServiceProvider, public toastCtrl: ToastController, public loadingCtrl: LoadingController, public networkService: NetworkServiceProvider) {
 
         this.patient = this.navParams.data;
-       
+        this.medic_id = 0;
         
         // for (var i = 40; i <= 150; i++) {
         //     this.optionsPD.push(i);

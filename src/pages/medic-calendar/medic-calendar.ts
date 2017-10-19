@@ -18,6 +18,7 @@ export class MedicCalendarPage {
   loader: any;
   authUser: any;
   currentDate: any;
+  self: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public medicService: MedicServiceProvider, public modalCtrl: ModalController, public loadingCtrl: LoadingController, public toastCtrl: ToastController, public networkService: NetworkServiceProvider) {
 
     this.authUser = JSON.parse(window.localStorage.getItem('auth_user'));
@@ -26,14 +27,22 @@ export class MedicCalendarPage {
       currentDate: new Date(),
       mode: 'month'
     }
+    this.self = this;
 
   }
 
   markDisabled(date) {
+   
 
     var current = moment().format("YYYY-MM-DD");
     var dateCal = moment(date).format("YYYY-MM-DD");
-    return moment(dateCal).isBefore(current) //dateCal < current;
+    
+  
+      
+    return moment(dateCal).isBefore(current)
+
+
+   
   }
 
   loadAppointments(date_from, date_to) {
@@ -72,7 +81,8 @@ export class MedicCalendarPage {
     } else {
       this.medicService.findSchedules(this.params.medic.id, this.params.clinic.id, date_from, date_to)
         .then(data => {
-
+          this.schedules = data;
+          
           data.forEach(schedule => {
 
             let intervals = this.createIntervalsFromHours(moment(schedule.start).format("YYYY-MM-DD"), moment(schedule.start).format("HH:mm"), moment(schedule.end).format("HH:mm"), moment.duration(schedule.user.settings.slotDuration).asMinutes());
