@@ -133,7 +133,7 @@ export class SearchClinicPage {
             
               }, (err) => {
                 let locationAlert = this.alertCtrl.create({
-                  title: 'La aplicación tardo mucho en contrar las coordenadas!',
+                  title: 'La aplicación tardo mucho en encontrar las coordenadas!',
                   subTitle: 'Por favor verifica que tu GPS este activo',
                   buttons:  [
                     {

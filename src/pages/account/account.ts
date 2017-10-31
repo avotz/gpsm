@@ -31,13 +31,58 @@ export class AccountPage {
 
     this.navCtrl = navCtrl;
     this.user = JSON.parse(window.localStorage.getItem('auth_user'));
-    console.log(this.user);
+
     this.accountForm = formBuilder.group({
       name: [this.user.name, Validators.required],
       email: [this.user.email, Validators.required],
       password: ['', Validators.minLength(6)]
 
     });
+    
+    if (this.networkService.noConnection()) {
+      this.networkService.showNetworkAlert();
+    } else {
+      let loader = this.loadingCtrl.create({
+        content: "Espere por favor...",
+
+      });
+
+      loader.present();
+
+      this.authService.getUser()
+        .then(resp => {
+
+          this.user = resp;
+          
+          let d = new Date();
+          this.user.photo = this.user.photo + '?' + d.getTime()
+          console.log(this.user.photo)
+
+          window.localStorage.setItem('auth_user', JSON.stringify(resp));
+
+
+          this.accountForm.get('name').setValue(this.user.name)
+          this.accountForm.get('email').setValue(this.user.email)
+      
+
+          loader.dismissAll();
+        })
+        .catch(error => {
+
+          let message = 'Ha ocurrido un error en actualizando la cuenta';
+
+          let toast = this.toastCtrl.create({
+            message: message,
+            cssClass: 'mytoast error',
+            duration: 3000
+          });
+
+          toast.present(toast);
+          loader.dismiss();
+
+        });
+    }
+   
   }
 
   public presentActionSheet() {
