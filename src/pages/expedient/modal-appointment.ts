@@ -48,7 +48,20 @@ export class ModalAppointmentPage {
           this.isWaiting = null;
           loader.dismissAll();
         })
-        .catch(error => alert(JSON.stringify(error)));
+        .catch(error =>{
+
+          let message = 'Ha ocurrido un error actualizado la cuenta';
+
+          let toast = this.toastCtrl.create({
+            message: message,
+            cssClass: 'mytoast error',
+            duration: 3000
+          });
+
+          toast.present(toast);
+          loader.dismiss();
+
+        });
     }
 
 

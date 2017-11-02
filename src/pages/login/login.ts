@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, ToastController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {Facebook} from '@ionic-native/facebook';
 import {GooglePlus } from '@ionic-native/google-plus';
@@ -19,7 +19,7 @@ export class LoginPage {
   password;
   loginForm: FormGroup;
   submitAttempt: boolean = false;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public authService: AuthServiceProvider, public loadingCtrl: LoadingController, private fb:Facebook, private gp:GooglePlus, public formBuilder: FormBuilder, public networkService: NetworkServiceProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public authService: AuthServiceProvider, public loadingCtrl: LoadingController, private fb: Facebook, private gp: GooglePlus, public formBuilder: FormBuilder, public networkService: NetworkServiceProvider, public toastCtrl: ToastController) {
 
   	   this.navCtrl = navCtrl;
        this.authService = authService;
@@ -81,8 +81,15 @@ export class LoginPage {
                   })
                   .catch(error => {
 
-                      alert(error)
-                    
+                    let message = 'Ha ocurrido un error iniciando sesion';
+
+                    let toast = this.toastCtrl.create({
+                      message: message,
+                      cssClass: 'mytoast error',
+                      duration: 3000
+                    });
+
+                    toast.present(toast);
                     loader.dismiss();
                   });
         }
@@ -167,7 +174,17 @@ export class LoginPage {
                   }    
 
               })
-              .catch(error => alert(error));
+              .catch(error =>{
+                let message = 'Ha ocurrido un error en el registro desde una red social';
+
+                let toast = this.toastCtrl.create({
+                  message: message,
+                  cssClass: 'mytoast error',
+                  duration: 3000
+                });
+
+                toast.present(toast);
+              });
         }
     }
 
@@ -194,7 +211,18 @@ export class LoginPage {
                 }    
 
               })
-              .catch(error => alert(error));
+              .catch(error => {
+                let message = 'Ha ocurrido un error en el registro desde una red social';
+
+                let toast = this.toastCtrl.create({
+                  message: message,
+                  cssClass: 'mytoast error',
+                  duration: 3000
+                });
+
+                toast.present(toast);
+                
+              });
           }
         
     }

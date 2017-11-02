@@ -88,7 +88,16 @@ export class ReviewPage {
           })
           .catch(error => {
 
-            alert(error)
+            let message = 'Ha ocurrido un error enviando la encuesta';
+
+            let toast = this.toastCtrl.create({
+              message: message,
+              cssClass: 'mytoast error',
+              duration: 3000
+            });
+
+            toast.present(toast);
+            loader.dismiss();
             this.submitAttempt = false;
 
             loader.dismiss();

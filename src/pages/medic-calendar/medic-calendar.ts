@@ -70,7 +70,18 @@ export class MedicCalendarPage {
 
 
         })
-        .catch(error => alert(JSON.stringify(error)));
+        .catch(error => {
+          let message = 'Ha ocurrido un error cargando las consultas';
+
+          let toast = this.toastCtrl.create({
+            message: message,
+            cssClass: 'mytoast error',
+            duration: 3000
+          });
+
+          toast.present(toast);
+          loader.dismiss();
+        });
     }
 
   }
@@ -146,7 +157,18 @@ export class MedicCalendarPage {
           loader.dismiss();
 
         })
-        .catch(error => alert(JSON.stringify(error)));
+        .catch(error => {
+          let message = 'Ha ocurrido un error cargando los horarios';
+
+          let toast = this.toastCtrl.create({
+            message: message,
+            cssClass: 'mytoast error',
+            duration: 3000
+          });
+
+          toast.present(toast);
+          loader.dismiss();
+        });
     }
 
   }

@@ -62,7 +62,7 @@ export class MyApp {
       FirebasePlugin.onNotificationOpen(notification => {
         if(!notification.tap){
           let alert = alertCtrl.create({
-            title: 'Notificación',
+            title: notification.title,
             message: notification.body
           })
           alert.present()

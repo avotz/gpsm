@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, AlertController, ToastController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Geolocation } from '@ionic-native/geolocation';
 import { MedicServiceProvider } from '../../providers/medic-service/medic-service';
@@ -28,7 +28,7 @@ export class SearchMedicPage {
   located = null;
   lat;
   lon;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public medicService: MedicServiceProvider, public formBuilder: FormBuilder, public geolocation: Geolocation, public networkService: NetworkServiceProvider, public alertCtrl: AlertController,  private diagnostic: Diagnostic) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public medicService: MedicServiceProvider, public formBuilder: FormBuilder, public geolocation: Geolocation, public networkService: NetworkServiceProvider, public alertCtrl: AlertController, private diagnostic: Diagnostic, public toastCtrl: ToastController) {
 
     this.navCtrl = navCtrl;
     this.medics = [];
@@ -100,8 +100,16 @@ export class SearchMedicPage {
           infiniteScroll.complete();
         })
         .catch(error => {
-          alert(error.statusText)
-          console.log(JSON.stringify(error))
+          let message = 'Ha ocurrido un error cargando los médicos';
+
+          let toast = this.toastCtrl.create({
+            message: message,
+            cssClass: 'mytoast error',
+            duration: 3000
+          });
+
+          toast.present(toast);
+         
 
         });
     }
@@ -265,7 +273,15 @@ export class SearchMedicPage {
         this.submitAttempt = false;
       })
       .catch(error => {
-        alert(error.statusText)
+        let message = 'Ha ocurrido un error cargando los médicos';
+
+        let toast = this.toastCtrl.create({
+          message: message,
+          cssClass: 'mytoast error',
+          duration: 3000
+        });
+
+        toast.present(toast);
         loader.dismiss();
       });
 

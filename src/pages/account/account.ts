@@ -270,8 +270,15 @@ export class AccountPage {
           })
           .catch(error => {
 
-            alert(error)
+            let message = 'Ha ocurrido un error actualizado la cuenta';
 
+            let toast = this.toastCtrl.create({
+              message: message,
+              cssClass: 'mytoast error',
+              duration: 3000
+            });
+
+            toast.present(toast);
             loader.dismiss();
           });
       }

@@ -57,7 +57,16 @@ export class ModalReservationPage {
                 })
                 .catch(error => {
 
-                    alert(JSON.stringify(error))
+                    let message = 'Ha ocurrido un error cargando los pacientes';
+
+                    let toast = this.toastCtrl.create({
+                        message: message,
+                        cssClass: 'mytoast error',
+                        duration: 3000
+                    });
+
+                    toast.present(toast);
+                   
                     this.isWaiting = null;
 
                 });
@@ -91,7 +100,16 @@ export class ModalReservationPage {
                 })
                 .catch(error => {
 
-                    alert(JSON.stringify(error))
+                    let message = 'Ha ocurrido un error guardando el recordatorio';
+
+                    let toast = this.toastCtrl.create({
+                        message: message,
+                        cssClass: 'mytoast error',
+                        duration: 3000
+                    });
+
+                    toast.present(toast);
+                   
                     this.isWaiting = null;
 
                 });
@@ -142,7 +160,16 @@ export class ModalReservationPage {
                 })
                 .catch(error => {
 
-                    alert(JSON.stringify(error))
+                    let message = 'Ha ocurrido un error guardando la cita';
+
+                    let toast = this.toastCtrl.create({
+                        message: message,
+                        cssClass: 'mytoast error',
+                        duration: 3000
+                    });
+
+                    toast.present(toast);
+                  
                     this.isWaiting = null;
 
                 }
