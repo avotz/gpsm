@@ -77,11 +77,19 @@
                     <ion-item text-wrap>
                         
                             <h2>Pruebas Diagnósticas</h2> 
-                              <ul *ngIf="appointment.labexams.length">
-                                <li *ngFor="let exam of appointment.labexams">
-                                    <span><span class="text"> {{ exam.name }}</span></span>
-                                </li>
-                            </ul>
+                             <ion-item *ngFor="let item of labexams">
+                                <h2>{{ dateFormat(item.date) }}</h2>
+                                <ul>
+                                    <li *ngFor="let exam of item.exams">
+                                        <b>{{ exam.name }}</b>
+                            
+                            
+                                    </li>
+                                </ul>
+                            
+                            
+                            
+                            </ion-item>
                             <h2>Resultados</h2>
                             <ul>
                                 <li *ngFor="let result of labresults">

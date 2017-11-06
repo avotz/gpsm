@@ -61,6 +61,7 @@ export class TabMedicoPage {
 
           this.appointments = data.appointments;
           this.labresults = data.labresults;
+          this.labexams = data.labexams;
           // this.history = data.history;
           // this.allergies = this.history.allergies;
           // this.pathologicals = this.history.pathologicals;
