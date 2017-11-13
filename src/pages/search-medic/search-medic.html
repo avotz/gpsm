@@ -91,7 +91,7 @@
             <ion-item *ngIf="!medics.length > 0 && searchKey" class="errors">
                 <span>No se encontraron Médicos</span>
             </ion-item>
-           <ion-item *ngFor="let medic of medics">
+           <div *ngFor="let medic of medics">
               <ion-item *ngFor="let doctor of medic.users" >
                     <ion-avatar item-start>
                         <img src="{{ serverUrl}}{{ doctor.photo }}"/>
@@ -101,7 +101,7 @@
                     <ng-template #elseBlock><p>Médico General</p></ng-template>
                 <button ion-button clear item-end (click)="openMedicDetail(doctor)">Ver</button>
             </ion-item>
-        </ion-item>
+        </div>
         
 
     </ion-list>
