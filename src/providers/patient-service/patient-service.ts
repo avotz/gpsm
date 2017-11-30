@@ -15,6 +15,10 @@ export class PatientServiceProvider {
 
     register(form) {
 
+        form.email = (form.email) ? form.email : '' // para no enviar null
+        form.address = (form.address) ? form.address : ''
+        form.city = (form.city) ? form.city : ''
+
         let headers = new Headers({
             'Accept': 'application/json',
             'Authorization': 'Bearer ' + window.localStorage.getItem('token')
@@ -259,7 +263,9 @@ export class PatientServiceProvider {
     }
    
     update(patient_id, form) {
-
+        form.email = (form.email) ? form.email : '' // para no enviar null
+        form.address = (form.address) ? form.address : ''
+        form.city = (form.city) ? form.city : ''
 
         let headers = new Headers({
             'Accept': 'application/json',

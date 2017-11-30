@@ -8,7 +8,7 @@ import {AuthServiceProvider} from '../../providers/auth-service/auth-service';
 import { RegisterPage } from '../register/register';
 import { RegisterPatientPage } from '../register-patient/register-patient';
 import { HomePage } from '../home/home';
-
+import { PasswordResetPage } from './password-reset';
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',
@@ -16,6 +16,7 @@ import { HomePage } from '../home/home';
 export class LoginPage {
   errorAuth;
   email;
+  phone;
   password;
   loginForm: FormGroup;
   submitAttempt: boolean = false;
@@ -25,7 +26,7 @@ export class LoginPage {
        this.authService = authService;
        this.loadingCtrl = loadingCtrl;
        this.loginForm = formBuilder.group({
-        email: ['',Validators.required],
+        phone: ['',Validators.required],
         password: ['',Validators.required]
         
       });
@@ -36,6 +37,9 @@ export class LoginPage {
      this.navCtrl.push(RegisterPage);   
 
    }
+  forgetPassword(){
+    this.navCtrl.push(PasswordResetPage);   
+  }
 
    login() {
     
@@ -52,7 +56,7 @@ export class LoginPage {
       
         if(this.loginForm.valid){
           loader.present();
-          this.authService.login(this.loginForm.value.email, this.loginForm.value.password)
+          this.authService.login(this.loginForm.value.phone, this.loginForm.value.password)
                   .then(data => {
 
                     loader.dismiss();
@@ -74,7 +78,7 @@ export class LoginPage {
                       this.navCtrl.setRoot(HomePage);
                     else {
                         this.navCtrl.push(RegisterPatientPage,{
-                          name: data.user.name, email:  data.user.email
+                          name: data.user.name, email: data.user.email, phone: data.user.phone
                       });  
                     }      
 

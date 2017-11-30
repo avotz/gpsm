@@ -32,7 +32,8 @@ export class RegisterPage {
 
        this.registerForm = formBuilder.group({
         name: ['',Validators.required],
-        email: ['',Validators.required],
+        phone: ['', Validators.required],
+        email: [''],
         password: ['',Validators.required],
         password_confirmation: ['',Validators.required]
       },{
@@ -75,7 +76,7 @@ export class RegisterPage {
 
               this.errorAuth = "";
               this.navCtrl.push(RegisterPatientPage,{
-                    name: data.user.name, email:  data.user.email
+                name: data.user.name, email: data.user.email, phone: data.user.phone
                 });   
              
             
@@ -83,31 +84,36 @@ export class RegisterPage {
             })
             .catch(error => {
 
-                let message = 'Ha ocurrido un error registrando el usuario.';
-                let errorSaveText = error.statusText;
-                
-                if(error.status == 422)
-                {
-                    let body = JSON.parse(error._body)
-                    
-                    errorSaveText = body.errors.email[0]
+              let message = 'Ha ocurrido un error registrando al usuario.';
+              let errorSaveText = error.statusText;
+              let errorSaveTextPhone = error.statusText;
 
-                    message = message + errorSaveText
-                    
-                }
+              if (error.status == 422) {
+                errorSaveText = "";
+                errorSaveTextPhone = "";
+                let body = JSON.parse(error._body)
 
-                let toast = this.toastCtrl.create({
-                  message: message,
-                  cssClass: 'mytoast error',
-                  duration: 3000
-                });
-      
-                toast.present(toast);
-               
-              
-                loader.dismiss();
-                this.errorSave = errorSaveText
-                console.log(error);
+                if (body.errors.email)
+                  errorSaveText = body.errors.email[0]
+                if (body.errors.phone)
+                  errorSaveTextPhone = body.errors.phone[0]
+
+                message = message + errorSaveText + ' ' + errorSaveTextPhone
+
+              }
+
+              let toast = this.toastCtrl.create({
+                message: message,
+                cssClass: 'mytoast error',
+                duration: 4500
+              });
+
+              toast.present(toast);
+             
+
+              this.errorSave = message;
+              console.log(error);
+              loader.dismiss();
             });
       }
     }

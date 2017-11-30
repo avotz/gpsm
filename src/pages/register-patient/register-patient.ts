@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, ToastController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PatientServiceProvider } from '../../providers/patient-service/patient-service';
 import { NetworkServiceProvider } from '../../providers/network-service/network-service';
@@ -13,7 +13,7 @@ export class RegisterPatientPage {
   patientForm: FormGroup;
   errorSave;
   submitAttempt: boolean = false;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public patientService: PatientServiceProvider, public loadingCtrl: LoadingController, public formBuilder: FormBuilder, public networkService: NetworkServiceProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public patientService: PatientServiceProvider, public loadingCtrl: LoadingController, public formBuilder: FormBuilder, public networkService: NetworkServiceProvider, public toastCtrl: ToastController) {
 
     this.navCtrl = navCtrl;
     this.patientService = patientService;
@@ -23,8 +23,8 @@ export class RegisterPatientPage {
       last_name: ['', Validators.required],
       birth_date: ['', Validators.required],
       gender: ['', Validators.required],
-      phone: ['', Validators.required],
-      email: [navParams.get('email'), Validators.required],
+      phone: [navParams.get('phone'), Validators.required],
+      email: [navParams.get('email')],
       address: [''],
       province: ['', Validators.required],
       city: [''],
@@ -71,8 +71,34 @@ export class RegisterPatientPage {
 
           })
           .catch(error => {
+            let message = 'Ha ocurrido un error actualizando el paciente.';
+            let errorSaveText = error.statusText;
+            let errorSaveTextPhone = error.statusText;
 
-            this.errorSave = error.statusText;
+            if (error.status == 422) {
+              errorSaveText = "";
+              errorSaveTextPhone = "";
+              let body = JSON.parse(error._body)
+
+              if (body.errors.email)
+                errorSaveText = body.errors.email[0]
+              if (body.errors.phone)
+                errorSaveTextPhone = body.errors.phone[0]
+
+              message = message + errorSaveText + ' ' + errorSaveTextPhone
+
+            }
+
+            let toast = this.toastCtrl.create({
+              message: message,
+              cssClass: 'mytoast error',
+              duration: 4500
+            });
+
+            toast.present(toast);
+
+
+            this.errorSave = errorSaveText + ' ' + errorSaveTextPhone
             console.log(error);
             loader.dismiss();
           });

@@ -19,14 +19,19 @@
         <ion-col>
           <ion-list inset>
             
-            <ion-item>
+            <!-- <ion-item>
               <ion-input formControlName="email" type="email" [class.invalid]="!loginForm.controls.email.valid && (loginForm.controls.email.dirty || submitAttempt)" email="true" placeholder="Correo"  required></ion-input>
             </ion-item>
-            <p *ngIf="!loginForm.controls.email.valid  && (loginForm.controls.email.dirty || submitAttempt)" class="error">Por favor ingrese un correo válido.</p>
+            <p *ngIf="!loginForm.controls.email.valid  && (loginForm.controls.email.dirty || submitAttempt)" class="error">Por favor ingrese un correo válido.</p> -->
+            <ion-item>
+              <ion-input formControlName="phone" type="phone" [class.invalid]="!loginForm.controls.phone.valid && (loginForm.controls.phone.dirty || submitAttempt)"
+                 placeholder="Teléfono" required></ion-input>
+            </ion-item>
+            <p *ngIf="!loginForm.controls.phone.valid  && (loginForm.controls.phone.dirty || submitAttempt)" class="error">Por favor ingrese un Teléfono.</p>
             
             
             <ion-item>
-              <ion-input formControlName="password" type="password" [class.invalid]="!loginForm.controls.email.valid && (loginForm.controls.password.dirty || submitAttempt)" placeholder="Contraseña" name="password" [(ngModel)]="password" required></ion-input>
+              <ion-input formControlName="password" type="password" [class.invalid]="!loginForm.controls.password.valid && (loginForm.controls.password.dirty || submitAttempt)" placeholder="Contraseña" name="password" [(ngModel)]="password" required></ion-input>
             </ion-item>
             <p *ngIf="!loginForm.controls.password.valid  && (loginForm.controls.password.dirty || submitAttempt)" class="error">Por favor ingrese una Contraseña.</p>
             
@@ -45,6 +50,7 @@
     </form>
     <ion-row>
         <button ion-button class="register-btn" block clear (click)="createAccount()">Crear Nueva Cuenta</button>
+        <button ion-button class="register-btn" block clear (click)="forgetPassword()">¿Olvidaste tu contraseña?</button>
         
          <button (click)="loginFacebook()" block ion-button color="facebook" icon-left><ion-icon name="logo-facebook"></ion-icon>  Iniciar con facebook</button>
         <button (click)="loginGoogle()" block ion-button color="google" icon-left><ion-icon name="logo-googleplus"></ion-icon> Iniciar con Google+</button>

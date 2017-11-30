@@ -7,7 +7,7 @@ import {SERVER_URL} from '../config';
 
 const postData = {
           password:'',
-          email:''
+          phone:''
        };
 
 @Injectable()
@@ -18,8 +18,29 @@ export class AuthServiceProvider {
     this.http = http;
   }
 
-  login(email, password){
-        postData.email = email
+    sendResetCode(form) {
+
+    
+        return this.http.post(SERVER_URL + '/api/user/password/phone', form)
+            .map(res => res.json())
+            .toPromise();
+
+
+
+    }
+    resetPassword(form) {
+
+
+        return this.http.post(SERVER_URL + '/api/user/password/reset', form)
+            .map(res => res.json())
+            .toPromise();
+
+
+
+    }
+
+  login(phone, password){
+        postData.phone = phone
         postData.password = password
        
         return this.http.post(SERVER_URL + '/api/token', postData)
@@ -47,6 +68,7 @@ export class AuthServiceProvider {
     register(form){
        
         form.push_token = window.localStorage.getItem('push_token') 
+        form.email = (form.email) ? form.email : '' // para no enviar null
         /*let postDataRegister = {
           name: form.name,
           email: form.email,

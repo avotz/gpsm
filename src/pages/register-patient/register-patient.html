@@ -63,8 +63,7 @@
     
               <ion-item>
                 <ion-label floating>Correo</ion-label>
-                <ion-input formControlName="email" type="email" [class.invalid]="!patientForm.controls.email.valid && (patientForm.controls.email.dirty || submitAttempt)"
-                  email="true"></ion-input>
+                <ion-input formControlName="email" type="email"></ion-input>
               </ion-item>
     
               <p *ngIf="!patientForm.controls.email.valid  && (patientForm.controls.email.dirty || submitAttempt)" class="error">Por favor ingrese un correo válido.</p>

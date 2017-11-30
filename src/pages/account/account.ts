@@ -34,7 +34,8 @@ export class AccountPage {
 
     this.accountForm = formBuilder.group({
       name: [this.user.name, Validators.required],
-      email: [this.user.email, Validators.required],
+      phone: [this.user.phone, Validators.required],
+      email: [this.user.email],
       password: ['', Validators.minLength(6)]
 
     });
@@ -63,6 +64,7 @@ export class AccountPage {
 
           this.accountForm.get('name').setValue(this.user.name)
           this.accountForm.get('email').setValue(this.user.email)
+          this.accountForm.get('phone').setValue(this.user.phone)
       
 
           loader.dismissAll();
@@ -270,12 +272,28 @@ export class AccountPage {
           })
           .catch(error => {
 
-            let message = 'Ha ocurrido un error actualizado la cuenta';
+            let message = 'Ha ocurrido un error actualizando la cuenta.';
+            let errorSaveText = error.statusText;
+            let errorSaveTextPhone = error.statusText;
+
+            if (error.status == 422) {
+              errorSaveText = "";
+              errorSaveTextPhone = "";
+              let body = JSON.parse(error._body)
+
+              if (body.errors.email)
+                errorSaveText = body.errors.email[0]
+              if (body.errors.phone)
+                errorSaveTextPhone = body.errors.phone[0]
+
+              message = message + errorSaveText + ' ' + errorSaveTextPhone
+
+            }
 
             let toast = this.toastCtrl.create({
               message: message,
               cssClass: 'mytoast error',
-              duration: 3000
+              duration: 4500
             });
 
             toast.present(toast);
