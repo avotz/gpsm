@@ -43,7 +43,7 @@
 
             <ion-item>
               <ion-label floating>Teléfono</ion-label>
-              <ion-input formControlName="phone" type="phone" [class.invalid]="!accountForm.controls.email.valid && (accountForm.controls.phone.dirty || submitAttempt)"
+              <ion-input formControlName="phone" type="number" [class.invalid]="!accountForm.controls.email.valid && (accountForm.controls.phone.dirty || submitAttempt)"
                 ></ion-input>
             </ion-item>
             <ion-item *ngIf="!accountForm.controls.phone.valid  && (accountForm.controls.phone.dirty || submitAttempt)">

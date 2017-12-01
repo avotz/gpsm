@@ -24,7 +24,7 @@
             </ion-item>
             <p *ngIf="!loginForm.controls.email.valid  && (loginForm.controls.email.dirty || submitAttempt)" class="error">Por favor ingrese un correo válido.</p> -->
             <ion-item>
-              <ion-input formControlName="phone" type="phone" [class.invalid]="!loginForm.controls.phone.valid && (loginForm.controls.phone.dirty || submitAttempt)"
+              <ion-input formControlName="phone" type="number" [class.invalid]="!loginForm.controls.phone.valid && (loginForm.controls.phone.dirty || submitAttempt)"
                  placeholder="Teléfono" required></ion-input>
             </ion-item>
             <p *ngIf="!loginForm.controls.phone.valid  && (loginForm.controls.phone.dirty || submitAttempt)" class="error">Por favor ingrese un Teléfono.</p>

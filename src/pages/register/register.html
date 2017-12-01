@@ -34,7 +34,7 @@
 
             <ion-item>
               <!-- <ion-input type="text" placeholder="Email" name="email" [(ngModel)]="email" required></ion-input> -->
-              <ion-input formControlName="phone" type="phone" [class.invalid]="!registerForm.controls.phone.valid && (registerForm.controls.phone.dirty || submitAttempt)"  placeholder="Teléfono"></ion-input>
+              <ion-input formControlName="phone" type="number" [class.invalid]="!registerForm.controls.phone.valid && (registerForm.controls.phone.dirty || submitAttempt)"  placeholder="Teléfono"></ion-input>
             </ion-item>
             <p *ngIf="!registerForm.controls.phone.valid  && (registerForm.controls.phone.dirty || submitAttempt)" class="error">Por favor ingrese un teléfono</p>
             
