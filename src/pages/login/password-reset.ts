@@ -52,12 +52,17 @@ export class PasswordResetPage {
                   .then(data => {
 
                     loader.dismiss();
+
+                    if (data.error) {
+                      this.errorAuth = data.error.message;
+                      return;
+                    }
                    
                       let message = data.message;
 
                       let toast = this.toastCtrl.create({
                           message: message,
-                          cssClass: 'mytoast error',
+                          cssClass: 'mytoast success',
                           duration: 3000
                       });
 
@@ -70,13 +75,30 @@ export class PasswordResetPage {
                   })
                   .catch(error => {
 
-                    let message = 'Ha ocurrido un error enviando el codigo';
+                    let message = 'Ha ocurrido un error enviando el código.';
+                    let errorSaveText = error.statusText;
+                    let errorSaveTextPhone = error.statusText;
+
+                    if (error.status == 422) {
+                      errorSaveText = "";
+                      errorSaveTextPhone = "";
+                      let body = JSON.parse(error._body)
+
+        
+                      if (body.errors.phone)
+                        errorSaveTextPhone = body.errors.phone[0]
+
+                      message = message + errorSaveText + ' ' + errorSaveTextPhone
+
+                    }
 
                     let toast = this.toastCtrl.create({
                       message: message,
                       cssClass: 'mytoast error',
-                      duration: 3000
+                      duration: 4500
                     });
+
+                    
 
                     toast.present(toast);
                     loader.dismiss();
