@@ -77,11 +77,27 @@
                         </ion-item>
                         <ion-item>
                             <ion-icon name='heart' item-start></ion-icon>
-                            Presión Arterial
+                            Frecuencia Cardiaca
                             <ion-note item-end>
                             l/m {{ vitalSigns.heart_rate }}
                             </ion-note>
                             
+                        </ion-item>
+                        <ion-item>
+                            <ion-icon name='leaf' item-start></ion-icon>
+                            Saturación de Oxígeno
+                            <ion-note item-end>
+                                % {{ vitalSigns.oxygen }}
+                            </ion-note>
+                        
+                        </ion-item>
+                        <ion-item>
+                            <ion-icon name='medical' item-start></ion-icon>
+                            Glicemia
+                            <ion-note item-end>
+                                {{ vitalSigns.glicemia }}
+                            </ion-note>
+                        
                         </ion-item>
                        
                     </ion-list>

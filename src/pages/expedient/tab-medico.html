@@ -34,6 +34,69 @@
                        
                     </ion-card-header>
                     <ion-card-content>
+                        <h2>Signos Vitales </h2> 
+                                
+                           
+                        <ul>
+                        
+                            <li>
+                                
+                                <b>Altura: </b>  {{ appointment.vital_signs.height }} Mts
+                                
+                        
+                            </li>
+                            <li>
+                                
+                                <b>Peso: </b>{{ appointment.vital_signs.weight }} Kg
+                               
+                        
+                            </li>
+                            <li>
+                                
+                                <b>Masa Corporal: </b> {{ appointment.vital_signs.mass }} lmc
+                               
+                        
+                            </li>
+                            <li>
+                               
+                                <b>Temperatura: </b> {{ appointment.vital_signs.temp }} C
+                                
+                        
+                            </li>
+                            <li>
+                               
+                                <b>Frecuencia Respiratoria: </b> {{ appointment.vital_signs.respiratory_rate }} r/m
+                                
+                        
+                            </li>
+                            <li>
+                                
+                                <b>Presión Arterial: </b>  P.S {{ appointment.vital_signs.blood_ps }} P.D {{ appointment.vital_signs.blood_pd }}
+                               
+                        
+                            </li>
+                            <li>
+                               
+                                <b>Frecuencia Cardiaca:</b> {{ appointment.vital_signs.heart_rate }} l/m
+                              
+                        
+                            </li>
+                            <li>
+                               
+                                <b>Saturación de Oxígeno: </b> {{ appointment.vital_signs.oxygen }}  %
+                                
+                                   
+                              
+                        
+                            </li>
+                            <li>
+                                
+                                <b>Glicemia:</b> {{ appointment.vital_signs.glicemia }}
+                              
+                        
+                            </li>
+                        
+                        </ul>
                         
                         <ion-item text-wrap>
                             
