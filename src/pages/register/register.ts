@@ -112,7 +112,7 @@ export class RegisterPage {
              
 
               this.errorSave = message;
-              console.log(error);
+              
               loader.dismiss();
             });
       }
@@ -193,7 +193,37 @@ export class RegisterPage {
                 }    
                 
             })
-            .catch(error => alert(error));
+            .catch(error => {
+
+              let message = 'Ha ocurrido un error en el registro desde una red social.';
+              let errorSaveText = error.statusText;
+              let errorSaveTextPhone = error.statusText;
+              
+              if (error.status == 422) {
+                errorSaveText = "";
+                errorSaveTextPhone = "";
+                let body = JSON.parse(error._body)
+
+                if (body.errors.email)
+                  errorSaveText = body.errors.email[0]
+                if (body.errors.phone)
+                  errorSaveTextPhone = body.errors.phone[0]
+
+                message = message + errorSaveText + ' ' + errorSaveTextPhone
+
+              }
+
+
+
+              let toast = this.toastCtrl.create({
+                message: message,
+                cssClass: 'mytoast error',
+                duration: 4500
+              });
+
+              toast.present(toast);
+
+            });
          
     }
 
@@ -217,7 +247,35 @@ export class RegisterPage {
               }        
 
             })
-            .catch(error => alert(error));
+            .catch(error => {
+              let message = 'Ha ocurrido un error en el registro desde una red social.';
+              let errorSaveText = error.statusText;
+              let errorSaveTextPhone = error.statusText;
+              console.log(error)
+              if (error.status == 422) {
+                errorSaveText = "";
+                errorSaveTextPhone = "";
+                let body = JSON.parse(error._body)
+
+                if (body.errors.email)
+                  errorSaveText = body.errors.email[0]
+                if (body.errors.phone)
+                  errorSaveTextPhone = body.errors.phone[0]
+
+                message = message + errorSaveText + ' ' + errorSaveTextPhone
+
+              }
+
+
+
+              let toast = this.toastCtrl.create({
+                message: message,
+                cssClass: 'mytoast error',
+                duration: 4500
+              });
+
+              toast.present(toast);
+            });
         
     }
 

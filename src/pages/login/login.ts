@@ -179,15 +179,37 @@ export class LoginPage {
 
               })
               .catch(error =>{
-                let message = 'Ha ocurrido un error en el registro desde una red social';
+                let message = 'Ha ocurrido un error en el registro desde una red social.';
+                let errorSaveText = error.statusText;
+                let errorSaveTextPhone = error.statusText;
+               
+                if (error.status == 422) {
+                  errorSaveText = "";
+                  errorSaveTextPhone = "";
+                  let body = JSON.parse(error._body)
+
+                  if (body.errors.email)
+                    errorSaveText = body.errors.email[0]
+                  if (body.errors.phone)
+                    errorSaveTextPhone = body.errors.phone[0]
+
+                  message = message + errorSaveText + ' ' + errorSaveTextPhone
+
+                }
+
+             
 
                 let toast = this.toastCtrl.create({
                   message: message,
                   cssClass: 'mytoast error',
-                  duration: 3000
+                  duration: 4500
                 });
 
                 toast.present(toast);
+
+
+
+
               });
         }
     }
@@ -216,12 +238,30 @@ export class LoginPage {
 
               })
               .catch(error => {
-                let message = 'Ha ocurrido un error en el registro desde una red social';
+                let message = 'Ha ocurrido un error en el registro desde una red social.';
+                let errorSaveText = error.statusText;
+                let errorSaveTextPhone = error.statusText;
+               
+                if (error.status == 422) {
+                  errorSaveText = "";
+                  errorSaveTextPhone = "";
+                  let body = JSON.parse(error._body)
+
+                  if (body.errors.email)
+                    errorSaveText = body.errors.email[0]
+                  if (body.errors.phone)
+                    errorSaveTextPhone = body.errors.phone[0]
+
+                  message = message + errorSaveText + ' ' + errorSaveTextPhone
+
+                }
+
+
 
                 let toast = this.toastCtrl.create({
                   message: message,
                   cssClass: 'mytoast error',
-                  duration: 3000
+                  duration: 4500
                 });
 
                 toast.present(toast);

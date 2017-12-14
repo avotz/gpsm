@@ -23,6 +23,9 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { Ionic2RatingModule } from 'ionic2-rating';
 //import { FCM } from '@ionic-native/fcm';
 //import { ReactiveFormsModule } from '@angular/forms';
+import { registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es';
+registerLocaleData(localeEs);
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';

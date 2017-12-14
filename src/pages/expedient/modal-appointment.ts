@@ -116,7 +116,7 @@ export class ModalAppointmentPage {
   
     let ext =  result.name.split('.').pop();
 
-    if(ext == 'pdf')
+    if (ext == 'pdf' || ext == 'docx' || ext == 'xlsx' || ext == 'doc' || ext == 'xls')
       this.iab.create(url,'_system')
     else 
       this.photoViewer.show(url,'_blank');

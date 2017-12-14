@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions} from '@angular/http';
-import 'rxjs/Rx';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/toPromise';
 import {SERVER_URL} from '../config';
 //import {Observable} from 'rxjs/Observable';
 //import 'rxjs/add/operator/map';
