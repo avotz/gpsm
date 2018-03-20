@@ -7,6 +7,9 @@ import { SearchClinicPage } from '../search-clinic/search-clinic';
 //import { PatientsPage } from '../patients/patients';
 import { ExpedientPage } from '../expedient/expedient';
 import { ReviewPage } from '../review/review';
+import { NotificationsPage } from '../notifications/notifications';
+import { Badge } from '@ionic-native/badge';
+import { Events } from 'ionic-angular';
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -14,10 +17,38 @@ import { ReviewPage } from '../review/review';
 export class HomePage {
 
   auth;
-  constructor(public navCtrl: NavController, public toastCtrl: ToastController, public networkService: NetworkServiceProvider,public loadingCtrl: LoadingController, public patientService: PatientServiceProvider) {
+  countNotifications: number = 0;
+  notifications = [];
+
+  constructor(public navCtrl: NavController, public toastCtrl: ToastController, public networkService: NetworkServiceProvider, public loadingCtrl: LoadingController, public patientService: PatientServiceProvider, public badge: Badge, public events: Events) {
 
     this.auth = JSON.parse(window.localStorage.getItem('auth_user'));
+    this.getbadges();
+    
+    this.events.subscribe('notifications:updated', (count) => {
+     
+      this.countNotifications++;
+      
+    });
+    this.events.subscribe('notifications:clear', (count) => {
+     
+      this.countNotifications = count;
 
+    });
+  }
+ 
+  async getbadges(){
+    try {
+      this.countNotifications = await this.badge.get();
+      console.log(this.countNotifications);
+    } catch (error) {
+      console.error(error)
+    }
+  }
+  notificationsPage() {
+
+    this.navCtrl.push(NotificationsPage)
+    //this.navCtrl.setRoot(SearchMedicPage);
 
   }
   expedient() {

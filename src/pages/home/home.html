@@ -5,9 +5,9 @@
     </button>
     <ion-title>Inicio</ion-title>
     <ion-buttons end>
-        <button ion-button (click)="review()" color="primary" icon-left>
-            <ion-icon name="heart" end></ion-icon>
-                Califica
+        <button ion-button (click)="notificationsPage()" icon-left>
+            <ion-icon name="notifications" item-start></ion-icon>
+                <ion-badge item-end color="{{ countNotifications > 0 ? 'danger' : 'primary' }}">{{ countNotifications }}</ion-badge>
             </button>
     </ion-buttons>
   </ion-navbar>

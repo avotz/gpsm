@@ -58,6 +58,8 @@ import { MedicServiceProvider } from '../providers/medic-service/medic-service';
 import { AppointmentServiceProvider } from '../providers/appointment-service/appointment-service';
 import { ClinicServiceProvider } from '../providers/clinic-service/clinic-service';
 import { ReviewServiceProvider } from '../providers/review-service/review-service';
+import { NotificationsPage } from '../pages/notifications/notifications';
+import { Badge } from '@ionic-native/badge';
 
 @NgModule({
   declarations: [
@@ -83,7 +85,8 @@ import { ReviewServiceProvider } from '../providers/review-service/review-servic
     ReviewPage,
     AppointmentsPage,
     PasswordResetPage,
-    NewPasswordPage
+    NewPasswordPage,
+    NotificationsPage
     
   ],
   imports: [
@@ -123,7 +126,8 @@ import { ReviewServiceProvider } from '../providers/review-service/review-servic
     ReviewPage,
     AppointmentsPage,
     PasswordResetPage,
-    NewPasswordPage
+    NewPasswordPage,
+    NotificationsPage
   ],
   providers: [
     StatusBar,
@@ -132,6 +136,7 @@ import { ReviewServiceProvider } from '../providers/review-service/review-servic
     File,
     Transfer,
     Camera,
+    Badge,
     PhotoViewer,
     FilePath,
     Facebook,

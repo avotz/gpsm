@@ -15,6 +15,8 @@ import { AccountPage } from '../pages/account/account';
 import { PatientsPage } from '../pages/patients/patients';
 import { ReviewPage } from '../pages/review/review';
 import { AppointmentsPage } from '../pages/appointments/appointments';
+import { Badge } from '@ionic-native/badge';
+import { Events } from 'ionic-angular';
 
 declare var FirebasePlugin: any;
 @Component({
@@ -27,12 +29,14 @@ export class MyApp {
 
   pages: Array<{title: string, component: any}>
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private fb:Facebook, private gp:GooglePlus, public alertCtrl: AlertController, public authService: AuthServiceProvider) {
+  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private fb: Facebook, private gp: GooglePlus, public alertCtrl: AlertController, public authService: AuthServiceProvider, public badge: Badge, public events: Events) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
+
+      window.localStorage.setItem('countNotifications', '0')
 
       FirebasePlugin.getToken( token => {
         // save this server-side and use it to push notifications to this device
@@ -61,12 +65,37 @@ export class MyApp {
     
       FirebasePlugin.onNotificationOpen(notification => {
         if(!notification.tap){
+
           let alert = alertCtrl.create({
             title: notification.title,
             message: notification.body
           })
-          alert.present()
+          alert.present();
+
+          
+          
         }
+
+        // let countNotifications = 0;
+
+        // if (notification.tipo == 'marketing') {
+        //   if (window.localStorage.getItem('countNotifications')) {
+        //     countNotifications = parseInt(window.localStorage.getItem('countNotifications'));
+        //     countNotifications = countNotifications + 1;
+        //     window.localStorage.setItem('countNotifications', countNotifications.toString())
+
+        //   } else {
+        //     countNotifications = 1;
+        //     window.localStorage.setItem('countNotifications', countNotifications.toString())
+        //   }
+          
+        // }
+
+       
+
+        this.badge.increase(1);
+        this.events.publish('notifications:updated', 1);
+        
     }, (error) => {
         console.error(error);
     })
@@ -74,6 +103,8 @@ export class MyApp {
 
 
     });
+
+    
 
     // used for an example of ngFor and navigation
     this.pages = [
@@ -90,6 +121,8 @@ export class MyApp {
     this.checkPreviousAuthorization(); 
     
   }
+  
+
   savePushToken(token){
     let auth = JSON.parse(window.localStorage.getItem('auth_user'));
     

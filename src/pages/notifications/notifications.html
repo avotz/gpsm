@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-navbar>
+      
+      <ion-title>Notificaciones</ion-title>
+      <ion-buttons end>
+        
+        <button ion-button (click)="refresh()" color="primary">
+            
+                Refrescar
+            </button>
+      </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+
+
+<ion-content padding>
+    <ion-item *ngIf="!notifications.length > 0" class="errors">
+        <span>No se encontraron notificaciones</span>
+    </ion-item>
+    <ion-card *ngFor="let notification of notifications">
+        <img src="{{ showImage(notification.media) }}" *ngIf="notification.media" />
+        <ion-card-content>
+            <ion-card-title>
+                {{ notification.title }}
+            </ion-card-title>
+            <p>
+             {{ notification.body }}
+            </p>
+        </ion-card-content>
+    </ion-card>
+  
+</ion-content>
