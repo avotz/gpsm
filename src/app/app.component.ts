@@ -17,6 +17,7 @@ import { ReviewPage } from '../pages/review/review';
 import { AppointmentsPage } from '../pages/appointments/appointments';
 import { Badge } from '@ionic-native/badge';
 import { Events } from 'ionic-angular';
+import { NotificationsPage } from '../pages/notifications/notifications';
 
 declare var FirebasePlugin: any;
 @Component({
@@ -66,30 +67,27 @@ export class MyApp {
       FirebasePlugin.onNotificationOpen(notification => {
         if(!notification.tap){
 
-          let alert = alertCtrl.create({
+          let confirm = this.alertCtrl.create({
             title: notification.title,
-            message: notification.body
-          })
-          alert.present();
-
-          
+            message: notification.body,
+            buttons: [
+              {
+                text: 'Cerrar',
+                handler: () => {
+                  confirm.dismiss();
+                }
+              },
+              {
+                text: 'Ir a notificaciones',
+                handler: () => {
+                  this.nav.push(NotificationsPage);
+                }
+              }
+            ]
+          });
+          confirm.present();
           
         }
-
-        // let countNotifications = 0;
-
-        // if (notification.tipo == 'marketing') {
-        //   if (window.localStorage.getItem('countNotifications')) {
-        //     countNotifications = parseInt(window.localStorage.getItem('countNotifications'));
-        //     countNotifications = countNotifications + 1;
-        //     window.localStorage.setItem('countNotifications', countNotifications.toString())
-
-        //   } else {
-        //     countNotifications = 1;
-        //     window.localStorage.setItem('countNotifications', countNotifications.toString())
-        //   }
-          
-        // }
 
        
 
