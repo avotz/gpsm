@@ -52,12 +52,24 @@
               <p *ngIf="!patientForm.controls.gender.valid  && (patientForm.controls.gender.dirty || submitAttempt)" class="error">Por favor ingrese un genero.</p>
     
     
-              <ion-item>
-                <ion-label floating>Teléfono (Celular)</ion-label>
-                <ion-input formControlName="phone" type="number" [class.invalid]="!patientForm.controls.phone.valid && (patientForm.controls.phone.dirty || submitAttempt)"></ion-input>
-              </ion-item>
-    
-              <p *ngIf="!patientForm.controls.phone.valid  && (patientForm.controls.phone.dirty || submitAttempt)" class="error">Por favor ingrese un teléfono.</p>
+              <ion-row>
+                <ion-col col-5>
+                  <ion-item>
+                    <ion-select formControlName="phone_country_code">
+                      <ion-option value="+506">+506</ion-option>
+                    </ion-select>
+                  </ion-item>
+                </ion-col>
+                <ion-col>
+                  <ion-item>
+                    <ion-label floating>Teléfono</ion-label>
+                    <ion-input formControlName="phone_number" type="number" [class.invalid]="!patientForm.controls.phone_number.valid && (patientForm.controls.phone_number.dirty || submitAttempt)"
+                      placeholder=""></ion-input>
+                  </ion-item>
+                  <p *ngIf="!patientForm.controls.phone_number.valid  && (patientForm.controls.phone_number.dirty || submitAttempt)" class="error">Por favor ingrese un teléfono</p>
+              
+                </ion-col>
+              </ion-row>
     
     
     
@@ -80,13 +92,13 @@
               <ion-item>
                 <ion-label floating>Provincia</ion-label>
                 <ion-select formControlName="province" [class.invalid]="!patientForm.controls.province.valid && (patientForm.controls.province.dirty || submitAttempt)">
-                  <ion-option value="Guanacaste">Guanacaste</ion-option>
-                  <ion-option value="San Jose">San Jose</ion-option>
-                  <ion-option value="Heredia">Heredia</ion-option>
-                  <ion-option value="Limon">Limon</ion-option>
-                  <ion-option value="Cartago">Cartago</ion-option>
-                  <ion-option value="Puntarenas">Puntarenas</ion-option>
-                  <ion-option value="Alajuela">Alajuela</ion-option>
+                  <ion-option value="5">Guanacaste</ion-option>
+                  <ion-option value="1">San Jose</ion-option>
+                  <ion-option value="4">Heredia</ion-option>
+                  <ion-option value="7">Limon</ion-option>
+                  <ion-option value="3">Cartago</ion-option>
+                  <ion-option value="6">Puntarenas</ion-option>
+                  <ion-option value="2">Alajuela</ion-option>
                 </ion-select>
               </ion-item>
     

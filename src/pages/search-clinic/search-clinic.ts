@@ -183,7 +183,7 @@ export class SearchClinicPage {
   }
   loadCantones(prov) {
     provinces.forEach(provincia => {
-      if(provincia.title == prov)
+      if(provincia.id == prov)
       {
         this.cantones = provincia.cantones
       }
@@ -194,7 +194,7 @@ export class SearchClinicPage {
 
     this.cantones.forEach(canton => {
      
-      if(canton.title == cant)
+      if(canton.id == cant)
       {
         this.districts = canton.distritos
       }

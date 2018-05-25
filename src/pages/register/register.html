@@ -31,12 +31,25 @@
 
             </ion-item>
             <p *ngIf="!registerForm.controls.name.valid  && (registerForm.controls.name.dirty || submitAttempt)" class="error">Por favor ingrese un nombre</p>
-
-            <ion-item>
-              <!-- <ion-input type="text" placeholder="Email" name="email" [(ngModel)]="email" required></ion-input> -->
-              <ion-input formControlName="phone" type="number" [class.invalid]="!registerForm.controls.phone.valid && (registerForm.controls.phone.dirty || submitAttempt)"  placeholder="Teléfono"></ion-input>
-            </ion-item>
-            <p *ngIf="!registerForm.controls.phone.valid  && (registerForm.controls.phone.dirty || submitAttempt)" class="error">Por favor ingrese un teléfono</p>
+            <ion-row>
+              <ion-col col-5>
+                <ion-item>
+                  <ion-select formControlName="phone_country_code">
+                    <ion-option value="+506">+506</ion-option>
+                  </ion-select>
+                </ion-item>
+              </ion-col>
+              <ion-col>
+                <ion-item>
+                
+                  <ion-input formControlName="phone_number" type="number" [class.invalid]="!registerForm.controls.phone_number.valid && (registerForm.controls.phone_number.dirty || submitAttempt)"
+                    placeholder="Teléfono"></ion-input>
+                </ion-item>
+                <p *ngIf="!registerForm.controls.phone_number.valid  && (registerForm.controls.phone_number.dirty || submitAttempt)" class="error">Por favor ingrese un teléfono</p>
+               
+              </ion-col>
+            </ion-row>
+            
             
             <ion-item>
               <!-- <ion-input type="password" placeholder="Contraseña" name="password" [(ngModel)]="password" required></ion-input> -->

@@ -32,7 +32,8 @@ export class RegisterPage {
 
        this.registerForm = formBuilder.group({
         name: ['',Validators.required],
-        phone: ['', Validators.required],
+        phone_country_code: ['+506', Validators.required],
+        phone_number: ['', Validators.required],
         email: [''],
         password: ['',Validators.required],
         password_confirmation: ['',Validators.required]
@@ -76,8 +77,8 @@ export class RegisterPage {
 
               this.errorAuth = "";
               this.navCtrl.push(RegisterPatientPage,{
-                name: data.user.name, email: data.user.email, phone: data.user.phone
-                });   
+                name: data.user.name, email: data.user.email, phone: data.user.phone_number
+                , phone_country: data.user.phone_country_code });
              
             
 
@@ -95,8 +96,8 @@ export class RegisterPage {
 
                 if (body.errors.email)
                   errorSaveText = body.errors.email[0]
-                if (body.errors.phone)
-                  errorSaveTextPhone = body.errors.phone[0]
+                if (body.errors.phone_number)
+                  errorSaveTextPhone = body.errors.phone_number[0]
 
                 message = message + errorSaveText + ' ' + errorSaveTextPhone
 
@@ -206,8 +207,8 @@ export class RegisterPage {
 
                 if (body.errors.email)
                   errorSaveText = body.errors.email[0]
-                if (body.errors.phone)
-                  errorSaveTextPhone = body.errors.phone[0]
+                if (body.errors.phone_number)
+                  errorSaveTextPhone = body.errors.phone_number[0]
 
                 message = message + errorSaveText + ' ' + errorSaveTextPhone
 
@@ -259,8 +260,8 @@ export class RegisterPage {
 
                 if (body.errors.email)
                   errorSaveText = body.errors.email[0]
-                if (body.errors.phone)
-                  errorSaveTextPhone = body.errors.phone[0]
+                if (body.errors.phone_number)
+                  errorSaveTextPhone = body.errors.phone_number[0]
 
                 message = message + errorSaveText + ' ' + errorSaveTextPhone
 

@@ -23,7 +23,8 @@ export class RegisterPatientPage {
       last_name: ['', Validators.required],
       birth_date: ['', Validators.required],
       gender: ['', Validators.required],
-      phone: [navParams.get('phone'), Validators.required],
+      phone_country_code: [navParams.get('phone_country'), Validators.required],
+      phone_number: [navParams.get('phone'), Validators.required],
       email: [navParams.get('email')],
       address: [''],
       province: ['', Validators.required],
@@ -82,8 +83,8 @@ export class RegisterPatientPage {
 
               if (body.errors.email)
                 errorSaveText = body.errors.email[0]
-              if (body.errors.phone)
-                errorSaveTextPhone = body.errors.phone[0]
+              if (body.errors.phone_number)
+                errorSaveTextPhone = body.errors.phone_number[0]
 
               message = message + errorSaveText + ' ' + errorSaveTextPhone
 

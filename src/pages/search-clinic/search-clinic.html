@@ -33,7 +33,7 @@
                     </ion-item>
             <ion-card-header (click)="toggleGroup(1)" [ngClass]="{active: isGroupShown(1)}">
                 Parámetros de busqueda (Opcionales)
-                <ion-icon color="success" item-right [name]="isGroupShown(1) ? 'arrow-dropdown' : 'arrow-dropright'"></ion-icon>
+                <ion-icon color="primary" item-right [name]="isGroupShown(1) ? 'arrow-dropdown' : 'arrow-dropright'"></ion-icon>
             </ion-card-header>
             <ion-card-content >
                     
@@ -43,34 +43,34 @@
                         <ion-label>Provincia</ion-label>
                         <ion-select formControlName="province" (ionChange)="onChangeProvince($event)" >
                             <ion-option value=""></ion-option>
-                            <ion-option value="Guanacaste">Guanacaste</ion-option>
-                            <ion-option value="San Jose">San Jose</ion-option>
-                            <ion-option value="Heredia">Heredia</ion-option>
-                            <ion-option value="Limon">Limon</ion-option>
-                            <ion-option value="Cartago">Cartago</ion-option>
-                            <ion-option value="Puntarenas">Puntarenas</ion-option>
-                            <ion-option value="Alajuela">Alajuela</ion-option>
+                            <ion-option value="5">Guanacaste</ion-option>
+                            <ion-option value="1">San Jose</ion-option>
+                            <ion-option value="4">Heredia</ion-option>
+                            <ion-option value="7">Limon</ion-option>
+                            <ion-option value="3">Cartago</ion-option>
+                            <ion-option value="6">Puntarenas</ion-option>
+                            <ion-option value="2">Alajuela</ion-option>
                         </ion-select>
                     </ion-item>
                     <ion-item>
                         <ion-label>Cantón</ion-label>
                         <ion-select formControlName="canton" (ionChange)="onChangeCanton($event)">
                             <ion-option value=""></ion-option>
-                            <ion-option *ngFor="let canton of cantones" value="{{canton.title}}">{{canton.title}}</ion-option>
+                            <ion-option *ngFor="let canton of cantones" value="{{canton.id}}">{{canton.title}}</ion-option>
                         </ion-select>
                     </ion-item>
                     <ion-item>
                         <ion-label>Distrito</ion-label>
                         <ion-select formControlName="district">
                             <ion-option value=""></ion-option>
-                            <ion-option *ngFor="let district of districts" value="{{district}}">{{district}}</ion-option>
+                            <ion-option *ngFor="let district of districts" value="{{district.id}}">{{district.title}}</ion-option>
     
                         </ion-select>
                     </ion-item>
                     
                 </div>
                 
-                <button ion-button type="submit" (click)="onSearch()" full color="verde">
+                <button ion-button type="submit" (click)="onSearch()" full color="primary">
                         Buscar
                 </button>
             </ion-card-content>
