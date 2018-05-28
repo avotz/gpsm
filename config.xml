@@ -80,6 +80,7 @@
     </platform>
     <engine name="android" spec="^6.2.3" />
     <plugin name="com-sarriaroman-photoviewer" spec="^1.1.10" />
+    <plugin name="cordova-plugin-badge" spec="^0.8.7" />
     <plugin name="cordova-plugin-camera" spec="^2.4.1" />
     <plugin name="cordova-plugin-compat" spec="^1.1.0" />
     <plugin name="cordova-plugin-console" spec="^1.0.5" />
@@ -105,5 +106,4 @@
     <plugin name="cordova.plugins.diagnostic" spec="^3.6.6" />
     <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
     <plugin name="uk.co.workingedge.phonegap.plugin.launchnavigator" spec="^4.0.4" />
-    <plugin name="cordova-plugin-badge" spec="^0.8.7" />
 </widget>

@@ -9,7 +9,7 @@ page-account {
   
       ion-card-content {
   
-        background-color: map-get($colors, primary);
+        background-color: map-get($colors, gris);
         color: #FFFFFF;
         text-align: center;
         padding-bottom: 28px;
@@ -35,6 +35,9 @@ page-account {
         }
   
       }
+  }
+  ion-select{
+    max-width: 100%;
   }
   
 

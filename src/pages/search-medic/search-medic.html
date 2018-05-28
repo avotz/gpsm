@@ -94,7 +94,7 @@
            <div *ngFor="let medic of medics">
               <ion-item *ngFor="let doctor of medic.users" >
                     <ion-avatar item-start>
-                        <img src="{{ serverUrl}}{{ doctor.photo }}"/>
+                        <img src="{{ doctor.avatar_path }}"/>
                     </ion-avatar>
                     <h2>{{doctor.name}}</h2>
                     <p *ngIf="doctor.specialities.length; else elseBlock"><span *ngFor="let speciality of doctor.specialities">{{ speciality.name}}</span></p>
@@ -113,7 +113,7 @@
             <ion-item *ngFor="let medic of medics">
                 
                         <ion-avatar item-start>
-                            <img src="{{ serverUrl}}{{ medic.photo }}"/>
+                            <img src="{{ medic.avatar_path }}"/>
                         </ion-avatar>
                         <h2>{{medic.name}}</h2>
                         <p *ngIf="medic.specialities.length; else elseBlock"><span *ngFor="let speciality of medic.specialities">{{ speciality.name}}</span></p>

@@ -89,6 +89,7 @@ export class SearchMedicPage {
           data.data.forEach(medic => {
             this.medics.push(medic);
           });
+          
 
           this.medicSearchForm.get('page').setValue(data.currentPage)
           this.currentPage = data.current_page;

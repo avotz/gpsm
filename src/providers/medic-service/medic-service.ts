@@ -63,7 +63,7 @@ export class MedicServiceProvider {
               options = new RequestOptions({headers: headers,params: params});
 
 
-        return this.http.get(SERVER_URL + '/api/medics/'+ medic_id +'/schedules/list' , options)
+        return this.http.get(SERVER_URL + '/api/medics/'+ medic_id +'/schedules' , options)
             .map(res => res.json())
             .toPromise();
 
@@ -83,7 +83,7 @@ export class MedicServiceProvider {
                     options = new RequestOptions({headers: headers,params: params});
       
       
-              return this.http.get(SERVER_URL + '/api/medics/'+ medic_id +'/appointments/list' , options)
+              return this.http.get(SERVER_URL + '/api/medics/'+ medic_id +'/appointments' , options)
                   .map(res => res.json())
                   .toPromise();
       

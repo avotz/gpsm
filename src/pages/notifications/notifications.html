@@ -20,13 +20,13 @@
         <span>No se encontraron notificaciones</span>
     </ion-item>
     <ion-card *ngFor="let notification of notifications">
-        <img src="{{ showImage(notification.media) }}" *ngIf="notification.media" />
+        <img src="{{ showImage(notification.data.media) }}" *ngIf="notification.data.media" />
         <ion-card-content>
             <ion-card-title>
-                {{ notification.title }}
+                {{ notification.data.title }}
             </ion-card-title>
             <p>
-             {{ notification.body }}
+             {{ notification.data.body }}
             </p>
         </ion-card-content>
     </ion-card>

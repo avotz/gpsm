@@ -13,7 +13,7 @@
     <ion-card>
         
         <ion-card-content>
-            <img src="{{ serverUrl}}{{ user.photo }}" [hidden]="lastImage"/>
+            <img src="{{ user.avatar_path }}" [hidden]="lastImage"/>
             <img src="{{pathForImage(lastImage)}}" [hidden]="lastImage === null">
             <ion-buttons>
                 <button ion-button icon-left (click)="presentActionSheet()" color="light">
@@ -41,14 +41,25 @@
                 <p>Por favor ingrese un nombre válido</p>
             </ion-item>
 
-            <ion-item>
-              <ion-label floating>Teléfono</ion-label>
-              <ion-input formControlName="phone" type="number" [class.invalid]="!accountForm.controls.email.valid && (accountForm.controls.phone.dirty || submitAttempt)"
-                ></ion-input>
-            </ion-item>
-            <ion-item *ngIf="!accountForm.controls.phone.valid  && (accountForm.controls.phone.dirty || submitAttempt)">
-              <p>Por favor ingrese un teléfono</p>
-            </ion-item>
+            <ion-row>
+              <ion-col col-5>
+                <ion-item>
+                  <ion-label floating>Código</ion-label>
+                  <ion-select formControlName="phone_country_code">
+                    <ion-option value="+506">+506</ion-option>
+                  </ion-select>
+                </ion-item>
+              </ion-col>
+              <ion-col>
+                <ion-item>
+                  <ion-label floating>Teléfono</ion-label>
+                  <ion-input formControlName="phone_number" type="number" [class.invalid]="!accountForm.controls.phone_number.valid && (accountForm.controls.phone_number.dirty || submitAttempt)"
+                    placeholder=""></ion-input>
+                </ion-item>
+                <p *ngIf="!accountForm.controls.phone_number.valid  && (accountForm.controls.phone_number.dirty || submitAttempt)" class="error">Por favor ingrese un teléfono</p>
+            
+              </ion-col>
+            </ion-row>
 
             <ion-item>
                 <ion-label floating>Correo</ion-label>

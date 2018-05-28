@@ -26,7 +26,7 @@
       <ion-item *ngFor="let patient of patients">
         
               <ion-avatar item-start>
-                  <img src="{{ serverUrl}}{{ patient.photo }}"/>
+                  <img src="{{ patient.avatar_path }}"/>
               </ion-avatar>
               <h2>{{patient.fullname}}</h2>
 

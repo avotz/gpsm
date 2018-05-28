@@ -93,7 +93,7 @@ export class AuthServiceProvider {
 
         options = new RequestOptions({headers: headers});
        
-       return this.http.put(SERVER_URL + '/api/account/edit', form, options)
+       return this.http.put(SERVER_URL + '/api/account', form, options)
            .map(res => res.json())
           .toPromise();
 

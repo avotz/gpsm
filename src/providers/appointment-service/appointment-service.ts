@@ -23,7 +23,7 @@ export class AppointmentServiceProvider {
 
        
       
-        return this.http.post(SERVER_URL + '/api/appointments', appointment, options)
+        return this.http.post(SERVER_URL + '/api/reservations', appointment, options)
             .map(res => res.json())
            .toPromise();
 
@@ -59,7 +59,7 @@ export class AppointmentServiceProvider {
 
       options = new RequestOptions({headers: headers});
      
-     return this.http.delete(SERVER_URL + '/api/appointments/'+ appointment_id +'/delete', options)
+     return this.http.delete(SERVER_URL + '/api/appointments/'+ appointment_id , options)
          .map(res => res.json())
         .toPromise();
 

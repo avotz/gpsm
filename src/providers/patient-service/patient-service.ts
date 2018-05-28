@@ -47,7 +47,7 @@ export class PatientServiceProvider {
 
 
 
-        return this.http.post(SERVER_URL + '/api/account/patients/' + patient_id + '/pressures', form, options)
+        return this.http.post(SERVER_URL + '/api/patients/' + patient_id + '/pressures', form, options)
             .map(res => res.json())
             .toPromise();
 
@@ -65,7 +65,7 @@ export class PatientServiceProvider {
             options = new RequestOptions({ headers: headers });
 
 
-        return this.http.get(SERVER_URL + '/api/account/patients/' + patient_id + '/pressures', options)
+        return this.http.get(SERVER_URL + '/api/patients/' + patient_id + '/pressures', options)
             .map(res => res.json())
             .toPromise();
 
@@ -81,7 +81,7 @@ export class PatientServiceProvider {
 
             options = new RequestOptions({ headers: headers });
 
-        return this.http.delete(SERVER_URL + '/api/account/patients/pressures/' + id, options)
+        return this.http.delete(SERVER_URL + '/api/pressures/' + id, options)
             .map(res => res.json())
             .toPromise();
 
@@ -99,7 +99,7 @@ export class PatientServiceProvider {
 
 
 
-        return this.http.post(SERVER_URL + '/api/account/patients/' + patient_id + '/sugars', form, options)
+        return this.http.post(SERVER_URL + '/api/patients/' + patient_id + '/sugars', form, options)
             .map(res => res.json())
             .toPromise();
 
@@ -117,7 +117,7 @@ export class PatientServiceProvider {
             options = new RequestOptions({ headers: headers });
 
 
-        return this.http.get(SERVER_URL + '/api/account/patients/' + patient_id + '/sugars', options)
+        return this.http.get(SERVER_URL + '/api/patients/' + patient_id + '/sugars', options)
             .map(res => res.json())
             .toPromise();
 
@@ -133,7 +133,7 @@ export class PatientServiceProvider {
 
             options = new RequestOptions({ headers: headers });
 
-        return this.http.delete(SERVER_URL + '/api/account/patients/sugars/' + id, options)
+        return this.http.delete(SERVER_URL + '/api/sugars/' + id, options)
             .map(res => res.json())
             .toPromise();
 
@@ -151,7 +151,7 @@ export class PatientServiceProvider {
 
 
 
-        return this.http.post(SERVER_URL + '/api/account/patients/' + patient_id + '/medicines', form, options)
+        return this.http.post(SERVER_URL + '/api/patients/' + patient_id + '/medicines', form, options)
             .map(res => res.json())
             .toPromise();
 
@@ -169,7 +169,7 @@ export class PatientServiceProvider {
             options = new RequestOptions({ headers: headers });
 
 
-        return this.http.get(SERVER_URL + '/api/account/patients/' + patient_id + '/medicines', options)
+        return this.http.get(SERVER_URL + '/api/patients/' + patient_id + '/medicines', options)
             .map(res => res.json())
             .toPromise();
 
@@ -185,7 +185,7 @@ export class PatientServiceProvider {
 
             options = new RequestOptions({ headers: headers });
 
-        return this.http.delete(SERVER_URL + '/api/account/patients/medicines/' + id, options)
+        return this.http.delete(SERVER_URL + '/api/medicines/' + id, options)
             .map(res => res.json())
             .toPromise();
 
@@ -203,7 +203,7 @@ export class PatientServiceProvider {
 
 
 
-        return this.http.post(SERVER_URL + '/api/account/patients/' + patient_id + '/allergies', form, options)
+        return this.http.post(SERVER_URL + '/api/patients/' + patient_id + '/allergies', form, options)
             .map(res => res.json())
             .toPromise();
 
@@ -221,7 +221,7 @@ export class PatientServiceProvider {
             options = new RequestOptions({ headers: headers });
 
 
-        return this.http.get(SERVER_URL + '/api/account/patients/' + patient_id + '/allergies', options)
+        return this.http.get(SERVER_URL + '/api/patients/' + patient_id + '/allergies', options)
             .map(res => res.json())
             .toPromise();
 
@@ -237,7 +237,7 @@ export class PatientServiceProvider {
 
             options = new RequestOptions({ headers: headers });
 
-        return this.http.delete(SERVER_URL + '/api/account/patients/allergies/' + id, options)
+        return this.http.delete(SERVER_URL + '/api/allergies/' + id, options)
             .map(res => res.json())
             .toPromise();
 
@@ -256,7 +256,7 @@ export class PatientServiceProvider {
             options = new RequestOptions({ headers: headers });
 
 
-        return this.http.get(SERVER_URL + '/api/account/patients/' + patient_id + '/history', options)
+        return this.http.get(SERVER_URL + '/api/patients/' + patient_id + '/history', options)
             .map(res => res.json())
             .toPromise();
 
@@ -275,7 +275,7 @@ export class PatientServiceProvider {
 
             options = new RequestOptions({ headers: headers });
 
-        return this.http.put(SERVER_URL + '/api/account/patients/' + patient_id, form, options)
+        return this.http.put(SERVER_URL + '/api/patients/' + patient_id, form, options)
             .map(res => res.json())
             .toPromise();
 
@@ -292,7 +292,7 @@ export class PatientServiceProvider {
 
             options = new RequestOptions({ headers: headers });
 
-        return this.http.delete(SERVER_URL + '/api/account/patients/' + patient_id, options)
+        return this.http.delete(SERVER_URL + '/api/patients/' + patient_id, options)
             .map(res => res.json())
             .toPromise();
 

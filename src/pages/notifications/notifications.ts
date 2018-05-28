@@ -64,8 +64,8 @@ export class NotificationsPage {
   }
 
   showImage(media) {
-    let d = new Date();
-    return `${this.serverUrl}/storage/${media}?${d.getTime()}`;
+    //let d = new Date();
+    return `${this.serverUrl}/storage/${media}`;
 
   }
   refresh() {

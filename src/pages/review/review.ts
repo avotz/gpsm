@@ -100,7 +100,7 @@ export class ReviewPage {
             loader.dismiss();
             this.submitAttempt = false;
 
-            loader.dismiss();
+           
           });
       }
     }

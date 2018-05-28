@@ -26,7 +26,8 @@ export class MedicDetailPage {
     } else {
       this.medicService.findById(this.medic.id)
       .then(resp => {
-          this.medic = resp.data;
+       
+          this.medic = resp;
           this.isWaiting = null;
       })
       .catch(error => alert(JSON.stringify(error)));

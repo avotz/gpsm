@@ -12,7 +12,7 @@
     <ion-card>
 
         <ion-card-content>
-            <img src="{{ serverUrl}}{{ medic.photo }}"/>
+            <img src="{{ medic.avatar_path }}"/>
             <h2>{{medic.name}}</h2>
             <h3 *ngIf="medic.specialities.length; else elseBlock"><span *ngFor="let speciality of medic.specialities">{{ speciality.name}}</span></h3>
             <ng-template #elseBlock><h3>Médico General</h3></ng-template>

@@ -26,7 +26,7 @@ export class ClinicDetailPage {
             this.isWaiting = true;
             this.clinicService.findById(this.clinic.id)
                 .then(resp => {
-                    this.clinic = resp.data;
+                    this.clinic = resp;
                     this.isWaiting = null;
                 })
                 .catch(error => alert(JSON.stringify(error)));

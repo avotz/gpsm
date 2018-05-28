@@ -159,8 +159,12 @@ export class ModalReservationPage {
 
                 })
                 .catch(error => {
-
+                   
                     let message = 'Ha ocurrido un error guardando la cita';
+                    
+                    if (error._body && error.status == 422){
+                        message = JSON.parse(error._body).message;
+                    }
 
                     let toast = this.toastCtrl.create({
                         message: message,
@@ -199,9 +203,13 @@ export class ModalReservationPage {
                 })
                 .catch(error => {
                     let message = 'Ha ocurrido un error eliminado la cita';
+                   
+                    if (error._body && error.status == 422) {
+                        message = JSON.parse(error._body).message;
+                    }
 
-                    if (error.status == 403)
-                        message = 'No se puede eliminar la cita por que ya esta iniciada';
+                    // if (error.status == 403)
+                    //     message = 'No se puede eliminar la cita por que ya esta iniciada';
 
                     let toast = this.toastCtrl.create({
                         message: message,

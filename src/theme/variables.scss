@@ -39,11 +39,13 @@ $colors: (
   danger:     #f53d3d,
   light:      #f4f4f4,
   dark:       #222,
+  gris: #4F6466,
   facebook:   #3b5998,
   google: #d34836,
   celeste: #00c0ef,
   verde: #00a65a,
-  amarillo: #f39c12
+  amarillo: #f39c12,
+  turquesa: #67BC9A
 );
 
 
@@ -119,5 +121,5 @@ $colors: (
   background-color: map-get($colors, danger);
 }
 .mytoast.success .toast-wrapper{
-  background-color: map-get($colors, secondary);
+  background-color: map-get($colors, turquesa);
 }

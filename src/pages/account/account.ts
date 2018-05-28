@@ -34,7 +34,8 @@ export class AccountPage {
 
     this.accountForm = formBuilder.group({
       name: [this.user.name, Validators.required],
-      phone: [this.user.phone, Validators.required],
+      phone_country_code: [this.user.phone_country_code, Validators.required],
+      phone_number: [this.user.phone_number, Validators.required],
       email: [this.user.email],
       password: ['', Validators.minLength(6)]
 
@@ -56,22 +57,23 @@ export class AccountPage {
           this.user = resp;
           
           let d = new Date();
-          this.user.photo = this.user.photo + '?' + d.getTime()
-          console.log(this.user.photo)
+          this.user.avatar_path = this.user.avatar_path + '?' + d.getTime()
+          console.log(this.user.avatar_path)
 
           window.localStorage.setItem('auth_user', JSON.stringify(resp));
 
 
           this.accountForm.get('name').setValue(this.user.name)
           this.accountForm.get('email').setValue(this.user.email)
-          this.accountForm.get('phone').setValue(this.user.phone)
+          this.accountForm.get('phone_country_code').setValue(this.user.phone_country_code)
+          this.accountForm.get('phone_number').setValue(this.user.phone_number)
       
 
           loader.dismissAll();
         })
         .catch(error => {
 
-          let message = 'Ha ocurrido un error en actualizando la cuenta';
+          let message = 'Ha ocurrido un error en obteniendo informacion de la cuenta';
 
           let toast = this.toastCtrl.create({
             message: message,
