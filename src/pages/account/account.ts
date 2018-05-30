@@ -56,8 +56,8 @@ export class AccountPage {
 
           this.user = resp;
           
-          let d = new Date();
-          this.user.avatar_path = this.user.avatar_path + '?' + d.getTime()
+          //let d = new Date();
+          //this.user.avatar_path = this.user.avatar_path + '?' + d.getTime()
           console.log(this.user.avatar_path)
 
           window.localStorage.setItem('auth_user', JSON.stringify(resp));
@@ -182,7 +182,7 @@ export class AccountPage {
       this.networkService.showNetworkAlert();
     } else {
       // Destination URL
-      var url = `${this.serverUrl}/api/account/avatars`;
+      var url = `${this.serverUrl}/api/users/${this.user.id}/avatar`;
 
       // File for Upload
       var targetPath = this.pathForImage(this.lastImage);
