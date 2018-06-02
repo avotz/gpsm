@@ -182,7 +182,7 @@ export class AccountPage {
       this.networkService.showNetworkAlert();
     } else {
       // Destination URL
-      var url = `${this.serverUrl}/api/users/${this.user.id}/avatar`;
+      var url = `${this.serverUrl}/api/account/avatars`;
 
       // File for Upload
       var targetPath = this.pathForImage(this.lastImage);
@@ -192,7 +192,7 @@ export class AccountPage {
 
 
       var options = {
-        fileKey: "photo",
+        fileKey: "avatar",
         fileName: filename,
         chunkedMode: false,
         mimeType: "multipart/form-data",
@@ -215,11 +215,11 @@ export class AccountPage {
         loader.dismissAll()
         this.presentToast('Imagen subida correctamente.');
 
-        console.log(data);
-        let d = new Date();
-        this.user.photo = '/storage/' + data.response + '?' + d.getTime();
-        window.localStorage.setItem('auth_user', JSON.stringify(this.user));
-        this.lastImage = null;
+      
+        // let d = new Date();
+        // this.user.photo = '/storage/' + data.response + '?' + d.getTime();
+        // window.localStorage.setItem('auth_user', JSON.stringify(this.user));
+        // this.lastImage = null;
       }, err => {
         loader.dismissAll()
         console.log(err);

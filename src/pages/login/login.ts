@@ -16,7 +16,7 @@ import { PasswordResetPage } from './password-reset';
 export class LoginPage {
   errorAuth;
   email;
-  phone;
+  phone_number;
   password;
   loginForm: FormGroup;
   submitAttempt: boolean = false;
@@ -26,7 +26,7 @@ export class LoginPage {
        this.authService = authService;
        this.loadingCtrl = loadingCtrl;
        this.loginForm = formBuilder.group({
-        phone: ['',Validators.required],
+        phone_number: ['',Validators.required],
         password: ['',Validators.required]
         
       });
@@ -56,7 +56,7 @@ export class LoginPage {
       
         if(this.loginForm.valid){
           loader.present();
-          this.authService.login(this.loginForm.value.phone, this.loginForm.value.password)
+          this.authService.login(this.loginForm.value.phone_number, this.loginForm.value.password)
                   .then(data => {
 
                     loader.dismiss();
@@ -78,7 +78,7 @@ export class LoginPage {
                       this.navCtrl.setRoot(HomePage);
                     else {
                         this.navCtrl.push(RegisterPatientPage,{
-                          name: data.user.name, email: data.user.email, phone: data.user.phone
+                          name: data.user.name, email: data.user.email, phone: data.user.phone_number
                       });  
                     }      
 
@@ -190,8 +190,8 @@ export class LoginPage {
 
                   if (body.errors.email)
                     errorSaveText = body.errors.email[0]
-                  if (body.errors.phone)
-                    errorSaveTextPhone = body.errors.phone[0]
+                  if (body.errors.phone_number)
+                    errorSaveTextPhone = body.errors.phone_number[0]
 
                   message = message + errorSaveText + ' ' + errorSaveTextPhone
 
@@ -249,8 +249,8 @@ export class LoginPage {
 
                   if (body.errors.email)
                     errorSaveText = body.errors.email[0]
-                  if (body.errors.phone)
-                    errorSaveTextPhone = body.errors.phone[0]
+                  if (body.errors.phone_number)
+                    errorSaveTextPhone = body.errors.phone_number[0]
 
                   message = message + errorSaveText + ' ' + errorSaveTextPhone
 

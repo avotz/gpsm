@@ -8,7 +8,7 @@ import {SERVER_URL} from '../config';
 
 const postData = {
           password:'',
-          phone:''
+          phone_number:''
        };
 
 @Injectable()
@@ -41,7 +41,7 @@ export class AuthServiceProvider {
     }
 
   login(phone, password){
-        postData.phone = phone
+        postData.phone_number = phone
         postData.password = password
        
         return this.http.post(SERVER_URL + '/api/token', postData)
