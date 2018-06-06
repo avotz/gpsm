@@ -78,7 +78,7 @@ export class LoginPage {
                       this.navCtrl.setRoot(HomePage);
                     else {
                         this.navCtrl.push(RegisterPatientPage,{
-                          name: data.user.name, email: data.user.email, phone: data.user.phone_number
+                          name: data.user.name, email: data.user.email, phone_country_code: data.user.phone_country_code, phone: data.user.phone_number
                       });  
                     }      
 
@@ -159,7 +159,7 @@ export class LoginPage {
     if (this.networkService.noConnection()) {
       this.networkService.showNetworkAlert();
     } else {     
-      this.authService.registerSocial(data.name, data.email, access_token)
+      this.authService.registerSocial(data.first_name, data.email, access_token)
           .then(data => {
 
                 console.log(data);

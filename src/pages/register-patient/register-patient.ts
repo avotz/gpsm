@@ -23,7 +23,7 @@ export class RegisterPatientPage {
       last_name: ['', Validators.required],
       birth_date: ['', Validators.required],
       gender: ['', Validators.required],
-      phone_country_code: [navParams.get('phone_country'), Validators.required],
+      phone_country_code: [navParams.get('phone_country') ? navParams.get('phone_country') : '+506', Validators.required],
       phone_number: [navParams.get('phone'), Validators.required],
       email: [navParams.get('email')],
       address: [''],
