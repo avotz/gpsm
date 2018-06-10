@@ -39,7 +39,9 @@
     </ion-card>
     <h6>{{ currentDate }}</h6>
 
+    
   <calendar [eventSource]="eventSource" [calendarMode]="calendar.mode" [currentDate]="calendar.currentDate" (onCurrentDateChanged)="onCurrentDateChanged($event)"
-    (onEventSelected)="onEventSelected($event)" step="30" [markDisabled]="markDisabled" noEventsLabel="No hay horario disponible">
+    (onEventSelected)="onEventSelected($event)" step="30" [markDisabled]="markDisabled" noEventsLabel="No hay horario disponible" 
+    [autoSelect]="true">
   </calendar>
 </ion-content>

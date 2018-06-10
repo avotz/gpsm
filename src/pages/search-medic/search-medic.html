@@ -33,7 +33,26 @@
                                 <small>lng: {{ lon }} </small>   
                             </div>
                         </ion-item>
-           
+                        <ion-item>
+                            <ion-label>Especialidad</ion-label>
+                            <ion-select formControlName="speciality">
+                                <ion-option value=""></ion-option>
+                                <ion-option *ngFor="let speciality of specialities" value="{{speciality.id}}">{{speciality.name}}</ion-option>
+                            </ion-select>
+                        </ion-item>
+                        <ion-item>
+                            <ion-label>Provincia</ion-label>
+                            <ion-select formControlName="province" (ionChange)="onChangeProvince($event)" >
+                                <ion-option value=""></ion-option>
+                                <ion-option value="5">Guanacaste</ion-option>
+                                <ion-option value="1">San Jose</ion-option>
+                                <ion-option value="4">Heredia</ion-option>
+                                <ion-option value="7">Limon</ion-option>
+                                <ion-option value="3">Cartago</ion-option>
+                                <ion-option value="6">Puntarenas</ion-option>
+                                <ion-option value="2">Alajuela</ion-option>
+                            </ion-select>
+                        </ion-item>
                 
             <ion-card-header (click)="toggleGroup(1)" [ngClass]="{active: isGroupShown(1)}">
                 Parámetros de busqueda (Opcionales)
@@ -42,26 +61,7 @@
             <ion-card-content >
                
                 <div class="optional-fields" *ngIf="isGroupShown(1)">
-                    <ion-item>
-                        <ion-label>Especialidad</ion-label>
-                        <ion-select formControlName="speciality">
-                            <ion-option value=""></ion-option>
-                            <ion-option *ngFor="let speciality of specialities" value="{{speciality.id}}">{{speciality.name}}</ion-option>
-                        </ion-select>
-                    </ion-item>
-                    <ion-item>
-                        <ion-label>Provincia</ion-label>
-                        <ion-select formControlName="province" (ionChange)="onChangeProvince($event)" >
-                            <ion-option value=""></ion-option>
-                            <ion-option value="5">Guanacaste</ion-option>
-                            <ion-option value="1">San Jose</ion-option>
-                            <ion-option value="4">Heredia</ion-option>
-                            <ion-option value="7">Limon</ion-option>
-                            <ion-option value="3">Cartago</ion-option>
-                            <ion-option value="6">Puntarenas</ion-option>
-                            <ion-option value="2">Alajuela</ion-option>
-                        </ion-select>
-                    </ion-item>
+                    
                     <ion-item>
                         <ion-label>Cantón</ion-label>
                         <ion-select formControlName="canton" (ionChange)="onChangeCanton($event)">

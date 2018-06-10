@@ -18,16 +18,23 @@ export class MedicCalendarPage {
   loader: any;
   authUser: any;
   currentDate: any;
+  currentMonth: any = moment().month()
+  currentYear: any = moment().year()
   self: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public medicService: MedicServiceProvider, public modalCtrl: ModalController, public loadingCtrl: LoadingController, public toastCtrl: ToastController, public networkService: NetworkServiceProvider) {
 
     this.authUser = JSON.parse(window.localStorage.getItem('auth_user'));
     this.params = this.navParams.data;
     this.calendar = {
-      currentDate: new Date(),
+      currentDate: moment().toDate(),
       mode: 'month'
     }
     this.self = this;
+
+    
+    let dateFrom = moment(this.currentDate).startOf('month').format('YYYY-MM-DD');
+    let dateTo = moment(this.currentDate).endOf('month').format('YYYY-MM-DD');
+    this.loadAppointments(dateFrom, dateTo);
 
   }
 
@@ -93,7 +100,7 @@ export class MedicCalendarPage {
       this.medicService.findSchedules(this.params.medic.id, this.params.clinic.id, date_from, date_to)
         .then(data => {
           this.schedules = data;
-          
+          let eventsOfMonth = [];
           data.forEach(schedule => {
 
             let intervals = this.createIntervalsFromHours(moment(schedule.start).format("YYYY-MM-DD"), moment(schedule.start).format("HH:mm"), moment(schedule.end).format("HH:mm"), moment.duration(schedule.user.settings.slotDuration).asMinutes());
@@ -106,7 +113,8 @@ export class MedicCalendarPage {
             let reserved;
             let appointmentId;
             let reservedType;
-            for (var i = 0; i < intervals.length; i++) {
+            
+            for (var i = 0; i < intervals.length-1; i++) {
 
               startEvent = moment(schedule.start).format("YYYY-MM-DD") + 'T' + intervals[i] + ':00';
               endEvent = moment(schedule.start).format("YYYY-MM-DD") + 'T' + intervals[i + 1] + ':00';
@@ -129,8 +137,8 @@ export class MedicCalendarPage {
 
               let event = {
                 title: title,
-                startTime: new Date(moment(schedule.start).format("YYYY-MM-DD") + ' ' + intervals[i]),
-                endTime: new Date(moment(schedule.start).format("YYYY-MM-DD") + ' ' + intervals[i + 1]),
+                startTime: moment(moment(schedule.start).format("YYYY-MM-DD") + ' ' + intervals[i]).toDate(),
+                endTime: moment(moment(schedule.start).format("YYYY-MM-DD") + ' ' + intervals[i + 1]).toDate(),
                 startFormatted: moment(schedule.start).format("YYYY-MM-DD") + ' ' + intervals[i] + ':00',
                 endFormatted: moment(schedule.start).format("YYYY-MM-DD") + ' ' + intervals[i + 1] + ':00',
                 start: startEvent,
@@ -145,15 +153,16 @@ export class MedicCalendarPage {
 
               }
 
-              events.push(event);
+              eventsOfMonth.push(event);
 
             }
-
-            this.eventSource = events;
+           
 
 
           });
-
+          
+          this.eventSource = eventsOfMonth;
+          
           loader.dismiss();
 
         })
@@ -172,6 +181,21 @@ export class MedicCalendarPage {
     }
 
   }
+  // isAvailable(date) {
+  //   let res = false;
+
+  //   for (var j = 0; j < this.schedules.length; j++) {
+
+  //     if (moment(this.schedules[j].date).format("YYYY-MM-DD") == date ) {
+
+  //       res = true;
+  //     }
+
+  //   }
+
+  //   return res
+
+  // }
 
   isReserved(startSchedule, endSchedule) {
     let res = {
@@ -202,8 +226,8 @@ export class MedicCalendarPage {
 
   createIntervalsFromHours(date, from, until, slot) {
 
-    until = Date.parse(date + " " + until);
-    from = Date.parse(date + " " + from);
+    until = moment(date + " " + until).toDate()//Date.parse(date + " " + until);
+    from = moment(date + " " + from).toDate()//Date.parse(date + " " + from);
 
     let intervalLength = (slot) ? slot : 30;
     let intervalsPerHour = 60 / intervalLength;
@@ -211,7 +235,7 @@ export class MedicCalendarPage {
 
     let max = (Math.abs(until - from) / milisecsPerHour) * intervalsPerHour;
 
-    let time = new Date(from);
+    let time = from;//new Date(from);
     let intervals = [];
     for (let i = 0; i <= max; i++) {
       //doubleZeros just adds a zero in front of the value if it's smaller than 10.
@@ -233,7 +257,7 @@ export class MedicCalendarPage {
     console.log(evt)
     if (evt.reserved == 1) return
 
-    let current = new Date();
+    let current = moment().toDate();
 
     if (evt.startTime < current && (evt.reserved == 1 || evt.reserved == 0)) {
       let toast = this.toastCtrl.create({
@@ -251,8 +275,17 @@ export class MedicCalendarPage {
     let modal = this.modalCtrl.create(ModalReservationPage, evt);
     modal.onDidDismiss(data => {
 
-      if (data.date)
-        this.onCurrentDateChanged(data.date);
+      if (data.date){
+        this.calendar.currentDate = moment(data.date).toDate();//new Date(data.date);
+        let dateFrom = moment(data.date).startOf('month').format('YYYY-MM-DD');
+        let dateTo = moment(data.date).endOf('month').format('YYYY-MM-DD');
+        //this.calendar.currentDate = moment(data.date)
+
+        this.currentMonth = moment(data.date).month()
+        this.currentYear = moment(data.date).year()
+        this.loadAppointments(dateFrom, dateTo);
+      }
+     
 
       if(data.toHome)
         this.goHome()
@@ -260,15 +293,27 @@ export class MedicCalendarPage {
     });
     modal.present();
   }
+  
 
   onCurrentDateChanged(date) {
 
-    let dateFrom = moment(date).format('YYYY-MM-DD');
-    let dateTo = dateFrom; //moment(lastDay).format('YYYY-MM-DD');
-    this.currentDate = dateFrom;
+    // let dateFrom = moment(date).format('YYYY-MM-DD');
+    // let dateTo = dateFrom; //moment(lastDay).format('YYYY-MM-DD');
+    // this.currentDate = dateFrom;
+    let dateFrom = moment(date).startOf('month').format('YYYY-MM-DD');
+    let dateTo = moment(date).endOf('month').format('YYYY-MM-DD');
+    this.currentDate = moment(date).format('YYYY-MM-DD');
 
     console.log(dateFrom + ' - ' + dateTo)
-    this.loadAppointments(dateFrom, dateTo);
+    if (this.currentMonth != moment(date).month() || this.currentYear != moment(date).year()) {
+
+      this.currentMonth = moment(date).month()
+      this.currentYear = moment(date).year()
+      this.loadAppointments(dateFrom, dateTo);
+    
+
+    }
+     
 
 
   }

@@ -20,11 +20,11 @@
 
         <ion-list>
             <ion-item *ngFor="let clinic of medic.offices">
-                <ion-icon name="home" item-left></ion-icon>
+                <!-- <ion-icon name="home" item-left></ion-icon> -->
                 <p>{{clinic.name}}</p>
                 <h2>{{clinic.address}}</h2>
                 <button ion-button round item-right (click)="openCalendar(medic, clinic)" color="danger" >
-                    <ion-icon name="calendar"></ion-icon>
+                    <ion-icon name="calendar"></ion-icon> Reservar
                 
                 </button>
                 <button ion-button round item-right (click)="share(clinic)" *ngIf="clinic.lat && clinic.lon">

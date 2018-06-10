@@ -7,6 +7,12 @@ page-medic-calendar {
         background: map-get($colors, turquesa);
         color: white !important;
     }
+    .monthview-primary-with-event[_ngcontent-c1]{
+        background-color: map-get($colors, turquesa);
+    }
+    .monthview-selected[_ngcontent-c1]{
+        background-color: map-get($colors, gris) !important;
+    }
     h4, h6{
         text-align: center;
     }

@@ -3,15 +3,22 @@
             <ion-title>
                 Mi Expediente
             </ion-title>
+            <ion-buttons end>
+        
+                <button ion-button (click)="goHome()" color="light">
+                    
+                     Otro?
+                    </button>
+              </ion-buttons>
         </ion-navbar>
-        <div class="patient-bar">
+        <!-- <div class="patient-bar">
                 Paciente: {{ patient.fullname }}.  <a item-right clear (click)="goPatients()" color="light">Otro?</a>
-        </div>
+        </div> -->
     </ion-header>
     
     <ion-tabs class="tabs-basic" >
-            <ion-tab tabTitle="Control Personal" [root]="tabPersonal" [rootParams]="personalTabParams" color="'danger'"></ion-tab>
-            <ion-tab tabTitle="Control Medico" [root]="tabMedico" [rootParams]="medicalTabParams"></ion-tab>
-            
-        </ion-tabs>
+            <ion-tab tabIcon="contact" tabTitle="Control Personal" [root]="tabPersonal" [rootParams]="personalTabParams" color="'ligth'"></ion-tab>
+            <ion-tab tabIcon="medkit"tabTitle="Control Medico" [root]="tabMedico" [rootParams]="medicalTabParams"></ion-tab>
+           
+    </ion-tabs>
 
