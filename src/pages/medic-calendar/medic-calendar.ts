@@ -106,7 +106,7 @@ export class MedicCalendarPage {
             let intervals = this.createIntervalsFromHours(moment(schedule.start).format("YYYY-MM-DD"), moment(schedule.start).format("HH:mm"), moment(schedule.end).format("HH:mm"), moment.duration(schedule.user.settings.slotDuration).asMinutes());
 
 
-            let events = [];
+            //let events = [];
             let title = 'Disponible';
             let startEvent;
             let endEvent;
