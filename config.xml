@@ -90,7 +90,6 @@
         <variable name="APP_ID" value="159461661253763" />
         <variable name="APP_NAME" value="GPS Medica" />
     </plugin>
-    <plugin name="cordova-plugin-file" spec="^4.3.3" />
     <plugin name="cordova-plugin-file-transfer" spec="^1.6.3" />
     <plugin name="cordova-plugin-filepath" spec="^1.0.2" />
     <plugin name="cordova-plugin-firebase" spec="^0.1.24" />
@@ -107,6 +106,7 @@
     <plugin name="cordova.plugins.diagnostic" spec="^3.6.6" />
     <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
     <plugin name="uk.co.workingedge.phonegap.plugin.launchnavigator" spec="^4.0.4" />
-    <engine name="android" spec="^6.2.3" />
+    <plugin name="cordova-plugin-file" spec="^6.0.1" />
+    <engine name="android" spec="6.4.0" />
     <engine name="ios" spec="4.5.4" />
 </widget>
