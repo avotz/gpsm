@@ -34,7 +34,13 @@ export class MyApp {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      statusBar.styleDefault();
+      
+      if(platform.is('android')) {
+        statusBar.styleBlackOpaque();
+      }else{
+        statusBar.styleDefault();
+      }
+      
       splashScreen.hide();
 
       window.localStorage.setItem('countNotifications', '0')
