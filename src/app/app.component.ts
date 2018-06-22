@@ -45,65 +45,70 @@ export class MyApp {
 
       window.localStorage.setItem('countNotifications', '0')
 
-      FirebasePlugin.getToken( token => {
-        // save this server-side and use it to push notifications to this device
-         
-          if(token){
-            window.localStorage.setItem('push_token', token)
-            this.savePushToken(token)
-          }
-      }, (error) => {
-          console.error(error);
-          window.localStorage.setItem('push_token', '')
-      })
-      
-      FirebasePlugin.onTokenRefresh(token => {
-        // save this server-side and use it to push notifications to this device
-       
-        if(token){
-          window.localStorage.setItem('push_token', token)
-          this.savePushToken(token)
-        }
-        
-    }, (error) => {
-        console.error(error)
-        window.localStorage.setItem('push_token', '')
-    })
-    
-      FirebasePlugin.onNotificationOpen(notification => {
-        if(!notification.tap){
-
-          let confirm = this.alertCtrl.create({
-            title: notification.title,
-            message: notification.body,
-            buttons: [
-              {
-                text: 'Cerrar',
-                handler: () => {
-                  confirm.dismiss();
+      if(platform.is('cordova')) {
+            FirebasePlugin.getToken( token => {
+              // save this server-side and use it to push notifications to this device
+              
+                if(token){
+                  window.localStorage.setItem('push_token', token)
+                  this.savePushToken(token)
                 }
-              },
-              {
-                text: 'Ir a notificaciones',
-                handler: () => {
-                  this.nav.push(NotificationsPage);
-                }
+            }, (error) => {
+                console.error(error);
+                window.localStorage.setItem('push_token', '')
+            })
+            
+            FirebasePlugin.onTokenRefresh(token => {
+              // save this server-side and use it to push notifications to this device
+            
+              if(token){
+                window.localStorage.setItem('push_token', token)
+                this.savePushToken(token)
               }
-            ]
-          });
-          confirm.present();
+              
+          }, (error) => {
+              console.error(error)
+              window.localStorage.setItem('push_token', '')
+          })
           
-        }
-
-       
-
-        this.badge.increase(1);
-        this.events.publish('notifications:updated', 1);
-        
-    }, (error) => {
-        console.error(error);
-    })
-
+            FirebasePlugin.onNotificationOpen(notification => {
+              if(!notification.tap){
+      
+                let confirm = this.alertCtrl.create({
+                  title: notification.title,
+                  message: notification.body,
+                  buttons: [
+                    {
+                      text: 'Cerrar',
+                      handler: () => {
+                        confirm.dismiss();
+                      }
+                    },
+                    {
+                      text: 'Ir a notificaciones',
+                      handler: () => {
+                        this.nav.push(NotificationsPage);
+                      }
+                    }
+                  ]
+                });
+                confirm.present();
+                
+              }
+      
+            
+      
+              this.badge.increase(1);
+              this.events.publish('notifications:updated', 1);
+              
+          }, (error) => {
+              console.error(error);
+          })
+  
+      }else{
+        console.log('Estamos en el navegador. Firebase no funciona aqui')
+      }
+      
 
 
     });

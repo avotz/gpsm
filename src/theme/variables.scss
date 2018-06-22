@@ -42,6 +42,7 @@ $colors: (
   gris: #4F6466,
   facebook:   #3b5998,
   google: #d34836,
+  googlelight: #ffffff,
   celeste: #00c0ef,
   verde: #00a65a,
   amarillo: #f39c12,
@@ -114,6 +115,13 @@ $colors: (
    }
    .list-md[inset] .item-select, .list-md[inset] .item-datetime{
      padding-left: 0;
+   }
+   .button-md-googlelight{
+     ion-icon{
+      color: map-get($colors, google);
+     }
+     color: map-get($colors, google);
+     
    }
 
 }
