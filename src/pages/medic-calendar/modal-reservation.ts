@@ -126,8 +126,8 @@ export class ModalReservationPage {
                 date: this.appointment.startFormatted,
                 start: this.appointment.start,
                 end: this.appointment.end,
-                backgroundColor: '#337ab7', //Success (green)
-                borderColor: '#337ab7',
+                backgroundColor: '#374850', //Success (green)
+                borderColor: '#374850',
                 user_id: this.appointment.medic_id,
                 patient_id: (this.patientIdSelected) ? this.patientIdSelected : 0,
                 office_id: (this.appointment.office_id) ? this.appointment.office_id : 0,

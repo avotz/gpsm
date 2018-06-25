@@ -8,7 +8,8 @@ import {SERVER_URL} from '../config';
 
 const postData = {
           password:'',
-          phone_number:''
+          phone_number:'',
+          push_token: ''
        };
 
 @Injectable()
@@ -43,7 +44,8 @@ export class AuthServiceProvider {
   login(phone, password){
         postData.phone_number = phone
         postData.password = password
-       
+        postData.push_token = window.localStorage.getItem('push_token') 
+
         return this.http.post(SERVER_URL + '/api/token', postData)
             .map(res => res.json())
             .toPromise();

@@ -39,9 +39,23 @@
     </ion-card>
     <h6>{{ currentDate }}</h6>
 
-    
+    <ng-template #template let-showEventDetail="showEventDetail" let-selectedDate="selectedDate" let-noEventsLabel="noEventsLabel">
+        <ion-list class="event-detail-container" has-bouncing="false" *ngIf="showEventDetail" overflow-scroll="false">
+            <ion-item *ngFor="let event of selectedDate?.events" (click)="onEventSelected(event)">
+                    <span *ngIf="!event.allDay" class="monthview-eventdetail-timecolumn">{{event.startTime|date: 'HH:mm'}}
+                        -
+                        {{event.endTime|date: 'HH:mm'}} |
+                    </span>
+                <span *ngIf="event.allDay" class="monthview-eventdetail-timecolumn">All day</span>
+                <span class="event-detail status-{{event.reserved}}">    {{event.title}}</span>
+            </ion-item>
+            <ion-item *ngIf="selectedDate?.events.length==0">
+                <div class="no-events-label">{{noEventsLabel}}</div>
+            </ion-item>
+        </ion-list>
+    </ng-template>
   <calendar [eventSource]="eventSource" [calendarMode]="calendar.mode" [currentDate]="calendar.currentDate" (onCurrentDateChanged)="onCurrentDateChanged($event)"
     (onEventSelected)="onEventSelected($event)" step="30" [markDisabled]="markDisabled" noEventsLabel="No hay horario disponible" 
-    [autoSelect]="true">
+    [autoSelect]="true" [monthviewEventDetailTemplate]="template">
   </calendar>
 </ion-content>

@@ -16,5 +16,17 @@ page-medic-calendar {
     h4, h6{
         text-align: center;
     }
+    .status-2{
+        color:white;
+        border-radius: 5px;
+        padding: 0 2px;
+        background-color: map-get($colors, turquesa);
+    }
+    .status-1{
+        color:white;
+        border-radius: 5px;
+        padding: 0 2px;
+        background-color: map-get($colors, danger);
+    }
     
 }
