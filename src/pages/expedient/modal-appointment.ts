@@ -111,7 +111,7 @@ export class ModalAppointmentPage {
       
   // }
   showImage(result){
-    let url = `${this.serverUrl}/storage/patients/${this.appointment.patient.id }/labresults/${result.id}/${result.name}`
+    let url = result.file_path;//`${this.serverUrl}/storage/patients/${this.appointment.patient.id }/labresults/${result.id}/${result.name}`
 
   
     let ext =  result.name.split('.').pop();
