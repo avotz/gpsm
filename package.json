@@ -28,7 +28,7 @@
         "@ionic-native/file": "^4.1.0",
         "@ionic-native/file-path": "^4.1.0",
         "@ionic-native/geolocation": "^4.1.0",
-        "@ionic-native/google-plus": "^4.7.0",
+        "@ionic-native/google-plus": "^4.9.0",
         "@ionic-native/in-app-browser": "^4.2.1",
         "@ionic-native/launch-navigator": "^4.1.0",
         "@ionic-native/network": "^4.2.0",
@@ -116,7 +116,7 @@
             "cordova-plugin-badge": {},
             "cordova-plugin-file": {},
             "cordova-plugin-googleplus": {
-                "REVERSED_CLIENT_ID": "1088161575987-k9lmf7jnkh6ci9ruh265pman74rtj5gb.apps.googleusercontent.com"
+                "REVERSED_CLIENT_ID": "com.googleusercontent.apps.673440482992-k2ngmevpuolh3bfibcaqdoe9hcl1mrqc"
             }
         },
         "platforms": [

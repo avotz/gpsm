@@ -105,23 +105,30 @@ export class LoginPage {
     if (this.networkService.noConnection()) {
       this.networkService.showNetworkAlert();
     } else { 
+      
         this.fb.login(['public_profile', 'email'])
         .then(rta => {
+          
           console.log(rta.status)
           let access_token = rta.authResponse.accessToken;
+          
           if(rta.status == 'connected'){
+            
             this.fb.api("/me?fields=id,name,email,first_name,last_name,gender",['public_profile','email'])
             .then(rta=>{
+              
               console.log(rta);
               this.registerFromFB(rta, access_token);
                    
             })
             .catch(error =>{
+              
               console.error( error );
             });
           };
         })
         .catch(error =>{
+          
           console.error( error );
         });
       }
@@ -131,6 +138,7 @@ export class LoginPage {
     if (this.networkService.noConnection()) {
       this.networkService.showNetworkAlert();
     } else {  
+      
       this.gp.login(
             {
                 'scopes': '',
@@ -139,7 +147,7 @@ export class LoginPage {
             }
         ).then(
             (success) => {
-
+              
                 this.registerFromGoogle(success);
                 /*alert(  '\n id: ' + JSON.stringify(success.userId) +
                         '\n name: ' + JSON.stringify(success.displayName) +
@@ -149,6 +157,7 @@ export class LoginPage {
 
             },
             (failure) => {
+              
                 console.log('GOOGLE+ login FAILED', failure);
             }
         );
@@ -159,9 +168,14 @@ export class LoginPage {
     if (this.networkService.noConnection()) {
       this.networkService.showNetworkAlert();
     } else {     
+      let loader = this.loadingCtrl.create({
+        content: "Espere por favor...",
+        //duration: 3000
+      });
+      loader.present();
       this.authService.registerSocial(data.first_name, data.email, access_token)
           .then(data => {
-
+            loader.dismiss();
                 console.log(data);
                   
                   
@@ -179,6 +193,7 @@ export class LoginPage {
 
               })
               .catch(error =>{
+                loader.dismiss();
                 let message = 'Ha ocurrido un error en el registro desde una red social.';
                 let errorSaveText = error.statusText;
                 let errorSaveTextPhone = error.statusText;
@@ -218,8 +233,14 @@ export class LoginPage {
     if (this.networkService.noConnection()) {
       this.networkService.showNetworkAlert();
     } else {   
+      let loader = this.loadingCtrl.create({
+        content: "Espere por favor...",
+        //duration: 3000
+      });
+      loader.present();
       this.authService.registerSocial(data.displayName, data.email, '')
           .then(data => {
+            loader.dismiss();
 
                 console.log(data);
                 
@@ -238,6 +259,7 @@ export class LoginPage {
 
               })
               .catch(error => {
+                loader.dismiss();
                 let message = 'Ha ocurrido un error en el registro desde una red social.';
                 let errorSaveText = error.statusText;
                 let errorSaveTextPhone = error.statusText;
