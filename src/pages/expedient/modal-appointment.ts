@@ -118,8 +118,15 @@ export class ModalAppointmentPage {
 
     if (ext == 'pdf' || ext == 'docx' || ext == 'xlsx' || ext == 'doc' || ext == 'xls')
       this.iab.create(url,'_system')
-    else 
-      this.photoViewer.show(url,'_blank');
+    else{
+        var options = {
+          share: false, // default is false
+          closeButton: true, // default is true
+          copyToReference: true // default is false
+        };
+        this.photoViewer.show(url,'_blank', options);
+  
+      } 
     
   }
   dismiss() {

@@ -8,6 +8,7 @@ import { Camera } from '@ionic-native/camera';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { SERVER_URL } from '../../providers/config';
 import { NetworkServiceProvider } from '../../providers/network-service/network-service';
+import { normalizeURL } from 'ionic-angular';
 
 declare var cordova: any;
 
@@ -116,7 +117,7 @@ export class AccountPage {
   public takePicture(sourceType) {
     // Create options for the Camera Dialog
     var options = {
-      quality: 100,
+      quality: 50,
       sourceType: sourceType,
       saveToPhotoAlbum: false,
       correctOrientation: true
@@ -173,7 +174,7 @@ export class AccountPage {
     if (img === null) {
       return '';
     } else {
-      return cordova.file.dataDirectory + img;
+      return normalizeURL(cordova.file.dataDirectory + img);
     }
   }
 
