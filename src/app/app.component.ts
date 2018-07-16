@@ -27,6 +27,8 @@ export class MyApp {
    @ViewChild(Nav) nav: Nav;
 
   rootPage:any = LandingPage;
+  title:any = '';
+  body:any = '';
 
   pages: Array<{title: string, component: any}>
 
@@ -44,6 +46,14 @@ export class MyApp {
       splashScreen.hide();
 
       window.localStorage.setItem('countNotifications', '0')
+
+      if(platform.is('ios')){
+        FirebasePlugin.grantPermission(); //ios
+        FirebasePlugin.hasPermission(function(data){
+          console.log(data.isEnabled);
+        });
+
+      }
 
       if(platform.is('cordova')) {
             FirebasePlugin.getToken( token => {
@@ -73,10 +83,18 @@ export class MyApp {
           
             FirebasePlugin.onNotificationOpen(notification => {
               if(!notification.tap){
+
+                if(platform.is('ios')){
+                  this.title = notification.aps.alert.title;
+                  this.body = notification.aps.alert.body;
+                }else{
+                  this.title = notification.title;
+                  this.body = notification.body;
+                }
       
                 let confirm = this.alertCtrl.create({
-                  title: notification.title,
-                  message: notification.body,
+                  title: this.title,
+                  message: this.body,
                   buttons: [
                     {
                       text: 'Cerrar',
