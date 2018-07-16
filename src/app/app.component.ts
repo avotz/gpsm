@@ -32,7 +32,7 @@ export class MyApp {
 
   pages: Array<{title: string, component: any}>
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private fb: Facebook, private gp: GooglePlus, public alertCtrl: AlertController, public authService: AuthServiceProvider, public badge: Badge, public events: Events) {
+  constructor(public platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private fb: Facebook, private gp: GooglePlus, public alertCtrl: AlertController, public authService: AuthServiceProvider, public badge: Badge, public events: Events) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -47,93 +47,9 @@ export class MyApp {
 
       window.localStorage.setItem('countNotifications', '0')
 
-      if(platform.is('ios')){
-        FirebasePlugin.grantPermission(); //ios
-        FirebasePlugin.hasPermission(function(data){
-          console.log(data.isEnabled);
-        });
+      this.registerPushFn();
 
-      }
-
-      if(platform.is('cordova')) {
-            FirebasePlugin.getToken( token => {
-              // save this server-side and use it to push notifications to this device
-              
-                if(token){
-                  window.localStorage.setItem('push_token', token)
-                  this.savePushToken(token)
-                }
-            }, (error) => {
-                console.error(error);
-                window.localStorage.setItem('push_token', '')
-            })
-            
-            FirebasePlugin.onTokenRefresh(token => {
-              // save this server-side and use it to push notifications to this device
-            
-              if(token){
-                window.localStorage.setItem('push_token', token)
-                this.savePushToken(token)
-              }
-              
-          }, (error) => {
-              console.error(error)
-              window.localStorage.setItem('push_token', '')
-          })
-          
-            FirebasePlugin.onNotificationOpen(notification => {
-              if(!notification.tap){
-
-                if(platform.is('ios')){
-                  this.title = notification.aps.alert.title;
-                  this.body = notification.aps.alert.body;
-                }else{
-                  this.title = notification.title;
-                  this.body = notification.body;
-                }
-      
-                let confirm = this.alertCtrl.create({
-                  title: this.title,
-                  message: this.body,
-                  buttons: [
-                    {
-                      text: 'Cerrar',
-                      handler: () => {
-                        confirm.dismiss();
-                      }
-                    },
-                    {
-                      text: 'Ir a notificaciones',
-                      handler: () => {
-                        this.nav.push(NotificationsPage);
-                      }
-                    }
-                  ]
-                });
-                confirm.present();
-                
-              }
-      
-            
-      
-              this.badge.increase(1);
-              this.events.publish('notifications:updated', 1);
-              
-          }, (error) => {
-              console.error(error);
-          })
-  
-      }else{
-        console.log('Estamos en el navegador. Firebase no funciona aqui')
-      }
-      
-
-
-    });
-
-    
-
-    // used for an example of ngFor and navigation
+      // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Inicio', component: HomePage },
       { title: 'Buscar Médico', component: SearchMedicPage },
@@ -146,7 +62,118 @@ export class MyApp {
     ];
     //this.pushSetup();
     this.checkPreviousAuthorization(); 
+
+    }); //platform ready
+
     
+  } //constructor
+
+  registerPushFn(): boolean {
+
+    if(! this.platform.is('cordova')){
+      console.log('firebase notification en chrome esta desabilitado')
+      return true;
+    }
+
+
+     if(this.platform.is('ios')){
+      
+          let self = this;
+          FirebasePlugin.hasPermission(function(data){
+            if(!data.isEnabled){
+                    console.log('no tiene permiso')
+                    FirebasePlugin.grantPermission(function(data){
+                      console.log('se le dio permiso y obtuvo token')
+                      return self.getTokenPush();
+                    })
+                  } else {
+                    console.log('tiene permiso')
+                    return self.getTokenPush();
+                  }
+          })
+        
+
+      }else{
+        return this.getTokenPush();
+      }
+    
+
+  }
+
+  getTokenPush(){
+
+    FirebasePlugin.getToken(token => {
+      //     // save this server-side and use it to push notifications to this device
+  
+          if (token) {
+            window.localStorage.setItem('push_token', token)
+            this.savePushToken(token)
+            console.log(token);
+            
+          }
+        }, (error) => {
+          console.error(error);
+          window.localStorage.setItem('push_token', '')
+        })
+  
+        FirebasePlugin.onTokenRefresh(token => {
+          // save this server-side and use it to push notifications to this device
+  
+          if (token) {
+            window.localStorage.setItem('push_token', token)
+            this.savePushToken(token)
+            console.log(token);
+            
+          }
+  
+        }, (error) => {
+          console.error(error)
+          window.localStorage.setItem('push_token', '')
+        })
+  
+        FirebasePlugin.onNotificationOpen(notification => {
+          if(!notification.tap){
+
+            if(this.platform.is('ios')){
+              this.title = notification.aps.alert.title;
+              this.body = notification.aps.alert.body;
+            }else{
+              this.title = notification.title;
+              this.body = notification.body;
+            }
+  
+            let confirm = this.alertCtrl.create({
+              title: this.title,
+              message: this.body,
+              buttons: [
+                {
+                  text: 'Cerrar',
+                  handler: () => {
+                    confirm.dismiss();
+                  }
+                },
+                {
+                  text: 'Ir a notificaciones',
+                  handler: () => {
+                    this.nav.push(NotificationsPage);
+                  }
+                }
+              ]
+            });
+            confirm.present();
+            
+          }
+  
+        
+  
+          this.badge.increase(1);
+          this.events.publish('notifications:updated', 1);
+          
+      }, (error) => {
+          console.error(error);
+      })
+
+        return true;
   }
   
 
@@ -172,33 +199,7 @@ export class MyApp {
         });
   }
 }
-  // pushSetup(){
-  //   FirebasePlugin.getToken(function(token) {
-  //       // save this server-side and use it to push notifications to this device
-  //       console.log(token);
-  //       window.localStorage.setItem('push_token', token);
-  //   }, function(error) {
-  //       console.error(error);
-  //       window.localStorage.setItem('push_token', '');
-  //   });
-    
-  //   FirebasePlugin.onTokenRefresh(function(token) {
-  //     // save this server-side and use it to push notifications to this device
-  //     console.log(token);
-  //     window.localStorage.setItem('push_token', token);
-  // }, function(error) {
-  //     console.error(error);
-  //     window.localStorage.setItem('push_token', '');
-  // });
-  
-  //   FirebasePlugin.onNotificationOpen(function(notification) {
-  //     alert(notification.body);
-  // }, function(error) {
-  //     console.error(error);
-  // });
-    
-   
-  // }
+ 
 
   checkPreviousAuthorization(): void { 
   
