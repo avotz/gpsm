@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Platform, NavController, NavParams, LoadingController, ToastController, ActionSheetController } from 'ionic-angular';
+import { Platform, NavController, NavParams, LoadingController, ToastController, ActionSheetController, AlertController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { File } from '@ionic-native/file';
 import { Transfer, TransferObject } from '@ionic-native/transfer';
@@ -9,7 +9,7 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { SERVER_URL } from '../../providers/config';
 import { NetworkServiceProvider } from '../../providers/network-service/network-service';
 import { normalizeURL } from 'ionic-angular';
-
+import { LandingPage } from '../landing/landing';
 declare var cordova: any;
 
 
@@ -28,7 +28,7 @@ export class AccountPage {
   lastImage: string = null;
 
   submitAttempt: boolean = false;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public authService: AuthServiceProvider, public loadingCtrl: LoadingController, public formBuilder: FormBuilder, public toastCtrl: ToastController, private camera: Camera, private transfer: Transfer, private file: File, private filePath: FilePath, public actionSheetCtrl: ActionSheetController, public platform: Platform, public networkService: NetworkServiceProvider) {
+  constructor(private alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams, public authService: AuthServiceProvider, public loadingCtrl: LoadingController, public formBuilder: FormBuilder, public toastCtrl: ToastController, private camera: Camera, private transfer: Transfer, private file: File, private filePath: FilePath, public actionSheetCtrl: ActionSheetController, public platform: Platform, public networkService: NetworkServiceProvider) {
 
     this.navCtrl = navCtrl;
     this.user = JSON.parse(window.localStorage.getItem('auth_user'));
@@ -228,7 +228,92 @@ export class AccountPage {
       });
     }
   }
+  cancelAccount(){
 
+    let alert = this.alertCtrl.create({
+      title: 'Eliminar cuenta',
+      message: 'Esta seguro que quieres eliminar esta cuenta?',
+      buttons: [
+        {
+          text: 'No',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Eliminar',
+          handler: () => {
+            this.cancelCuenta()
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+  
+  cancelCuenta(){
+    if (this.networkService.noConnection()) {
+      this.networkService.showNetworkAlert();
+    } else {
+      this.submitAttempt = true;
+      let message = 'Cuenta Eliminada Correctamente';
+      let styleClass = 'success';
+
+     
+
+        let loader = this.loadingCtrl.create({
+          content: "Espere por favor...",
+          //duration: 3000
+        });
+
+        loader.present();
+
+        this.authService.cancelAccount()
+          .then(data => {
+
+            loader.dismiss();
+            console.log(data);
+           
+            window.localStorage.removeItem('auth_user');
+            window.localStorage.removeItem('token');
+
+            this.navCtrl.setRoot(LandingPage);
+    
+
+
+            let toast = this.toastCtrl.create({
+              message: message,
+              cssClass: 'mytoast ' + styleClass,
+              duration: 3000
+            });
+            toast.present(toast);
+            this.errorAuth = "";
+            
+
+
+
+          })
+          .catch(error => {
+
+            let message = 'Ha ocurrido un error eliminando la cuenta.';
+            let errorSaveText = error.statusText;
+            let errorSaveTextPhone = error.statusText;
+
+           
+            let toast = this.toastCtrl.create({
+              message: message,
+              cssClass: 'mytoast error',
+              duration: 4500
+            });
+
+            toast.present(toast);
+            loader.dismiss();
+          });
+      
+    }
+
+  }
   update() {
     if (this.networkService.noConnection()) {
       this.networkService.showNetworkAlert();

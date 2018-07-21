@@ -102,6 +102,21 @@ export class AuthServiceProvider {
           
             
    }
+   cancelAccount(){
+    
+    
+    let headers = new Headers({'Accept': 'application/json',
+    'Authorization': 'Bearer '+ window.localStorage.getItem('token')}),
+
+     options = new RequestOptions({headers: headers});
+    
+    return this.http.delete(SERVER_URL + '/api/account/cancel', options)
+        .map(res => res.json())
+       .toPromise();
+
+       
+         
+}
    updatePushToken(token){
     
    
