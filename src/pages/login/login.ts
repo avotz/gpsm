@@ -177,6 +177,12 @@ export class LoginPage {
           .then(data => {
             loader.dismiss();
                 console.log(data);
+
+                if(data.error)
+                {
+                  this.errorAuth = data.error == 'Unauthenticated' ? 'Estas Credenciales no corresponden a ningun usuario registrado. Verifica!': data.error;
+                  return;
+                }
                   
                   
                   window.localStorage.setItem('token', data.access_token);
@@ -243,6 +249,11 @@ export class LoginPage {
             loader.dismiss();
 
                 console.log(data);
+                if(data.error)
+                    {
+                      this.errorAuth = data.error == 'Unauthenticated' ? 'Estas Credenciales no corresponden a ningun usuario registrado. Verifica!': data.error;
+                      return;
+                    }
                 
                 
                 window.localStorage.setItem('token', data.access_token);
