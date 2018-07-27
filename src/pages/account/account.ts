@@ -361,12 +361,11 @@ export class AccountPage {
           .catch(error => {
 
             let message = 'Ha ocurrido un error actualizando la cuenta.';
-            let errorSaveText = error.statusText;
-            let errorSaveTextPhone = error.statusText;
+           
 
             if (error.status == 422) {
-              errorSaveText = "";
-              errorSaveTextPhone = "";
+              let errorSaveText = "";
+              let errorSaveTextPhone = "";
               let body = JSON.parse(error._body)
 
               if (body.errors.email)

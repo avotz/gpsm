@@ -30,7 +30,7 @@ export class ModalPatientPage {
             last_name: [this.patient.last_name, Validators.required],
             birth_date: [this.patient.birth_date, Validators.required],
             gender: [this.patient.gender, Validators.required],
-            phone_country_code: [this.patient.phone_country_code, Validators.required],
+            phone_country_code: [this.patient.phone_country_code ? this.patient.phone_country_code : '+506', Validators.required],
             phone_number: [this.patient.phone_number, Validators.required],
             email: [this.patient.email],
             address: [this.patient.address],
