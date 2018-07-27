@@ -15,20 +15,20 @@
 }*/
 configurations.all {
    resolutionStrategy {
-       force "com.google.android.gms:play-services-auth:11.8.0"
-       force "com.google.android.gms:play-services-identity:11.8.0"
-       force "com.google.android.gms:play-services-ads:11.8.0"
-       force "com.google.android.gms:play-services-base:11.8.0"
-       force "com.google.android.gms:play-services-gcm:11.8.0"
-       force "com.google.android.gms:play-services-analytics:11.8.0"
-       force "com.google.android.gms:play-services-location:11.8.0"
-       force "com.google.android.gms:play-services-basement:11.8.0"
-       force "com.google.android.gms:play-services-tagmanager:11.8.0"
-       force 'com.google.firebase:firebase-core:11.8.0'
-       force 'com.google.firebase:firebase-crash:11.8.0'
-       force 'com.google.firebase:firebase-auth:11.8.0'
-       force 'com.google.firebase:firebase-common:11.8.0'
-       force 'com.google.firebase:firebase-config:11.8.0'
-       force 'com.google.firebase:firebase-messaging:11.8.0'
+       force "com.google.android.gms:play-services-auth:+"
+       force "com.google.android.gms:play-services-identity:+"
+       force "com.google.android.gms:play-services-ads:+"
+       force "com.google.android.gms:play-services-base:+"
+       force "com.google.android.gms:play-services-gcm:+"
+       force "com.google.android.gms:play-services-analytics:+"
+       force "com.google.android.gms:play-services-location:+"
+       force "com.google.android.gms:play-services-basement:+"
+       force "com.google.android.gms:play-services-tagmanager:+"
+       force 'com.google.firebase:firebase-core:+'
+       force 'com.google.firebase:firebase-crash:+'
+       force 'com.google.firebase:firebase-auth:+'
+       force 'com.google.firebase:firebase-common:+'
+       force 'com.google.firebase:firebase-config:+'
+       force 'com.google.firebase:firebase-messaging:+'
    }
 }
