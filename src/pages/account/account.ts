@@ -370,8 +370,8 @@ export class AccountPage {
 
               if (body.errors.email)
                 errorSaveText = body.errors.email[0]
-              if (body.errors.phone)
-                errorSaveTextPhone = body.errors.phone[0]
+              if (body.errors.phone_number)
+                errorSaveTextPhone = body.errors.phone_number[0]
 
               message = message + errorSaveText + ' ' + errorSaveTextPhone
 

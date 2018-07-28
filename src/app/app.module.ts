@@ -26,6 +26,7 @@ import { Ionic2RatingModule } from 'ionic2-rating';
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
 registerLocaleData(localeEs);
+import { AppVersion } from '@ionic-native/app-version';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -155,6 +156,7 @@ import { Badge } from '@ionic-native/badge';
     SocialSharing,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     {provide: LOCALE_ID, useValue: 'es-CR'},
+    AppVersion
     
     
   ]

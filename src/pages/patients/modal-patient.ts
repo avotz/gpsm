@@ -53,7 +53,7 @@ export class ModalPatientPage {
             let styleClass = 'success';
 
 
-            if (this.patientForm.valid) {
+            if (this.patientForm.valid && !this.isWaiting) {
 
 
                 this.isWaiting = true;

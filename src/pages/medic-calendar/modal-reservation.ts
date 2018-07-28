@@ -123,7 +123,7 @@ export class ModalReservationPage {
             let styleClass = 'success';
             let appointment = {
                 title: 'cita',
-                date: this.appointment.startFormatted,
+                date: moment(this.appointment.startFormatted).format('YYYY-MM-DD'),
                 start: this.appointment.start,
                 end: this.appointment.end,
                 backgroundColor: '#374850', //Success (green)

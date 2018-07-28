@@ -131,3 +131,8 @@ $colors: (
 .mytoast.success .toast-wrapper{
   background-color: map-get($colors, turquesa);
 }
+.versionApp{
+  position: absolute;
+  left:15px;
+  bottom: 15px;
+}
