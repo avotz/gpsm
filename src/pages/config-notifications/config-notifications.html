@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-navbar>
+      <button ion-button menuToggle>
+    <ion-icon name="menu"></ion-icon>
+  </button>
+      <ion-title>Config de notificaciones</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<p *ngIf="submitAttempt" style="color: #ea6153;">Por favor revisa los campos con errores.</p>
+
+<ion-content padding>
+    
+  <ion-card>
+    
+    <ion-card-content>
+      <form [formGroup]="configNotiForm">
+       
+        
+      
+        <ion-row>
+          <ion-col>
+            <ion-list>
+                <ion-label>Recibir Anuncios de:</ion-label>
+              <ion-item>
+                <ion-label>Farmacias</ion-label>
+                <ion-toggle formControlName="configNotiPharmacy"></ion-toggle>
+              </ion-item>
+              <ion-item>
+                <ion-label>Clínicas</ion-label>
+                <ion-toggle formControlName="configNotiClinic"></ion-toggle>
+              </ion-item>
+              
+              
+            </ion-list>
+          </ion-col>
+        </ion-row>
+        
+        <ion-row>
+          <ion-col class="signup-col">
+            <button ion-button class="submit-btn" full (click)="save()">Guardar</button>
+           
+          </ion-col>
+        </ion-row>
+         
+      </form>
+    </ion-card-content>
+</ion-card>
+	
+    
+    <!-- <h3 [hidden]="lastImage !== null">Selecciona una imagen para cambiar de foto</h3> -->
+</ion-content>
+

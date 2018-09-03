@@ -19,6 +19,7 @@ import { AppointmentsPage } from '../pages/appointments/appointments';
 import { Badge } from '@ionic-native/badge';
 import { Events } from 'ionic-angular';
 import { NotificationsPage } from '../pages/notifications/notifications';
+import { ConfigNotificationsPage } from '../pages/config-notifications/config-notifications';
 
 declare var FirebasePlugin: any;
 @Component({
@@ -59,6 +60,7 @@ export class MyApp {
       { title: 'Consultas programadas', component: AppointmentsPage },
       { title: 'Pacientes', component: PatientsPage },
       { title: 'Cuenta', component: AccountPage },
+      { title: 'Config de Notificaciones', component: ConfigNotificationsPage },
       { title: 'Califica esta Aplicación', component: ReviewPage }
     ];
     //this.pushSetup();

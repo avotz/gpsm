@@ -60,6 +60,7 @@ import { AppointmentServiceProvider } from '../providers/appointment-service/app
 import { ClinicServiceProvider } from '../providers/clinic-service/clinic-service';
 import { ReviewServiceProvider } from '../providers/review-service/review-service';
 import { NotificationsPage } from '../pages/notifications/notifications';
+import { ConfigNotificationsPage } from '../pages/config-notifications/config-notifications';
 import { Badge } from '@ionic-native/badge';
 
 @NgModule({
@@ -87,7 +88,8 @@ import { Badge } from '@ionic-native/badge';
     AppointmentsPage,
     PasswordResetPage,
     NewPasswordPage,
-    NotificationsPage
+    NotificationsPage,
+    ConfigNotificationsPage,
     
   ],
   imports: [
@@ -128,7 +130,8 @@ import { Badge } from '@ionic-native/badge';
     AppointmentsPage,
     PasswordResetPage,
     NewPasswordPage,
-    NotificationsPage
+    NotificationsPage,
+    ConfigNotificationsPage,
   ],
   providers: [
     StatusBar,
