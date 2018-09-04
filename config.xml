@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.avotz.gpsmedica" version="1.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.avotz.gpsmedica" version="1.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>GPS Médica</name>
     <description>GPS Médica App.</description>
     <author email="alonso@avotz.com" href="https://avotz.com/">Avotz Team</author>
@@ -87,10 +87,6 @@
     <plugin name="cordova-plugin-compat" spec="^1.1.0" />
     <plugin name="cordova-plugin-console" spec="^1.0.5" />
     <plugin name="cordova-plugin-device" spec="^1.1.4" />
-    <plugin name="cordova-plugin-facebook4" spec="^1.7.4">
-        <variable name="APP_ID" value="159461661253763" />
-        <variable name="APP_NAME" value="GPS Medica" />
-    </plugin>
     <plugin name="cordova-plugin-file-transfer" spec="^1.6.3" />
     <plugin name="cordova-plugin-filepath" spec="^1.0.2" />
     <plugin name="cordova-plugin-firebase" spec="^0.1.24" />
@@ -109,6 +105,11 @@
         <variable name="REVERSED_CLIENT_ID" value="com.googleusercontent.apps.673440482992-k2ngmevpuolh3bfibcaqdoe9hcl1mrqc" />
     </plugin>
     <plugin name="cordova-plugin-app-version" spec="^0.1.9" />
+    <plugin name="cordova-plugin-facebook4" spec="^2.3.0">
+        <variable name="APP_ID" value="159461661253763" />
+        <variable name="APP_NAME" value="GPS Medica" />
+        <variable name="ANDROID_SDK_VERSION" value="4.35.0" />
+    </plugin>
     <engine name="ios" spec="4.5.5" />
     <engine name="android" spec="6.4.0" />
 </widget>
