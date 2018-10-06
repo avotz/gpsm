@@ -26,7 +26,7 @@ export class LoginPage {
        this.authService = authService;
        this.loadingCtrl = loadingCtrl;
        this.loginForm = formBuilder.group({
-        phone_number: ['',Validators.required],
+        email: ['',Validators.required],
         password: ['',Validators.required]
         
       });
@@ -56,7 +56,7 @@ export class LoginPage {
       
         if(this.loginForm.valid){
           loader.present();
-          this.authService.login(this.loginForm.value.phone_number, this.loginForm.value.password)
+          this.authService.login(this.loginForm.value.email, this.loginForm.value.password)
                   .then(data => {
 
                     loader.dismiss();

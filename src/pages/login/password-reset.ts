@@ -21,7 +21,9 @@ export class PasswordResetPage {
        this.authService = authService;
        this.loadingCtrl = loadingCtrl;
        this.passwordForm = formBuilder.group({
-        phone: ['',Validators.required],
+        email: ['',Validators.required],
+        phone_country_code: ['+506',Validators.required],
+        phone_number: ['',Validators.required],
       
         
       });
@@ -85,8 +87,8 @@ export class PasswordResetPage {
                       let body = JSON.parse(error._body)
 
         
-                      if (body.errors.phone)
-                        errorSaveTextPhone = body.errors.phone[0]
+                      if (body.errors.phone_number)
+                        errorSaveTextPhone = body.errors.phone_number[0]
 
                       message = message + errorSaveText + ' ' + errorSaveTextPhone
 

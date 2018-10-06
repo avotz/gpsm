@@ -8,7 +8,7 @@ import {SERVER_URL} from '../config';
 
 const postData = {
           password:'',
-          phone_number:'',
+          email:'',
           push_token: ''
        };
 
@@ -41,8 +41,8 @@ export class AuthServiceProvider {
 
     }
 
-  login(phone, password){
-        postData.phone_number = phone
+  login(email, password){
+        postData.email = email
         postData.password = password
         postData.push_token = window.localStorage.getItem('push_token') 
 

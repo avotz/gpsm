@@ -31,6 +31,23 @@
 
             </ion-item>
             <p *ngIf="!registerForm.controls.name.valid  && (registerForm.controls.name.dirty || submitAttempt)" class="error">Por favor ingrese un nombre</p>
+            <ion-item>
+              <ion-input formControlName="email" type="email" placeholder="Email"></ion-input>
+            </ion-item>
+            <p *ngIf="!registerForm.controls.email.valid  && (registerForm.controls.email.dirty || submitAttempt)" class="error">Por favor ingrese un correo válido</p>
+            
+            <ion-item>
+              <!-- <ion-input type="password" placeholder="Contraseña" name="password" [(ngModel)]="password" required></ion-input> -->
+              <ion-input formControlName="password" type="password" [class.invalid]="!registerForm.controls.password.valid && (registerForm.controls.password.dirty || submitAttempt)" placeholder="Contraseña"></ion-input>
+            </ion-item>
+            <p *ngIf="!registerForm.controls.password.valid  && (registerForm.controls.password.dirty || submitAttempt)" class="error">Por favor ingrese una contraseña valida</p>
+            <ion-item>
+              <!-- <ion-input type="password" placeholder="Confirmación Contraseña" name="password_confirmation" [(ngModel)]="password_confirmation" required></ion-input> -->
+              <ion-input formControlName="password_confirmation" type="password" [class.invalid]="!registerForm.controls.password_confirmation.valid && (registerForm.controls.password_confirmation.dirty || submitAttempt)" placeholder="Confirmación de contraseña"></ion-input>
+            </ion-item>
+            <p *ngIf="!registerForm.controls.password_confirmation.valid  && submitAttempt" class="error">Por favor ingrese la confirmación de contraseña</p>
+            <p *ngIf="registerForm.controls.password_confirmation.errors?.MatchPassword" class="error">La  contraseñas no coinciden</p>
+         
             <ion-row>
               <ion-col col-5>
                 <ion-item>
@@ -50,27 +67,6 @@
               </ion-col>
             </ion-row>
             
-            
-            <ion-item>
-              <!-- <ion-input type="password" placeholder="Contraseña" name="password" [(ngModel)]="password" required></ion-input> -->
-              <ion-input formControlName="password" type="password" [class.invalid]="!registerForm.controls.password.valid && (registerForm.controls.password.dirty || submitAttempt)" placeholder="Contraseña"></ion-input>
-            </ion-item>
-            <p *ngIf="!registerForm.controls.password.valid  && (registerForm.controls.password.dirty || submitAttempt)" class="error">Por favor ingrese una contraseña valida</p>
-            <ion-item>
-              <!-- <ion-input type="password" placeholder="Confirmación Contraseña" name="password_confirmation" [(ngModel)]="password_confirmation" required></ion-input> -->
-              <ion-input formControlName="password_confirmation" type="password" [class.invalid]="!registerForm.controls.password_confirmation.valid && (registerForm.controls.password_confirmation.dirty || submitAttempt)" placeholder="Confirmación de contraseña"></ion-input>
-            </ion-item>
-            <p *ngIf="!registerForm.controls.password_confirmation.valid  && submitAttempt" class="error">Por favor ingrese la confirmación de contraseña</p>
-            <p *ngIf="registerForm.controls.password_confirmation.errors?.MatchPassword" class="error">La  contraseñas no coinciden</p>
-         
-            <p>El correo no es obligatorio, pero puede ser util para poder recibir información de factura dígital y notificaciones</p>
-         
-            <ion-item>
-              <ion-input formControlName="email" type="email" placeholder="Email"></ion-input>
-            </ion-item>
-            <p *ngIf="!registerForm.controls.email.valid  && (registerForm.controls.email.dirty || submitAttempt)" class="error">Por favor ingrese un correo válido</p>
-          
-             
             
           </ion-list>
         </ion-col>

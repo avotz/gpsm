@@ -28,7 +28,9 @@ export class NewPasswordPage {
        this.authService = authService;
 
        this.resetForm = formBuilder.group({
-        phone: ['', Validators.required],
+        email: ['', Validators.required],
+        phone_country_code: ['+506',Validators.required],
+        phone_number: ['', Validators.required],
         code: ['', Validators.required],
         password: ['',Validators.required],
         password_confirmation: ['',Validators.required]
@@ -81,7 +83,7 @@ export class NewPasswordPage {
               let message = 'Ha ocurrido un error reseteando la contraseña.';
               let errorSaveText = error.statusText;
               let errorSaveTextPhone = error.statusText;
-
+              let errorSaveTextEmail = error.statusText;
               if (error.status == 422) {
                 errorSaveText = "";
                 errorSaveTextPhone = "";
@@ -89,10 +91,12 @@ export class NewPasswordPage {
 
                 if (body.errors.code)
                   errorSaveText = body.errors.code[0]
-                if (body.errors.phone)
-                  errorSaveTextPhone = body.errors.phone[0]
+                if (body.errors.phone_number)
+                  errorSaveTextPhone = body.errors.phone_number[0]
+                if (body.errors.email)
+                errorSaveTextEmail = body.errors.email[0]
 
-                message = message + errorSaveText + ' ' + errorSaveTextPhone
+                message = message + errorSaveText + ' ' + errorSaveTextPhone + ' ' + errorSaveTextEmail 
 
               }
 

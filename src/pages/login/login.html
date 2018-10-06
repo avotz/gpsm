@@ -19,16 +19,16 @@
         <ion-col>
           <ion-list inset>
             
-            <!-- <ion-item>
+            <ion-item>
               <ion-input formControlName="email" type="email" [class.invalid]="!loginForm.controls.email.valid && (loginForm.controls.email.dirty || submitAttempt)" email="true" placeholder="Correo"  required></ion-input>
             </ion-item>
-            <p *ngIf="!loginForm.controls.email.valid  && (loginForm.controls.email.dirty || submitAttempt)" class="error">Por favor ingrese un correo válido.</p> -->
-            <ion-item>
+            <p *ngIf="!loginForm.controls.email.valid  && (loginForm.controls.email.dirty || submitAttempt)" class="error">Por favor ingrese un correo válido.</p>
+            <!-- <ion-item>
               <ion-input formControlName="phone_number" type="number" [class.invalid]="!loginForm.controls.phone_number.valid && (loginForm.controls.phone_number.dirty || submitAttempt)"
                  placeholder="Teléfono" required></ion-input>
             </ion-item>
             <p *ngIf="!loginForm.controls.phone_number.valid  && (loginForm.controls.phone_number.dirty || submitAttempt)" class="error">Por favor ingrese un Teléfono.</p>
-            
+             -->
             
             <ion-item>
               <ion-input formControlName="password" type="password" [class.invalid]="!loginForm.controls.password.valid && (loginForm.controls.password.dirty || submitAttempt)" placeholder="Contraseña" name="password" [(ngModel)]="password" required></ion-input>

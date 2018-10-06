@@ -34,7 +34,7 @@ export class RegisterPage {
         name: ['',Validators.required],
         phone_country_code: ['+506', Validators.required],
         phone_number: ['', Validators.required],
-        email: [''],
+        email: ['',Validators.required],
         password: ['',Validators.required],
         password_confirmation: ['',Validators.required]
       },{
