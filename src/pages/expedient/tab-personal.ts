@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
+import { NavController, NavParams, ToastController, LoadingController, ModalController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PatientServiceProvider } from '../../providers/patient-service/patient-service';
 import { NetworkServiceProvider } from '../../providers/network-service/network-service';
 
 import moment from 'moment'
+import { ModalGraficoPresionPage } from './modal-grafico-presion';
+import { ModalGraficoGlicemiaPage } from './modal-grafico-glicemia';
 
 
 @Component({
@@ -32,7 +34,7 @@ export class TabPersonalPage {
     // optionsPD: any = [];
     // optionsPS: any = [];
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public patientService: PatientServiceProvider, public toastCtrl: ToastController, public loadingCtrl: LoadingController, public networkService: NetworkServiceProvider) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public patientService: PatientServiceProvider, public toastCtrl: ToastController, public loadingCtrl: LoadingController, public networkService: NetworkServiceProvider, public modalCtrl: ModalController, ) {
 
         this.authUser = JSON.parse(window.localStorage.getItem('auth_user'));
         this.patient = this.navParams.data;
@@ -498,6 +500,22 @@ export class TabPersonalPage {
         //form.get('glicemia').setValue('')
 
 
+    }
+    goGraficoPresion(){
+        let modal = this.modalCtrl.create(ModalGraficoPresionPage, this.pressures);
+        modal.onDidDismiss(data => {
+    
+    
+        });
+        modal.present();
+    }
+    goGraficoGlicemia(){
+        let modal = this.modalCtrl.create(ModalGraficoGlicemiaPage, this.sugars);
+        modal.onDidDismiss(data => {
+    
+    
+        });
+        modal.present();
     }
 
     ionViewDidLoad() {

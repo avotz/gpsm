@@ -62,6 +62,8 @@ import { ReviewServiceProvider } from '../providers/review-service/review-servic
 import { NotificationsPage } from '../pages/notifications/notifications';
 import { ConfigNotificationsPage } from '../pages/config-notifications/config-notifications';
 import { Badge } from '@ionic-native/badge';
+import { ModalGraficoPresionPage } from '../pages/expedient/modal-grafico-presion';
+import { ModalGraficoGlicemiaPage } from '../pages/expedient/modal-grafico-glicemia';
 
 @NgModule({
   declarations: [
@@ -90,6 +92,8 @@ import { Badge } from '@ionic-native/badge';
     NewPasswordPage,
     NotificationsPage,
     ConfigNotificationsPage,
+    ModalGraficoPresionPage,
+    ModalGraficoGlicemiaPage
     
   ],
   imports: [
@@ -132,6 +136,8 @@ import { Badge } from '@ionic-native/badge';
     NewPasswordPage,
     NotificationsPage,
     ConfigNotificationsPage,
+    ModalGraficoPresionPage,
+    ModalGraficoGlicemiaPage
   ],
   providers: [
     StatusBar,

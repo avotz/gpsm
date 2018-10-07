@@ -31,6 +31,12 @@
             <form [formGroup]="pressureForm">
                 <ion-grid>
                     <ion-row>
+                            <ion-col col-12 class="container-btn-grafico">
+                                <button ion-button (click)="goGraficoPresion()" color="light" small>Ver Grafico
+                                </button>
+                            </ion-col>
+                    </ion-row>
+                    <ion-row>
                         <ion-col col-6>
                             <ion-item>
                                 <ion-label floating>Fecha de Control</ion-label>
@@ -124,6 +130,10 @@
         <div *ngSwitchCase="'sugar'">
                 <form [formGroup]="sugarForm">
                         <ion-grid>
+                                <ion-col col-12 class="container-btn-grafico">
+                                        <button ion-button (click)="goGraficoGlicemia()" color="light" small>Ver Grafico
+                                        </button>
+                                    </ion-col>
                             <ion-row>
                                 <ion-col col-6>
                                     <ion-item>
